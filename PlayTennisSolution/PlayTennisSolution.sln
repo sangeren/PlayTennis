@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0Infrastructure", "0Infrastructure", "{ACA2EA72-5C78-4223-8221-82F8A2748262}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1Dal", "1Dal", "{2FBB69F8-B86D-4C5A-AB31-CCD3307B5CB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2Bll", "2Bll", "{A48153DE-93C1-4568-9CBF-0099015060D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3Ui", "3Ui", "{FB542861-0CA5-4F5A-9D5D-E75FE99147C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4Test", "4Test", "{F43FC317-4FDD-48AA-81A3-320032FE9975}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
