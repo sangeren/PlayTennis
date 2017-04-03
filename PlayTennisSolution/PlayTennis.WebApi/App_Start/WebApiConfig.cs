@@ -19,6 +19,9 @@ namespace PlayTennis.WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //记录异常
+            config.Filters.Add(new WebApiExceptionFilterAttribute());
         }
     }
 }

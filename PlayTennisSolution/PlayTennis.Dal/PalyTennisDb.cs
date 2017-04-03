@@ -23,6 +23,7 @@ namespace PlayTennis.Dal
         //的详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=390109。
 
         public virtual DbSet<WxUserLogin> WxUserLogin { get; set; }
+        public virtual DbSet<LogInformation> LogInformation { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
