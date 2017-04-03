@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201704031410520_InitializeDb.cs" />
+    <Compile Include="Migrations\201704031410520_InitializeDb.Designer.cs">
+      <DependentUpon>201704031410520_InitializeDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +67,11 @@
       <Project>{16b862c3-fb42-4636-8a8d-8a6a6ce332f3}</Project>
       <Name>PlayTennis.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704031410520_InitializeDb.resx">
+      <DependentUpon>201704031410520_InitializeDb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
