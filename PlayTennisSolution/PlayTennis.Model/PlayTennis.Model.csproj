@@ -39,9 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />
+    <Compile Include="ExercisePurpose.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="LogInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SportsEquipment.cs" />
+    <Compile Include="TennisCourt.cs" />
+    <Compile Include="UserBaseInfo.cs" />
+    <Compile Include="UserInformation.cs" />
     <Compile Include="WxUser.cs" />
     <Compile Include="WxUserLogin.cs" />
   </ItemGroup>
