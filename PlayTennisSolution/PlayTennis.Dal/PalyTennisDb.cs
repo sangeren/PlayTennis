@@ -28,6 +28,8 @@ namespace PlayTennis.Dal
         public virtual DbSet<UserBaseInfo> UserBaseInfo { get; set; }
         public virtual DbSet<SportsEquipment> SportsEquipment { get; set; }
         public virtual DbSet<TennisCourt> TennisCourt { get; set; }
+        public virtual DbSet<UserInformation> UserInformation { get; set; }
+        public virtual DbSet<ExercisePurpose> ExercisePurpose { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

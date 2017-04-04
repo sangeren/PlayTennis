@@ -17,10 +17,13 @@ namespace PlayTennis.WebApi.Controllers
     public class ExercisePurposeController : ApiController
     {
         public LogService LogService { get; set; }
-
+        public UserLoginService UserLoginService { get; set; }
+        public ExercisePurposeService ExercisePurposeService { get; set; }
         public ExercisePurposeController()
         {
             LogService = new LogService();
+            UserLoginService = new UserLoginService();
+            ExercisePurposeService = new ExercisePurposeService();
         }
 
         // GET: api/EditPurpose
@@ -41,10 +44,10 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // POST: api/EditPurpose
-        public async void Post(EditPurposeDto purpose)
+        public async void Post(Guid wxUserid,EditPurposeDto purpose)
         {
-
-
+            var wxUser = UserLoginService.GetWxUserByuserid(wxUserid);
+            ExercisePurposeService.AddPurpose(purpose, wxUser);
         }
 
         // PUT: api/EditPurpose/5

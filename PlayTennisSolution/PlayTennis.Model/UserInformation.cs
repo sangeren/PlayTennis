@@ -11,11 +11,13 @@ namespace PlayTennis.Model
         public UserInformation()
         {
             Id = Guid.NewGuid();
+            TennisCourts = new HashSet<TennisCourt>();
         }
         public Guid Id { get; set; }
+        public WxUser WxUser { get; set; }
         public UserBaseInfo UserBaseInfo { get; set; }
         public ExercisePurpose ExercisePurpose { get; set; }
         public SportsEquipment SportsEquipment { get; set; }
-        public IList<TennisCourt> TennisCourts { get; set; }
+        public virtual ICollection<TennisCourt> TennisCourts { get; set; }
     }
 }
