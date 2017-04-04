@@ -42,6 +42,7 @@
     <Compile Include="Dto\WxUserLoginDto.cs" />
     <Compile Include="LogInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WxUser.cs" />
     <Compile Include="WxUserLogin.cs" />
   </ItemGroup>
   <ItemGroup />

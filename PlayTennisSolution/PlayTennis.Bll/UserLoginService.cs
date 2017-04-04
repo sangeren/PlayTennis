@@ -12,7 +12,7 @@ namespace PlayTennis.Bll
     public class UserLoginService
     {
 
-        public int LogUserLogin(WxUserLoginDto user)
+        public WxUser LogUserLogin(WxUserLoginDto user)
         {
             if (user != null)
             {
@@ -25,11 +25,18 @@ namespace PlayTennis.Bll
                 };
                 var context = new PalyTennisDb();
                 context.WxUserLogin.Add(userLogin);
-                var count = context.SaveChanges();
-                return count;
+                var wxUser = context.WxUser.FirstOrDefault(p => p.Opneid.Equals(user.Openid));//.Select(p => 1).FirstOrDefault();
+                if (wxUser == null)
+                {
+                    wxUser = new WxUser() { Id = Guid.NewGuid(), Opneid = user.Openid, CreateTime = DateTime.Now };
+                    context.WxUser.Add(wxUser);
+                }
+                context.WxUserLogin.Add(userLogin);
+                context.SaveChanges();
+                return wxUser;
             }
 
-            return 0;
+            return null;
         }
     }
 }

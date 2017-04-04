@@ -24,6 +24,7 @@ namespace PlayTennis.Dal
 
         public virtual DbSet<WxUserLogin> WxUserLogin { get; set; }
         public virtual DbSet<LogInformation> LogInformation { get; set; }
+        public virtual DbSet<WxUser> WxUser { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

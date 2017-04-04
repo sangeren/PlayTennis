@@ -16,14 +16,6 @@ namespace PlayTennis.WebApi
         //重写基类的异常处理方法
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            //1.异常日志记录（正式项目里面一般是用log4net记录异常日志）
-            //Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "——" +
-            //    actionExecutedContext.Exception.GetType().ToString() + "：" + actionExecutedContext.Exception.Message + "——堆栈信息：" +
-            //    actionExecutedContext.Exception.StackTrace);
-            var logService = new LogService();
-            logService.LogUserLoginAsync(new LogInformation() { Id = Guid.NewGuid(), Message = actionExecutedContext.Exception.Message, Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception) });
-
-
             //2.返回调用方具体的异常信息
             if (actionExecutedContext.Exception is NotImplementedException)
             {
@@ -39,6 +31,21 @@ namespace PlayTennis.WebApi
                 actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
+
+            //1.异常日志记录（正式项目里面一般是用log4net记录异常日志）
+            //Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "——" +
+            //    actionExecutedContext.Exception.GetType().ToString() + "：" + actionExecutedContext.Exception.Message + "——堆栈信息：" +
+            //    actionExecutedContext.Exception.StackTrace);
+            var logService = new LogService();
+            logService.LogUserLoginAsync(new LogInformation()
+            {
+                Id = Guid.NewGuid(),
+                Message = actionExecutedContext.Exception.Message,
+                Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception),
+                CreateTime = DateTime.Now,
+                Requst = JsonConvert.SerializeObject(actionExecutedContext.Request),
+                Response = JsonConvert.SerializeObject(actionExecutedContext.Response)
+            });
             base.OnException(actionExecutedContext);
         }
     }

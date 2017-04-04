@@ -18,43 +18,36 @@ namespace PlayTennis.WebApi.Controllers
         private const string Appid = "wx69499dc511c5b6b7";
         private const string Secret = "dae8ba55fbe5d2fbfca156c17199b4ab";
 
-        public async Task<int> Get(string code)
+
+
+        public async Task<string> Get(string id)
         {
-            try
+            if (string.IsNullOrEmpty(id))
             {
-                if (string.IsNullOrEmpty(code))
-                {
-                    throw new ArgumentNullException("code", "参数不合规！");
-                }
-
-                var result = 0;
-
-                var url =
-                    string.Format(
-                        "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code",
-                        Appid, Secret, code);
-                var client = new HttpClient();
-                var response = await client.GetAsync(url);
-                if (response.StatusCode.Equals(HttpStatusCode.OK))
-                {
-                    var context = await response.Content.ReadAsStringAsync();
-                    var userLogin = JsonConvert.DeserializeObject<WxLogin>(context);
-                    var servic = new UserLoginService();
-                    var count = servic.LogUserLogin(new WxUserLoginDto()
-                         {
-                             Openid = userLogin.openid,
-                             SessionKey = userLogin.session_key
-                         });
-                    result = count;
-                }
-                return result;
-
+                throw new ArgumentNullException("code", "参数不合规！");
             }
-            catch (Exception ex)
+
+            var result = "";
+
+            var url =
+                string.Format(
+                    "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code",
+                    Appid, Secret, id);
+            var client = new HttpClient();
+            var response = await client.GetAsync(url);
+            if (response.StatusCode.Equals(HttpStatusCode.OK))
             {
-                
-                throw;
+                var context = await response.Content.ReadAsStringAsync();
+                var userLogin = JsonConvert.DeserializeObject<WxLogin>(context);
+                var servic = new UserLoginService();
+                var wxUser = servic.LogUserLogin(new WxUserLoginDto()
+                {
+                    Openid = userLogin.openid,
+                    SessionKey = userLogin.session_key
+                });
+                result = wxUser.Id.ToString();
             }
+            return result;
         }
     }
 }
