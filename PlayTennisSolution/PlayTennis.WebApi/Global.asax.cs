@@ -19,7 +19,7 @@ namespace PlayTennis.WebApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //记录异常
-            //GlobalConfiguration.Configuration.Filters.Add(new WebApiExceptionFilterAttribute());
+            GlobalConfiguration.Configuration.Filters.Add(new WebApiExceptionFilterAttribute());
         }
     }
 }

@@ -21,7 +21,7 @@ namespace PlayTennis.WebApi
             );
 
             //记录异常
-            config.Filters.Add(new WebApiExceptionFilterAttribute());
+            //config.Filters.Add(new WebApiExceptionFilterAttribute());
         }
     }
 }

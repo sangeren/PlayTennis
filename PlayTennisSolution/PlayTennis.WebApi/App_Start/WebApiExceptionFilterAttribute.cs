@@ -37,15 +37,17 @@ namespace PlayTennis.WebApi
             //    actionExecutedContext.Exception.GetType().ToString() + "：" + actionExecutedContext.Exception.Message + "——堆栈信息：" +
             //    actionExecutedContext.Exception.StackTrace);
             var logService = new LogService();
-            logService.LogUserLoginAsync(new LogInformation()
+            var log = new LogInformation()
             {
                 Id = Guid.NewGuid(),
                 Message = actionExecutedContext.Exception.Message,
                 Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception),
                 CreateTime = DateTime.Now,
-                Requst = JsonConvert.SerializeObject(actionExecutedContext.Request),
-                Response = JsonConvert.SerializeObject(actionExecutedContext.Response)
-            });
+                //Requst = JsonConvert.SerializeObject(new { actionExecutedContext.Request.Headers }),
+                //Requst = JsonConvert.SerializeObject(actionExecutedContext.Request.Headers),
+                //Response = JsonConvert.SerializeObject(new { actionExecutedContext.Response.Headers })
+            };
+            logService.LogUserLoginAsync(log);
             base.OnException(actionExecutedContext);
         }
     }

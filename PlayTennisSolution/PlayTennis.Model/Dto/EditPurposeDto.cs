@@ -11,7 +11,7 @@ namespace PlayTennis.Model.Dto
         /// <summary>
         /// 微信用户id
         /// </summary>
-        public string userid { get; set; }
+        public Guid wxUserid { get; set; }
         /// <summary>
         /// 运动开始时间
         /// </summary>

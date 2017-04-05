@@ -36,17 +36,15 @@ namespace PlayTennis.WebApi.Controllers
         public string Get(int id)
         {
             var a = new EditPurposeDto();
-            a.userid = "3";
             a.location = new LocationDto() { latitude = 3 };
-
 
             return JsonConvert.SerializeObject(a);
         }
 
         // POST: api/EditPurpose
-        public async void Post(Guid wxUserid,EditPurposeDto purpose)
+        public void Post(EditPurposeDto purpose)
         {
-            var wxUser = UserLoginService.GetWxUserByuserid(wxUserid);
+            var wxUser = UserLoginService.GetWxUserByuserid(purpose.wxUserid);
             ExercisePurposeService.AddPurpose(purpose, wxUser);
         }
 
