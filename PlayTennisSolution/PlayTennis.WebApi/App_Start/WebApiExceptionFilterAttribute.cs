@@ -42,10 +42,7 @@ namespace PlayTennis.WebApi
                 Id = Guid.NewGuid(),
                 Message = actionExecutedContext.Exception.Message,
                 Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception),
-                CreateTime = DateTime.Now,
-                //Requst = JsonConvert.SerializeObject(new { actionExecutedContext.Request.Headers }),
-                //Requst = JsonConvert.SerializeObject(actionExecutedContext.Request.Headers),
-                //Response = JsonConvert.SerializeObject(new { actionExecutedContext.Response.Headers })
+                CreateTime = DateTime.Now
             };
             logService.LogUserLoginAsync(log);
             base.OnException(actionExecutedContext);

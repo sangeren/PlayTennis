@@ -70,13 +70,9 @@
     <Compile Include="Migrations\201704041406418_AddUserInfor.Designer.cs">
       <DependentUpon>201704041406418_AddUserInfor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704041420431_ModifyUserInfor.cs" />
-    <Compile Include="Migrations\201704041420431_ModifyUserInfor.Designer.cs">
-      <DependentUpon>201704041420431_ModifyUserInfor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704051535208_Add1.cs" />
-    <Compile Include="Migrations\201704051535208_Add1.Designer.cs">
-      <DependentUpon>201704051535208_Add1.cs</DependentUpon>
+    <Compile Include="Migrations\201704071540227_Log.cs" />
+    <Compile Include="Migrations\201704071540227_Log.Designer.cs">
+      <DependentUpon>201704071540227_Log.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
@@ -108,11 +104,8 @@
     <EmbeddedResource Include="Migrations\201704041406418_AddUserInfor.resx">
       <DependentUpon>201704041406418_AddUserInfor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704041420431_ModifyUserInfor.resx">
-      <DependentUpon>201704041420431_ModifyUserInfor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704051535208_Add1.resx">
-      <DependentUpon>201704051535208_Add1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704071540227_Log.resx">
+      <DependentUpon>201704071540227_Log.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

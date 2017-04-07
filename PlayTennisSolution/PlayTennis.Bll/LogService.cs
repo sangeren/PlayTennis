@@ -21,5 +21,17 @@ namespace PlayTennis.Bll
             context.SaveChanges();
             return null;
         }
+
+        public Task LogHttpResquestAsync(LogHttpRequest log)
+        {
+            if (log == null)
+            {
+                return null;
+            }
+            var context = new PalyTennisDb();
+            context.LogHttpRequest.Add(log);
+            context.SaveChanges();
+            return null;
+        }
     }
 }
