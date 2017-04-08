@@ -41,7 +41,7 @@ namespace PlayTennis.WebApi
                 Requst = JsonConvert.SerializeObject(rLog),
                 Response = JsonConvert.SerializeObject(resp),
             };
-            await logService.LogHttpResquestAsync(log);
+            logService.LogHttpResquestAsync(log);
 
             return response;
         }

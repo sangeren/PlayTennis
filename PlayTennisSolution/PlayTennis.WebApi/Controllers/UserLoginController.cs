@@ -39,13 +39,16 @@ namespace PlayTennis.WebApi.Controllers
             {
                 var context = await response.Content.ReadAsStringAsync();
                 var userLogin = JsonConvert.DeserializeObject<WxLogin>(context);
-                var servic = new UserLoginService();
-                var wxUser = servic.LogUserLogin(new WxUserLoginDto()
+                if (userLogin != null && userLogin.openid != null)
                 {
-                    Openid = userLogin.openid,
-                    SessionKey = userLogin.session_key
-                });
-                result = wxUser.Id.ToString();
+                    var servic = new UserLoginService();
+                    var wxUser = servic.LogUserLogin(new WxUserLoginDto()
+                    {
+                        Openid = userLogin.openid,
+                        SessionKey = userLogin.session_key
+                    });
+                    result = wxUser.Id.ToString();
+                }
             }
             return result;
         }

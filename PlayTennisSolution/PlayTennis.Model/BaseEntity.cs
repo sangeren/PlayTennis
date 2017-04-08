@@ -11,7 +11,8 @@ namespace PlayTennis.Model
         protected BaseEntity()
         {
             Id = Guid.NewGuid();
-
+            CreateTime = DateTime.Now;
+            UpdateTime = DateTime.Now;
         }
         /// <summary>
         /// 主键
