@@ -35,10 +35,10 @@ namespace PlayTennis.Bll
                 IsCanChange = purposeDto.isCanChange,
                 Location = new BaseLocation()
                 {
-                    Accuracy = purposeDto.location.accuracy,
-                    Latitude = purposeDto.location.latitude,
-                    Longitude = purposeDto.location.longitude,
-                    Speed = purposeDto.location.speed
+                    Accuracy = purposeDto.userLocation.accuracy,
+                    Latitude = purposeDto.userLocation.latitude,
+                    Longitude = purposeDto.userLocation.longitude,
+                    Speed = purposeDto.userLocation.speed
                 },
                 StartTime = purposeDto.startTime
             };

@@ -31,7 +31,7 @@ namespace PlayTennis.Model.Dto
         /// <summary>
         /// 位置
         /// </summary>
-        public LocationDto location { get; set; }
+        public LocationDto userLocation { get; set; }
     }
 
     public class LocationDto

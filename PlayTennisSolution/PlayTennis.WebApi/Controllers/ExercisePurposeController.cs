@@ -36,7 +36,7 @@ namespace PlayTennis.WebApi.Controllers
         public string Get(int id)
         {
             var a = new EditPurposeDto();
-            a.location = new LocationDto() { latitude = 3 };
+            a.userLocation = new LocationDto() { latitude = 3 };
 
             return JsonConvert.SerializeObject(a);
         }
