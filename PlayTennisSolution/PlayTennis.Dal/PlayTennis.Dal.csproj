@@ -82,9 +82,9 @@
     <Compile Include="Migrations\201704081542219_ChangeWxuuserid1.Designer.cs">
       <DependentUpon>201704081542219_ChangeWxuuserid1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704090818265_ChangeId.cs" />
-    <Compile Include="Migrations\201704090818265_ChangeId.Designer.cs">
-      <DependentUpon>201704090818265_ChangeId.cs</DependentUpon>
+    <Compile Include="Migrations\201704091305028_Changelocaltion.cs" />
+    <Compile Include="Migrations\201704091305028_Changelocaltion.Designer.cs">
+      <DependentUpon>201704091305028_Changelocaltion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
@@ -125,8 +125,8 @@
     <EmbeddedResource Include="Migrations\201704081542219_ChangeWxuuserid1.resx">
       <DependentUpon>201704081542219_ChangeWxuuserid1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704090818265_ChangeId.resx">
-      <DependentUpon>201704090818265_ChangeId.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704091305028_Changelocaltion.resx">
+      <DependentUpon>201704091305028_Changelocaltion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -45,14 +45,13 @@ namespace PlayTennis.WebApi.Tests.Controllers
             var controller = new ExercisePurposeController();
 
             // 操作
-            controller.Post(new EditPurposeDto()
+            controller.Post(new Guid("3A584BB9-E512-464C-B43B-C39A9323BBC7"), new EditPurposeDto()
             {
                 endTime = DateTime.Now,
                 exerciseExplain = "运动意向说明",
                 isCanChange = true,
                 startTime = DateTime.Now,
-                userLocation = new LocationDto() { latitude = 1, longitude = 1, speed = 1 },
-                wxUserid = new Guid("3A584BB9-E512-464C-B43B-C39A9323BBC7")
+                userLocation = new LocationDto() { latitude = 1, longitude = 1, speed = 1 }
             });
 
             // 断言
@@ -63,12 +62,21 @@ namespace PlayTennis.WebApi.Tests.Controllers
         public void Put()
         {
             // 排列
-            ValuesController controller = new ValuesController();
+            var controller = new ExercisePurposeController();
 
             // 操作
-            controller.Put(5, "value");
+            controller.Put(new EditPurposeDto()
+            {
+                Id = new Guid("5EB47953-2EC0-4872-9288-1F835450A5FF"),
+                endTime = DateTime.Now,
+                exerciseExplain = "运动意向说明2",
+                isCanChange = true,
+                startTime = DateTime.Now,
+                userLocation = new LocationDto() { latitude = 1, longitude = 1, speed = 1 }
+            });
 
             // 断言
+            Assert.IsTrue(true);
         }
 
         [TestMethod]

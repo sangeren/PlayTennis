@@ -8,10 +8,11 @@ namespace PlayTennis.Model.Dto
 {
     public class EditPurposeDto
     {
-        /// <summary>
-        /// 微信用户id
-        /// </summary>
-        public Guid wxUserid { get; set; }
+        ///// <summary>
+        ///// 微信用户id
+        ///// </summary>
+        //public Guid wxUserid { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// 运动开始时间
         /// </summary>

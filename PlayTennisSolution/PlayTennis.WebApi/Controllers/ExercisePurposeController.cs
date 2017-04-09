@@ -35,19 +35,25 @@ namespace PlayTennis.WebApi.Controllers
         // GET: api/EditPurpose/5
         public ExercisePurpose Get(Guid id)
         {
-           return ExercisePurposeService.GetPurposeById(id);
+            return ExercisePurposeService.GetPurposeById(id);
         }
 
         // POST: api/EditPurpose
-        public void Post(EditPurposeDto purpose)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">wxUserid</param>
+        /// <param name="purpose"></param>
+        public void Post(Guid id, EditPurposeDto purpose)
         {
-            var wxUser = UserLoginService.GetWxUserByuserid(purpose.wxUserid);
+            var wxUser = UserLoginService.GetWxUserByuserid(id);
             ExercisePurposeService.AddPurpose(purpose, wxUser);
         }
 
         // PUT: api/EditPurpose/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(EditPurposeDto purpose)
         {
+            ExercisePurposeService.EditPurpose(purpose);
         }
 
         // DELETE: api/EditPurpose/5

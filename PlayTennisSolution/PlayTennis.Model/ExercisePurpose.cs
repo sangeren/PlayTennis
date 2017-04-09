@@ -27,6 +27,6 @@ namespace PlayTennis.Model
         /// <summary>
         /// 位置
         /// </summary>
-        public BaseLocation Location { get; set; }
+        public BaseLocation UserLocation { get; set; }
     }
 }
