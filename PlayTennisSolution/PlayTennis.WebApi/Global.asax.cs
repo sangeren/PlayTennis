@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace PlayTennis.WebApi
 {
@@ -32,6 +33,12 @@ namespace PlayTennis.WebApi
 
             });
             MyMapper = config.CreateMapper();
+            //小写首字母  序列号
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            // 解决json序列化时的循环引用问题
+            json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            json.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Unspecified;
         }
     }
 }

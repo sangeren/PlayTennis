@@ -33,12 +33,9 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/EditPurpose/5
-        public string Get(int id)
+        public ExercisePurpose Get(Guid id)
         {
-            var a = new EditPurposeDto();
-            a.userLocation = new LocationDto() { latitude = 3 };
-
-            return JsonConvert.SerializeObject(a);
+           return ExercisePurposeService.GetPurposeById(id);
         }
 
         // POST: api/EditPurpose

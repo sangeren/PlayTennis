@@ -11,7 +11,7 @@ namespace PlayTennis.Bll
 {
     public class UserLoginService
     {
-        public PalyTennisDb Context { get; set; }
+        public PalyTennisDb Context { private get; set; }
 
         public UserLoginService()
         {

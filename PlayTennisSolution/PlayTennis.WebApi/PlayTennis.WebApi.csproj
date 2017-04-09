@@ -168,6 +168,7 @@
     <Compile Include="Controllers\ExercisePurposeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserInformationController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

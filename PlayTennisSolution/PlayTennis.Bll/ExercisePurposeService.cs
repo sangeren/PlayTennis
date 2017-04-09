@@ -11,7 +11,7 @@ namespace PlayTennis.Bll
 {
     public class ExercisePurposeService
     {
-        private PalyTennisDb Context { get; set; }
+        public PalyTennisDb Context { private get; set; }
 
         public ExercisePurposeService()
         {
@@ -19,7 +19,16 @@ namespace PlayTennis.Bll
         }
 
         //public IEnumerable<> 
-
+        public ExercisePurpose GetPurposeById(Guid wxUserid)
+        {
+            var purpose = new ExercisePurpose();
+            var userInfor = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUserid));
+            if (userInfor != null && userInfor.Id != Guid.Empty && userInfor.ExercisePurposeId != null)
+            {
+                purpose = Context.ExercisePurpose.FirstOrDefault(p => p.Id == userInfor.ExercisePurposeId.Value);
+            }
+            return purpose;
+        }
         public int AddPurpose(EditPurposeDto purposeDto, WxUser wxUser)
         {
             var result = 0;
@@ -44,13 +53,14 @@ namespace PlayTennis.Bll
             };
             Context.ExercisePurpose.Add(purpose);
 
-            var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxUser.Equals(wxUser));
+            var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
+            //if (userInfo != null && userInfo.Id.Equals(Guid.Empty))
             if (userInfo == null)
             {
                 userInfo = new UserInformation()
                 {
                     ExercisePurpose = purpose,
-                    WxUser = wxUser
+                    WxuserId = wxUser.Id
                 };
                 Context.UserInformation.Add(userInfo);
             }

@@ -22,7 +22,6 @@ namespace PlayTennis.Model
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
-
-        public virtual ICollection<UserInformation> UserInformations { get; set; }
+        //public virtual ICollection<UserInformation> UserInformations { get; set; }
     }
 }

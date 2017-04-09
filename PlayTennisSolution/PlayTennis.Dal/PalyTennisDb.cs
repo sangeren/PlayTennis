@@ -17,6 +17,7 @@ namespace PlayTennis.Dal
         public PalyTennisDb()
             : base("name=PalyTennisDb")
         {
+            //Configuration.ProxyCreationEnabled = false;
         }
 
         //为您要在模型中包含的每种实体类型都添加 DbSet。有关配置和使用 Code First  模型
