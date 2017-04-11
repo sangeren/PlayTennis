@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Web.Http;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PlayTennis.WebApi;
+using Newtonsoft.Json;
+using PlayTennis.Model;
 using PlayTennis.WebApi.Controllers;
 
 namespace PlayTennis.WebApi.Tests.Controllers
 {
     [TestClass]
-    public class ValuesControllerTest
+    public class TennisCourtControllerTest
     {
+        public TennisCourtControllerTest()
+        {
+            MyController = new TennisCourtController();
+        }
+        public TennisCourtController MyController { get; set; }
         [TestMethod]
         public void Get()
         {
             // 排列
-            var controller = new ValuesController();
+            var controller = MyController;
 
             // 操作
             IEnumerable<string> result = controller.Get();
@@ -33,23 +38,23 @@ namespace PlayTennis.WebApi.Tests.Controllers
         public void GetById()
         {
             // 排列
-            var controller = new ValuesController();
+            var controller = MyController;
 
             // 操作
-            var result = controller.Get(5);
-
+            var result = controller.Get(new Guid("4427AAD3-38A3-4B37-964F-CD564E5E4402"));
+            var str = JsonConvert.SerializeObject(result);
             // 断言
-            Assert.AreEqual("value", result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void Post()
         {
             // 排列
-            var controller = new ValuesController();
+            var controller = MyController;
 
             // 操作
-            controller.Post("value");
+            controller.Post(new Guid("1AE7E30B-E573-4CD6-8534-6E8331FEA8E2"), new TennisCourt());
 
             // 断言
         }
@@ -58,10 +63,11 @@ namespace PlayTennis.WebApi.Tests.Controllers
         public void Put()
         {
             // 排列
-            var controller = new ValuesController();
-
+            var controller = MyController;
+            var baseInfor = controller.Get(new Guid("4427AAD3-38A3-4B37-964F-CD564E5E4402"));
+            //baseInfor.PlayAge = 2;
             // 操作
-            controller.Put(5, "value");
+            controller.Put(baseInfor);
 
             // 断言
         }
@@ -70,7 +76,7 @@ namespace PlayTennis.WebApi.Tests.Controllers
         public void Delete()
         {
             // 排列
-            var controller = new ValuesController();
+            var controller = new BaseInforController();
 
             // 操作
             controller.Delete(5);

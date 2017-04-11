@@ -13,7 +13,7 @@ namespace PlayTennis.Model
         /// </summary>
         public string NickName { get; set; }
         /// <summary>
-        /// 性别
+        /// 性别:'男' 0, '女'1, '保密'2
         /// </summary>
         public byte Gender { get; set; }
         /// <summary>

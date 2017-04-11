@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using PlayTennis.Dal;
@@ -9,47 +8,41 @@ using PlayTennis.Model;
 
 namespace PlayTennis.Bll
 {
-    public class BaseInforService : BaseService<UserBaseInfo, Guid>
+    public class TennisCourtService : BaseService<TennisCourt, Guid>
     {
-        public BaseInforService()
+        public TennisCourtService()
         {
-            WxUserRepository = new GenericRepository<WxUser>();
             UserInformationRepository = new GenericRepository<UserInformation>();
         }
-        protected GenericRepository<WxUser> WxUserRepository { get; set; }
         protected GenericRepository<UserInformation> UserInformationRepository { get; set; }
-        public int AddBaseInfor(UserBaseInfo baseInfo, WxUser wxUser)
+
+        public int AddTennisCourt(TennisCourt tennisCourt, WxUser wxUser)
         {
             var result = 0;
-            if (baseInfo == null || wxUser == null)
+            if (tennisCourt == null || wxUser == null)
             {
                 return result;
             }
             //var userInfor = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
             var userInfor = UserInformationRepository.Entities.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
-            if (userInfor != null && userInfor.UserBaseInfoId != null)
-            {
-                return result;
-            }
 
-            MyEntitiesRepository.UnitOfWork.EnableTransation = true;
-            MyEntitiesRepository.Insert(baseInfo);
-            if (userInfor == null)
+            if (userInfor == null || userInfor.Id.Equals(Guid.Empty))
             {
+                MyEntitiesRepository.UnitOfWork.EnableTransation = true;
                 userInfor = new UserInformation()
                 {
-                    UserBaseInfo = baseInfo,
                     WxuserId = wxUser.Id
                 };
+                tennisCourt.UserInformationId = userInfor.Id;
                 UserInformationRepository.Insert(userInfor);
+                MyEntitiesRepository.Insert(tennisCourt);
+                result = MyEntitiesRepository.UnitOfWork.SavaChanges();
             }
             else
             {
-                userInfor.UserBaseInfoId = baseInfo.Id;
-                UserInformationRepository.Update(userInfor);
+                tennisCourt.UserInformationId = userInfor.Id;
+                result = MyEntitiesRepository.Insert(tennisCourt);
             }
-
-            result = MyEntitiesRepository.UnitOfWork.SavaChanges();
 
             return result;
         }

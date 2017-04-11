@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201704091305028_Changelocaltion.Designer.cs">
       <DependentUpon>201704091305028_Changelocaltion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704111545058_ChangeTennisCourt.cs" />
+    <Compile Include="Migrations\201704111545058_ChangeTennisCourt.Designer.cs">
+      <DependentUpon>201704111545058_ChangeTennisCourt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704091305028_Changelocaltion.resx">
       <DependentUpon>201704091305028_Changelocaltion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704111545058_ChangeTennisCourt.resx">
+      <DependentUpon>201704111545058_ChangeTennisCourt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

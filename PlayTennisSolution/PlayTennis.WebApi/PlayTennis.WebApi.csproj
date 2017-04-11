@@ -168,6 +168,8 @@
     <Compile Include="Controllers\BaseInforController.cs" />
     <Compile Include="Controllers\ExercisePurposeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SportsEquipmentController.cs" />
+    <Compile Include="Controllers\TennisCourtController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserInformationController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />

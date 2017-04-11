@@ -32,7 +32,6 @@ namespace PlayTennis.WebApi.Controllers
             return BaseInforService.GetEntityByid(id);
         }
 
-
         // POST: api/BaseInfor
         /// <summary>
         /// 新增基本信息
@@ -41,7 +40,8 @@ namespace PlayTennis.WebApi.Controllers
         /// <param name="baseInfo"></param>
         public void Post(Guid id, UserBaseInfo baseInfo)
         {
-
+            var wxUser = UserLoginService.GetWxUserByuserid(id);
+            BaseInforService.AddBaseInfor(baseInfo, wxUser);
         }
 
         // PUT: api/BaseInfor/5

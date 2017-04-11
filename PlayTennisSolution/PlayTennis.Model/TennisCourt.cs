@@ -13,6 +13,7 @@ namespace PlayTennis.Model
         public string CourtAddress { get; set; }
         public string OpenTime { get; set; }
         public BaseLocation UserLocation { get; set; }
+        public Guid? UserInformationId { get; set; }
         public virtual UserInformation UserInformation { get; set; }
     }
 }

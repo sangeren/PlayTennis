@@ -8,7 +8,7 @@ namespace PlayTennis.Model
 {
     public class SportsEquipment : BaseEntity
     {
-        SportsEquipment()
+        public SportsEquipment()
         {
             Id = Guid.NewGuid();
             CreateTime = DateTime.Now;
