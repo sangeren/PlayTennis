@@ -59,20 +59,20 @@ namespace PlayTennis.Bll
                 };
             Context.ExercisePurpose.Add(purpose);
 
-            var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
+            //var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
             //if (userInfo != null && userInfo.Id.Equals(Guid.Empty))
-            if (userInfo == null)
+            if (userInfor == null)
             {
-                userInfo = new UserInformation()
+                userInfor = new UserInformation()
                 {
                     ExercisePurpose = purpose,
                     WxuserId = wxUser.Id
                 };
-                Context.UserInformation.Add(userInfo);
+                Context.UserInformation.Add(userInfor);
             }
             else
             {
-                userInfo.ExercisePurpose = purpose;
+                userInfor.ExercisePurpose = purpose;
             }
 
             result = Context.SaveChanges();
