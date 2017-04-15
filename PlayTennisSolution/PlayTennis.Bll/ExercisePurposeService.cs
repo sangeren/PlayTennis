@@ -129,7 +129,7 @@ namespace PlayTennis.Bll
                         p.ExercisePurpose.UserLocation.Latitude < maxLat);
 
             var list = listOri
-                              .Where(p => p.UserBaseInfoId != null && p.ExercisePurpose.CreateTime.CompareTo(DateTime.Now) >= 0)
+                              .Where(p => p.UserBaseInfoId != null && p.ExercisePurpose.StartTime.Value.CompareTo(DateTime.Now) >= 0)
                               .Select(p => new ExercisePurposeDto()
                               {
                                   WxUserId = p.WxuserId,

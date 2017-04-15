@@ -20,7 +20,8 @@ namespace PlayTennis.WebApi.Controllers
 
 
 
-        public async Task<string> Get(string id)
+        public async Task<string> Get(string id, string nickName, string avatarUrl, byte gender)
+        //public async Task<string> Get(string id,WxUserLoginDto userLoginDto)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -45,7 +46,13 @@ namespace PlayTennis.WebApi.Controllers
                     var wxUser = servic.LogUserLogin(new WxUserLoginDto()
                     {
                         Openid = userLogin.openid,
-                        SessionKey = userLogin.session_key
+                        SessionKey = userLogin.session_key,
+                        //NickName = userLoginDto.NickName,
+                        //AvatarUrl = userLoginDto.AvatarUrl,
+                        //Gender = userLoginDto.Gender,
+                        NickName = nickName,
+                        AvatarUrl = avatarUrl,
+                        Gender = gender,
                     });
                     result = wxUser.Id.ToString();
                 }

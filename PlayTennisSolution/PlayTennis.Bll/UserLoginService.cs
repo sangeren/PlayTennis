@@ -34,7 +34,18 @@ namespace PlayTennis.Bll
                 {
                     wxUser = new WxUser() { Id = Guid.NewGuid(), Opneid = user.Openid, CreateTime = DateTime.Now };
                     Context.WxUser.Add(wxUser);
+
+                    var baseInfor = new UserBaseInfo() { NickName = user.NickName, AvatarUrl = user.AvatarUrl, NowAddress = "" };
+                    Context.UserBaseInfo.Add(baseInfor);
+
+                    var userInfor = new UserInformation()
+                      {
+                          UserBaseInfo = baseInfor,
+                          WxuserId = wxUser.Id
+                      };
+                    Context.UserInformation.Add(userInfor);
                 }
+
                 Context.WxUserLogin.Add(userLogin);
                 Context.SaveChanges();
                 return wxUser;
