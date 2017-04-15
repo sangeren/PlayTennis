@@ -40,11 +40,11 @@ namespace PlayTennis.Model.Dto
         /// <summary>
         /// 纬度
         /// </summary>
-        public decimal latitude { get; set; }
+        public double latitude { get; set; }
         /// <summary>
         /// 经度
         /// </summary>
-        public decimal longitude { get; set; }
+        public double longitude { get; set; }
         /// <summary>
         /// 速度，浮点数，单位m/s
         /// </summary>

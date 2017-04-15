@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
+    <Compile Include="Dto\ExercisePurposeDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />
     <Compile Include="ExercisePurpose.cs" />
     <Compile Include="Location.cs" />

@@ -7,13 +7,13 @@ namespace PlayTennis.Dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitializeDb : IMigrationMetadata
+    public sealed partial class ReIni : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeDb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ReIni));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704031410520_InitializeDb"; }
+            get { return "201704150556153_ReIni"; }
         }
         
         string IMigrationMetadata.Source

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using PlayTennis.Dal;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
+using PlayTennis.Utility;
 
 namespace PlayTennis.Bll
 {
@@ -109,6 +110,65 @@ namespace PlayTennis.Bll
             result = Context.SaveChanges();
 
             return result;
+        }
+
+        public List<ExercisePurposeDto> PurposeList(Guid wxUserId, int pageIndex, int pageSize, double latitude, double longitude, double disdance = 10)
+        {
+            IQueryable<UserInformation> listOri = Context.UserInformation;
+            MapPoint[] ps = TencentMap.Range(new MapPoint(longitude, latitude), disdance, MapOption.Square);
+            var minLng = ps[1].Lng;
+            var maxLng = ps[3].Lng;
+            var minLat = ps[2].Lat;
+            var maxLat = ps[0].Lat;
+            listOri =
+                listOri.Where(
+                    p =>
+                        p.ExercisePurposeId != null && p.ExercisePurpose.UserLocation.Longitude > minLng &&
+                        p.ExercisePurpose.UserLocation.Longitude < maxLng &&
+                        p.ExercisePurpose.UserLocation.Latitude > minLat &&
+                        p.ExercisePurpose.UserLocation.Latitude < maxLat);
+
+            var list = listOri
+                              .Where(p => p.UserBaseInfoId != null && p.ExercisePurpose.CreateTime.CompareTo(DateTime.Now) >= 0)
+                              .Select(p => new ExercisePurposeDto()
+                              {
+                                  WxUserId = p.WxuserId,
+                                  AvatarUrl = p.UserBaseInfo.AvatarUrl,
+                                  NickName = p.UserBaseInfo.NickName,
+                                  PlayAge = p.UserBaseInfo.PlayAge,
+                                  Gender = p.UserBaseInfo.Gender,
+                                  Latitude = p.ExercisePurpose.UserLocation.Latitude,
+                                  Longitude = p.ExercisePurpose.UserLocation.Longitude,
+                                  ExerciseExplain = p.ExercisePurpose.ExerciseExplain
+                              })
+                              .ToList();
+
+            if ((Math.Abs(latitude) > 0) && (Math.Abs(longitude) > 0))
+            {
+                foreach (var purposeDto in list)
+                {
+                    if (!(Math.Abs(purposeDto.Latitude) > 0) || !(Math.Abs(purposeDto.Longitude) > 0))
+                    {
+                        continue;
+                    }
+                    purposeDto.Disdance = TencentMap.GetDistance(longitude, purposeDto.Longitude, latitude, purposeDto.Latitude);
+                }
+            }
+
+            var listDistansc0 = list.Where(p => p.Disdance < 0.01);
+
+            list = list
+                .Where(p => p.Disdance >= 0.01)
+                .OrderBy(p => p.Disdance)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize).ToList();
+            if (list.Count < pageSize)
+            {
+                list.AddRange(listDistansc0);
+                list = list.Take(pageSize).ToList();
+            }
+
+            return list;
         }
     }
 }

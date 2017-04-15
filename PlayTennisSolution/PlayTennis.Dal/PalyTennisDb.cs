@@ -1,4 +1,5 @@
-﻿using PlayTennis.Model;
+﻿using System.Reflection;
+using PlayTennis.Model;
 
 namespace PlayTennis.Dal
 {
@@ -35,8 +36,21 @@ namespace PlayTennis.Dal
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+            //是否启用代理类
             Configuration.ProxyCreationEnabled = false;
+
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+
+            //注册实体配置信息
+            var tys = Assembly.Load("PlayTennis.Dal")
+                 .GetTypes()
+                 .Where(p => p.GetInterfaces().Contains(typeof(IEntityMapper)))
+                 .ToArray();
+            foreach (var mapper in tys)
+            {
+                var map = Activator.CreateInstance(mapper) as IEntityMapper;
+                map.RegistTo(modelBuilder.Configurations);
+            }
         }
     }
 

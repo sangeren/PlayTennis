@@ -67,6 +67,10 @@
       <Project>{16b862c3-fb42-4636-8a8d-8a6a6ce332f3}</Project>
       <Name>PlayTennis.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PlayTennis.Utility\PlayTennis.Utility.csproj">
+      <Project>{efa054e3-cb8e-4129-9865-85638c92c703}</Project>
+      <Name>PlayTennis.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

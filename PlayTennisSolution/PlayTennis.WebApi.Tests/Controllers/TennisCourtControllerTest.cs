@@ -23,6 +23,8 @@ namespace PlayTennis.WebApi.Tests.Controllers
         {
             // 排列
             var controller = MyController;
+            var tc = new TennisCourt() { UserLocation = new BaseLocation() { } };
+            var str = JsonConvert.SerializeObject(tc);
 
             // 操作
             IEnumerable<string> result = controller.Get();
@@ -54,7 +56,7 @@ namespace PlayTennis.WebApi.Tests.Controllers
             var controller = MyController;
 
             // 操作
-            controller.Post(new Guid("1AE7E30B-E573-4CD6-8534-6E8331FEA8E2"), new TennisCourt());
+            controller.Post(new Guid("1AE7E30B-E573-4CD6-8534-6E8331FEA8E2"), new TennisCourt() { UserLocation = new BaseLocation() { Longitude = new double() } });
 
             // 断言
         }
