@@ -15,9 +15,11 @@ namespace PlayTennis.WebApi.Controllers
         {
             UserLoginService = new UserLoginService();
             MyService = new TennisCourtService();
+            UserInformationService = new UserInformationService();
         }
         public UserLoginService UserLoginService { get; set; }
         public TennisCourtService MyService { get; set; }
+        public UserInformationService UserInformationService { get; set; }
 
         // GET: api/TennisCourt
         public IEnumerable<string> Get()
@@ -29,7 +31,13 @@ namespace PlayTennis.WebApi.Controllers
         // GET: api/SportsEquipment/5
         public TennisCourt Get(Guid id)
         {
-            return MyService.GetEntityByid(id);
+            var userInfor = UserInformationService.GetUserInformationById(id);
+            if (userInfor != null)
+            {
+                return MyService.GetEntityFirstOrDefault(p => p.UserInformationId == userInfor.Id);
+            }
+            return null;
+            //return MyService.GetEntityByid(id);
         }
 
         // POST: api/SportsEquipment

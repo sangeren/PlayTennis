@@ -37,7 +37,7 @@ namespace PlayTennis.WebApi.Tests.Controllers
             var controller = new BaseInforController();
 
             // 操作
-            var result = controller.Get(new Guid("4427AAD3-38A3-4B37-964F-CD564E5E4402"));
+            var result = controller.Get(new Guid("1AE7E30B-E573-4CD6-8534-6E8331FEA8E2"));
             var str = JsonConvert.SerializeObject(result);
             // 断言
             Assert.IsNotNull(result);

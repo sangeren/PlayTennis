@@ -14,11 +14,13 @@ namespace PlayTennis.WebApi.Controllers
         public LogService LogService { get; set; }
         public UserLoginService UserLoginService { get; set; }
         public BaseInforService BaseInforService { get; set; }
+        public UserInformationService UserInformationService { get; set; }
         public BaseInforController()
         {
             LogService = new LogService();
             UserLoginService = new UserLoginService();
             BaseInforService = new BaseInforService();
+            UserInformationService = new UserInformationService();
         }
         // GET: api/BaseInfor
         public IEnumerable<string> Get()
@@ -29,7 +31,12 @@ namespace PlayTennis.WebApi.Controllers
         // GET: api/BaseInfor/5
         public UserBaseInfo Get(Guid id)
         {
-            return BaseInforService.GetEntityByid(id);
+            var userInfor = UserInformationService.GetUserInformationById(id);
+            if (userInfor != null && userInfor.UserBaseInfoId != null)
+            {
+                return BaseInforService.GetEntityByid(userInfor.UserBaseInfoId.Value);
+            }
+            return null;
         }
 
         // POST: api/BaseInfor

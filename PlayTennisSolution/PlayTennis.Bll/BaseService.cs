@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PlayTennis.Dal;
 using PlayTennis.Model;
+using System.Linq.Expressions;
 
 namespace PlayTennis.Bll
 {
@@ -20,6 +21,10 @@ namespace PlayTennis.Bll
         public T GetEntityByid(TKey id)
         {
             return MyEntitiesRepository.GetById(id);
+        }
+        public T GetEntityFirstOrDefault(Expression<Func<T, bool>> where)
+        {
+            return MyEntitiesRepository.Get(where);
         }
         public int EditEntity(T t)
         {

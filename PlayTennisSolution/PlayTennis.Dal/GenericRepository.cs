@@ -26,7 +26,7 @@ namespace PlayTennis.Dal
 
         public virtual IEnumerable<TEntity> Get(
                 Expression<Func<TEntity, bool>> filter,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
+                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                 string includeProperties = "")
         {
             IQueryable<TEntity> query = _dbSet;
@@ -42,7 +42,7 @@ namespace PlayTennis.Dal
             //    query = query.Include(includeProperty);
             //}
 
-            query = includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            query = includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
             if (orderBy != null)
             {
@@ -54,6 +54,15 @@ namespace PlayTennis.Dal
             }
         }
 
+        public virtual TEntity Get(Expression<Func<TEntity, bool>> filter)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            if (filter != null)
+            {
+                return query.FirstOrDefault(filter);
+            }
+            return query.FirstOrDefault();
+        }
         public virtual IQueryable<TEntity> Get()
         {
             return _dbSet;

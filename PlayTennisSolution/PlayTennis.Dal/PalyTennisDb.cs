@@ -36,6 +36,7 @@ namespace PlayTennis.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+            Configuration.ProxyCreationEnabled = false;
         }
     }
 
