@@ -53,10 +53,15 @@
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IEntityMapper.cs" />
+    <Compile Include="Mapper\AppointmentConfiguration.cs" />
     <Compile Include="Mapper\ExercisePurposeConfiguration.cs" />
     <Compile Include="Migrations\201704150556153_ReIni.cs" />
     <Compile Include="Migrations\201704150556153_ReIni.Designer.cs">
       <DependentUpon>201704150556153_ReIni.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704161542081_AppointmentMig.cs" />
+    <Compile Include="Migrations\201704161542081_AppointmentMig.Designer.cs">
+      <DependentUpon>201704161542081_AppointmentMig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
@@ -76,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704150556153_ReIni.resx">
       <DependentUpon>201704150556153_ReIni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704161542081_AppointmentMig.resx">
+      <DependentUpon>201704161542081_AppointmentMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

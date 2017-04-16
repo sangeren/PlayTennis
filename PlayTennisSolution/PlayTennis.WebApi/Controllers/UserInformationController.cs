@@ -28,10 +28,19 @@ namespace PlayTennis.WebApi.Controllers
         /// 获取用户信息
         /// </summary>
         /// <param name="id">wxUserid</param>
+        /// <param name="idType">0:默认，微信id；1： userinfor id</param>
         /// <returns></returns>
-        public UserInformation Get(Guid id)
+        public UserInformation Get(Guid id, int idType = 0)
         {
-            return UserInformationService.GetUserInformationById(id);
+            if (idType == 0)
+            {
+                return UserInformationService.GetUserInformationById(id);
+
+            }
+            else
+            {
+                return UserInformationService.GetUserInformationByuserInformationId(id);
+            }
         }
 
         // POST: api/UserInformation

@@ -8,6 +8,11 @@ namespace PlayTennis.Model
 {
     public class UserBaseInfo : BaseEntity
     {
+        public UserBaseInfo()
+        {
+            InitiatorAppointments = new List<Appointment>();
+            InviteeAppointments = new List<Appointment>();
+        }
         /// <summary>
         /// 昵称
         /// </summary>
@@ -28,5 +33,8 @@ namespace PlayTennis.Model
         /// 现居地址
         /// </summary>
         public string NowAddress { get; set; }
+
+        public virtual IList<Appointment> InitiatorAppointments { get; set; }
+        public virtual IList<Appointment> InviteeAppointments { get; set; }
     }
 }

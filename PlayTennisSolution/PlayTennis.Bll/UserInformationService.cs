@@ -27,5 +27,14 @@ namespace PlayTennis.Bll
                 .Include(p => p.TennisCourts)
                 .FirstOrDefault(p => p.WxuserId.Equals(wxUserid));
         }
+        public UserInformation GetUserInformationByuserInformationId(Guid wxUserid)
+        {
+            return Context.UserInformation
+                .Include(p => p.ExercisePurpose)
+                .Include(p => p.UserBaseInfo)
+                .Include(p => p.SportsEquipment)
+                .Include(p => p.TennisCourts)
+                .FirstOrDefault(p => p.Id.Equals(wxUserid));
+        }
     }
 }

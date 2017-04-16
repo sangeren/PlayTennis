@@ -8,14 +8,13 @@ using PlayTennis.Model;
 
 namespace PlayTennis.Dal.Mapper
 {
-    public class ExercisePurposeConfiguration : EntityTypeConfiguration<ExercisePurpose>, IEntityMapper
+    public class AppointmentConfiguration : EntityTypeConfiguration<Appointment>, IEntityMapper
     {
-        public ExercisePurposeConfiguration()
+        public AppointmentConfiguration()
         {
-            //this.Property(p => p.UserLocation.Latitude).HasPrecision(18, 5);
-            //this.Property(p => p.UserLocation.Longitude).HasPrecision(18, 5);
+            this.HasRequired(p => p.Initiator).WithMany(p => p.InitiatorAppointments).HasForeignKey(p => p.InitiatorId).WillCascadeOnDelete(false);
+            this.HasRequired(p => p.Invitee).WithMany(p => p.InviteeAppointments).HasForeignKey(p => p.InviteeId).WillCascadeOnDelete(false);
         }
-
         public void RegistTo(System.Data.Entity.ModelConfiguration.Configuration.ConfigurationRegistrar configurationRegistrar)
         {
             configurationRegistrar.Add(this);
