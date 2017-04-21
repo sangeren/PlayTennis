@@ -42,8 +42,11 @@
     <Compile Include="Appointment.cs" />
     <Compile Include="AppointmentRecord.cs" />
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Dto\AppointmentDto.cs" />
+    <Compile Include="Dto\AppointmentResultDto.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeDto.cs" />
+    <Compile Include="Dto\WxMessageDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />
     <Compile Include="ExercisePurpose.cs" />
     <Compile Include="Location.cs" />

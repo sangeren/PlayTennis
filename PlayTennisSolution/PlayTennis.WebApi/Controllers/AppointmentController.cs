@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PlayTennis.Bll;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.WebApi.Controllers
 {
@@ -23,19 +24,39 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/Appointment/5
-        public string Get(int id)
+        /// <summary>
+        /// 预约列表
+        /// </summary>
+        /// <param name="id">用户id</param>
+        /// <param name="type">0：发起；1：接收；2:完成</param>
+        /// <returns></returns>
+        public IList<AppointmentResultDto> Get(Guid id, byte type)
         {
-            return "value";
+            return AppointmentService.AppointmentList(id, type);
         }
 
         // POST: api/Appointment
-        public void Post(Guid id, [FromBody]string value)
+        public void Post(Guid id, AppointmentDto appointment)
         {
+            AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
         }
 
+
         // PUT: api/Appointment/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(Guid id, AppointmentDto appointment)
         {
+            if (appointment.ActionType == 0)
+            {
+                AppointmentService.AcceptAppointment(id, appointment.appointmentId);
+            }
+            else if (appointment.ActionType == 1)
+            {
+                AppointmentService.RefuseAppointment(id, appointment.appointmentId, appointment.explain);
+            }
+            else if (appointment.ActionType == 2)
+            {
+                AppointmentService.FinishAppointment(id, appointment.appointmentId, appointment.comment);
+            }
         }
 
         // DELETE: api/Appointment/5
