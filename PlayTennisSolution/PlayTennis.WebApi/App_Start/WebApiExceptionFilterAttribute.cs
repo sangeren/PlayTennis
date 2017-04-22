@@ -13,6 +13,8 @@ namespace PlayTennis.WebApi
 {
     public class WebApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //重写基类的异常处理方法
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
@@ -36,15 +38,18 @@ namespace PlayTennis.WebApi
             //Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "——" +
             //    actionExecutedContext.Exception.GetType().ToString() + "：" + actionExecutedContext.Exception.Message + "——堆栈信息：" +
             //    actionExecutedContext.Exception.StackTrace);
-            var logService = new LogService();
-            var log = new LogInformation()
-            {
-                Id = Guid.NewGuid(),
-                Message = actionExecutedContext.Exception.Message,
-                Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception),
-                CreateTime = DateTime.Now
-            };
-            logService.LogUserLoginAsync(log);
+            //var logService = new LogService();
+            //var log = new LogInformation()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Message = actionExecutedContext.Exception.Message,
+            //    Detaile = JsonConvert.SerializeObject(actionExecutedContext.Exception),
+            //    CreateTime = DateTime.Now
+            //};
+            //logService.LogUserLoginAsync(log);
+            var jsonSetting = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+            //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Request, jsonSetting));
+            _log.Error(JsonConvert.SerializeObject(actionExecutedContext.Exception, jsonSetting));
             base.OnException(actionExecutedContext);
         }
     }
