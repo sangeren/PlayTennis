@@ -11,6 +11,10 @@ namespace PlayTennis.Bll
 {
     public class AppointmentService : BaseService<PlayTennis.Model.Appointment, Guid>
     {
+        public AppointmentService()
+        {
+            AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
+        }
         protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
 
         /// <summary>

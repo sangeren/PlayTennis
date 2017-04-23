@@ -27,7 +27,7 @@ namespace PlayTennis.Model
         /// <summary>
         /// 受邀者
         /// </summary>
-        public virtual  UserBaseInfo Invitee { get; set; }
+        public virtual UserBaseInfo Invitee { get; set; }
         /// <summary>
         /// 意向id
         /// </summary>
@@ -35,7 +35,7 @@ namespace PlayTennis.Model
         /// <summary>
         /// 邀约
         /// </summary>
-        public virtual ExercisePurpose ExercisePurpose{ get; set; }
+        public virtual ExercisePurpose ExercisePurpose { get; set; }
         public virtual IList<AppointmentRecord> AppointmentRecords { get; set; }
         /// <summary>
         /// -1：取消； 0:发起；1：接受；2 拒绝；3：完成；4：评论

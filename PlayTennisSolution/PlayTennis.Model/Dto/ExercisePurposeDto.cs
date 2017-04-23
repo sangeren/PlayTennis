@@ -8,6 +8,7 @@ namespace PlayTennis.Model.Dto
 {
     public class ExercisePurposeDto
     {
+        public Guid Id { get; set; }
         public Guid WxUserId { get; set; }
         public string AvatarUrl { get; set; }
         public string NickName { get; set; }

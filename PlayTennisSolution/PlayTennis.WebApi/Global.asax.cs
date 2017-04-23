@@ -9,6 +9,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using Newtonsoft.Json.Serialization;
+using PlayTennis.Model;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.WebApi
 {
@@ -30,6 +32,7 @@ namespace PlayTennis.WebApi
             {
                 cfg.CreateMap<HttpRequestMessage, RequestLog>();
                 cfg.CreateMap<HttpResponseMessage, ResponseLog>();
+                cfg.CreateMap<UserInformation, UserInformationDto>();
 
             });
             MyMapper = config.CreateMapper();

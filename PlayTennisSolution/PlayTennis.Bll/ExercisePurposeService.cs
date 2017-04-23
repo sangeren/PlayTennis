@@ -120,18 +120,19 @@ namespace PlayTennis.Bll
             var maxLng = ps[3].Lng;
             var minLat = ps[2].Lat;
             var maxLat = ps[0].Lat;
-            listOri =
-                listOri.Where(
-                    p =>
-                        p.ExercisePurposeId != null && p.ExercisePurpose.UserLocation.Longitude > minLng &&
-                        p.ExercisePurpose.UserLocation.Longitude < maxLng &&
-                        p.ExercisePurpose.UserLocation.Latitude > minLat &&
-                        p.ExercisePurpose.UserLocation.Latitude < maxLat);
+            //listOri =
+            //    listOri.Where(
+            //        p =>
+            //            p.ExercisePurposeId != null && p.ExercisePurpose.UserLocation.Longitude > minLng &&
+            //            p.ExercisePurpose.UserLocation.Longitude < maxLng &&
+            //            p.ExercisePurpose.UserLocation.Latitude > minLat &&
+            //            p.ExercisePurpose.UserLocation.Latitude < maxLat);
 
             var list = listOri
                               .Where(p => p.UserBaseInfoId != null && p.ExercisePurpose.StartTime.Value.CompareTo(DateTime.Now) >= 0)
                               .Select(p => new ExercisePurposeDto()
                               {
+                                  Id = p.UserBaseInfo.Id,
                                   WxUserId = p.WxuserId,
                                   AvatarUrl = p.UserBaseInfo.AvatarUrl,
                                   NickName = p.UserBaseInfo.NickName,

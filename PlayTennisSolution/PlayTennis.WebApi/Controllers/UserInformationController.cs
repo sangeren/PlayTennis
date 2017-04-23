@@ -29,8 +29,9 @@ namespace PlayTennis.WebApi.Controllers
         /// </summary>
         /// <param name="id">wxUserid</param>
         /// <param name="idType">0:默认，微信id；1： userinfor id</param>
+        /// <param name="initiatorId">发起者id</param>
         /// <returns></returns>
-        public UserInformation Get(Guid id, int idType = 0)
+        public UserInformation Get(Guid id, int idType = 0, Guid initiatorId = default(Guid))
         {
             if (idType == 0)
             {
@@ -39,7 +40,7 @@ namespace PlayTennis.WebApi.Controllers
             }
             else
             {
-                return UserInformationService.GetUserInformationByuserInformationId(id);
+                return UserInformationService.GetUserInformationByuserInformationId(id, initiatorId);
             }
         }
 

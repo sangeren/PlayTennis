@@ -6,35 +6,53 @@ using System.Text;
 using System.Threading.Tasks;
 using PlayTennis.Dal;
 using PlayTennis.Model;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.Bll
 {
-    public class UserInformationService
+    public class UserInformationService : BaseService<PlayTennis.Model.UserInformation, Guid>
     {
-        public PalyTennisDb Context { private get; set; }
+        protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
 
         public UserInformationService()
         {
-            Context = new PalyTennisDb();
+            AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
         }
 
         public UserInformation GetUserInformationById(Guid wxUserid)
         {
-            return Context.UserInformation
+            return MyEntitiesRepository.Entities
                 .Include(p => p.ExercisePurpose)
                 .Include(p => p.UserBaseInfo)
                 .Include(p => p.SportsEquipment)
                 .Include(p => p.TennisCourts)
                 .FirstOrDefault(p => p.WxuserId.Equals(wxUserid));
         }
-        public UserInformation GetUserInformationByuserInformationId(Guid wxUserid)
+        public UserInformation GetUserInformationByuserInformationId(Guid userid, Guid initiatorId)
         {
-            return Context.UserInformation
+            UserInformationDto userInforDto = null;
+            var userInfo = MyEntitiesRepository.Entities
                 .Include(p => p.ExercisePurpose)
                 .Include(p => p.UserBaseInfo)
                 .Include(p => p.SportsEquipment)
                 .Include(p => p.TennisCourts)
-                .FirstOrDefault(p => p.Id.Equals(wxUserid));
+                .FirstOrDefault(p => p.Id.Equals(userid));
+            return userInfo;
+            if (userInfo!=null)
+            {
+                //var resp = WebApiApplication.MyMapper.Map<UserInformationDto>(response);
+                
+            }
+
+            var appointment =
+                AppointmentRecordRepository
+                    .Entities
+                    .FirstOrDefault(p => p.Appointment.AppointmentState == 0
+                                         &&
+                                         p.Appointment.InitiatorId.Equals(initiatorId)
+                                         &&
+                                         p.Appointment.ExercisePurposeId.Equals(userInfo.ExercisePurposeId.Value));
+
         }
     }
 }

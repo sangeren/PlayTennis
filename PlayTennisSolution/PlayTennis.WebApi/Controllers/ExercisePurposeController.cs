@@ -27,15 +27,15 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/EditPurpose
-        public IEnumerable<ExercisePurposeDto> Get(Guid id, int pageIndex, int pageSize = 6, double lat = 0, double lon = 0)
+        public IList<ExercisePurposeDto> Get(Guid id, int pageIndex, int pageSize = 6, double lat = 0, double lon = 0)
         {
             //return new string[] { "value1", "value2" };
-            //return ExercisePurposeService.PurposeList(id, pageIndex, pageSize, lat, lon);
-            var list = new List<ExercisePurposeDto>();
-            list.Add(new ExercisePurposeDto() { AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
-            list.Add(new ExercisePurposeDto() { AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
-            list.Add(new ExercisePurposeDto() { AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
-            return list;
+            return ExercisePurposeService.PurposeList(id, pageIndex, pageSize, lat, lon);
+            //var list = new List<ExercisePurposeDto>();
+            //list.Add(new ExercisePurposeDto() { Id = new Guid("90560166-E488-4115-97E5-0DC15D287A13"), AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
+            //list.Add(new ExercisePurposeDto() { Id = new Guid("90560166-E488-4115-97E5-0DC15D287A13"), AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
+            //list.Add(new ExercisePurposeDto() { Id = new Guid("90560166-E488-4115-97E5-0DC15D287A13"), AvatarUrl = "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erq4RMdoXEOcrPjvz9swjl0fH1FWuY0cP65NeTjrNiaH5K9jf1AWRX8ibKGbssRZnqTDNUIbMiakyjZw/0", Disdance = 1, ExerciseExplain = "nihao", Gender = 1, PlayAge = 3, WxUserId = new Guid("2B1EC692-1357-491D-A898-DBB909FD9877"), NickName = "nime" });
+            //return list;
         }
 
         // GET: api/EditPurpose/5

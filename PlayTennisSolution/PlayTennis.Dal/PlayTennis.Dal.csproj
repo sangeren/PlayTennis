@@ -63,6 +63,14 @@
     <Compile Include="Migrations\201704161542081_AppointmentMig.Designer.cs">
       <DependentUpon>201704161542081_AppointmentMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704221513561_AddPurComunication.cs" />
+    <Compile Include="Migrations\201704221513561_AddPurComunication.Designer.cs">
+      <DependentUpon>201704221513561_AddPurComunication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704221515327_AddPurComunication2.cs" />
+    <Compile Include="Migrations\201704221515327_AddPurComunication2.Designer.cs">
+      <DependentUpon>201704221515327_AddPurComunication2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +92,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704161542081_AppointmentMig.resx">
       <DependentUpon>201704161542081_AppointmentMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704221513561_AddPurComunication.resx">
+      <DependentUpon>201704221513561_AddPurComunication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704221515327_AddPurComunication2.resx">
+      <DependentUpon>201704221515327_AddPurComunication2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

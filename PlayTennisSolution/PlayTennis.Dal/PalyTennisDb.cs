@@ -33,6 +33,7 @@ namespace PlayTennis.Dal
         public virtual DbSet<UserInformation> UserInformation { get; set; }
         public virtual DbSet<ExercisePurpose> ExercisePurpose { get; set; }
         public virtual DbSet<LogHttpRequest> LogHttpRequest { get; set; }
+        public virtual DbSet<PurposeCommunication> PurposeCommunication { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

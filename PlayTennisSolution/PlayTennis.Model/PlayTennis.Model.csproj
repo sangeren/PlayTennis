@@ -46,12 +46,14 @@
     <Compile Include="Dto\AppointmentResultDto.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeDto.cs" />
+    <Compile Include="Dto\UserInformationDto.cs" />
     <Compile Include="Dto\WxMessageDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />
     <Compile Include="ExercisePurpose.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LogInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurposeCommunication.cs" />
     <Compile Include="SportsEquipment.cs" />
     <Compile Include="TennisCourt.cs" />
     <Compile Include="UserBaseInfo.cs" />

@@ -36,6 +36,11 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // POST: api/Appointment
+        /// <summary>
+        /// 发起预约
+        /// </summary>
+        /// <param name="id">用户id</param>
+        /// <param name="appointment"></param>
         public void Post(Guid id, AppointmentDto appointment)
         {
             AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
