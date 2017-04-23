@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0Infrastructure", "0Infrastructure", "{ACA2EA72-5C78-4223-8221-82F8A2748262}"
+	ProjectSection(SolutionItems) = preProject
+		next-todo.txt = next-todo.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1Dal", "1Dal", "{2FBB69F8-B86D-4C5A-AB31-CCD3307B5CB4}"
 EndProject
