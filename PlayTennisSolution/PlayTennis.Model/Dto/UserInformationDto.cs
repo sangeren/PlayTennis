@@ -8,6 +8,8 @@ namespace PlayTennis.Model.Dto
 {
     public class UserInformationDto : UserInformation
     {
-        public Appointment Appointment { get; set; }
+        public ExercisePurpose ExercisePurpose { get; set; }
+        //public Appointment Appointment { get; set; }
+        public bool HasInitiatorAppointment { get; set; }
     }
 }

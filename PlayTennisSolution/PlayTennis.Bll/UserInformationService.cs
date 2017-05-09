@@ -7,51 +7,80 @@ using System.Threading.Tasks;
 using PlayTennis.Dal;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
+using PlayTennis.Utility;
 
 namespace PlayTennis.Bll
 {
     public class UserInformationService : BaseService<PlayTennis.Model.UserInformation, Guid>
     {
         protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
+        protected GenericRepository<ExercisePurpose> ExercisePurposeRepository { get; set; }
+        protected GenericRepository<Appointment> AppointmentRepository { get; set; }
 
         public UserInformationService()
         {
             AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
+            ExercisePurposeRepository = new GenericRepository<ExercisePurpose>();
+            AppointmentRepository = new GenericRepository<Appointment>();
         }
 
-        public UserInformation GetUserInformationById(Guid wxUserid)
+        public UserInformationDto GetUserInformationById(Guid wxUserid)
         {
-            return MyEntitiesRepository.Entities
-                .Include(p => p.ExercisePurpose)
+            var userInfo = MyEntitiesRepository.Entities
+                //.Include(p => p.ExercisePurpose)
                 .Include(p => p.UserBaseInfo)
                 .Include(p => p.SportsEquipment)
                 .Include(p => p.TennisCourts)
                 .FirstOrDefault(p => p.WxuserId.Equals(wxUserid));
+            if (userInfo == null)
+            {
+                return null;
+            }
+
+            var purpose =
+                ExercisePurposeRepository.Entities.SingleOrDefault(
+                    p => p.UserInformationId == userInfo.Id && p.ExerciseState == 0);
+            var result = MapperHelper.MyMapper.Map<UserInformationDto>(userInfo);
+            result.ExercisePurpose = purpose;
+
+            return result;
         }
-        public UserInformation GetUserInformationByuserInformationId(Guid userid, Guid initiatorId)
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="userid">用户id</param>
+        /// <param name="initiatorId">发起人id</param>
+        /// <returns></returns>
+        public UserInformationDto GetUserInformationByuserInformationId(Guid userid, Guid initiatorId)
         {
             UserInformationDto userInforDto = null;
             var userInfo = MyEntitiesRepository.Entities
-                .Include(p => p.ExercisePurpose)
+                //.Include(p => p.ExercisePurpose)
                 .Include(p => p.UserBaseInfo)
                 .Include(p => p.SportsEquipment)
                 .Include(p => p.TennisCourts)
-                .FirstOrDefault(p => p.Id.Equals(userid));
-            return userInfo;
-            if (userInfo!=null)
+                .FirstOrDefault(p => p.UserBaseInfoId == (userid));
+            if (userInfo == null)
             {
-                //var resp = WebApiApplication.MyMapper.Map<UserInformationDto>(response);
-                
+                return null;
             }
 
-            var appointment =
-                AppointmentRecordRepository
-                    .Entities
-                    .FirstOrDefault(p => p.Appointment.AppointmentState == 0
-                                         &&
-                                         p.Appointment.InitiatorId.Equals(initiatorId)
-                                         &&
-                                         p.Appointment.ExercisePurposeId.Equals(userInfo.ExercisePurposeId.Value));
+            var result = MapperHelper.MyMapper.Map<UserInformationDto>(userInfo);
+
+            var purpose =
+                 ExercisePurposeRepository.Entities.SingleOrDefault(
+                     p => p.UserInformationId == userInfo.Id && p.ExerciseState == 0);
+            result.ExercisePurpose = purpose;
+
+            if (purpose != null)
+            {
+                result.HasInitiatorAppointment =
+                    AppointmentRepository.Entities.Any(
+                        p =>
+                            p.ExercisePurposeId == purpose.Id && p.InitiatorId == initiatorId &&
+                            (p.AppointmentState == 0 || p.AppointmentState == 1 || p.AppointmentState == 2));
+            }
+            return result;
 
         }
     }

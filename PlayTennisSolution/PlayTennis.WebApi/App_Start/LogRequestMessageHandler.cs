@@ -10,6 +10,8 @@ using System.Web;
 using Newtonsoft.Json;
 using PlayTennis.Bll;
 using PlayTennis.Model;
+using PlayTennis.Model.Dto;
+using PlayTennis.Utility;
 
 namespace PlayTennis.WebApi
 {
@@ -18,7 +20,7 @@ namespace PlayTennis.WebApi
         protected override async Task<HttpResponseMessage> SendAsync(
            HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var rLog = WebApiApplication.MyMapper.Map<RequestLog>(request);
+            var rLog = MapperHelper.MyMapper.Map<RequestLog>(request);
             if (request.Content.Headers.ContentLength > 0 && request.Content.Headers.ContentLength < 1024)
             {
                 var stream = new MemoryStream();
@@ -32,7 +34,7 @@ namespace PlayTennis.WebApi
             // Call the inner handler. 
             // 调用内部处理器。
             var response = await base.SendAsync(request, cancellationToken);
-            var resp = WebApiApplication.MyMapper.Map<ResponseLog>(response);
+            var resp = MapperHelper.MyMapper.Map<ResponseLog>(response);
 
             //记录每次的请求（返回
             var logService = new LogService();

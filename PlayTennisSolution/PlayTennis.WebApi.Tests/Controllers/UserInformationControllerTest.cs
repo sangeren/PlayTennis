@@ -34,7 +34,7 @@ namespace PlayTennis.WebApi.Tests.Controllers
             var controller = new UserInformationController();
 
             // 操作
-            var result = controller.Get(new Guid("948b94d0-4014-438b-b476-7126eebe773d"));
+            var result = controller.Get(new Guid("1aca638b-bf76-483f-bf15-1629219fc0a0"));
             //var result = controller.Get(new Guid("3A584BB9-E512-464C-B43B-C39A9323BBC7"));
 
             // 断言

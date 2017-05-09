@@ -25,9 +25,9 @@ namespace PlayTennis.Bll
         {
             ExercisePurpose purpose = null;
             var userInfor = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUserid));
-            if (userInfor != null && userInfor.Id != Guid.Empty && userInfor.ExercisePurposeId != null)
+            if (userInfor != null && userInfor.Id != Guid.Empty)//ExercisePurpose
             {
-                purpose = Context.ExercisePurpose.FirstOrDefault(p => p.Id == userInfor.ExercisePurposeId.Value);
+                purpose = Context.ExercisePurpose.SingleOrDefault(p => p.UserInformationId == userInfor.Id && p.ExerciseState == 0);
             }
             return purpose;
         }
@@ -39,10 +39,21 @@ namespace PlayTennis.Bll
                 return result;
             }
             var userInfor = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
-            if (userInfor != null && userInfor.ExercisePurposeId != null && userInfor.ExercisePurposeId != Guid.Empty)
+            if (userInfor == null || userInfor.Id.Equals(Guid.Empty))
             {
                 return result;
             }
+
+            var oldPurposeCount =
+                Context.ExercisePurpose.Count(p => p.UserInformationId == userInfor.Id && p.ExerciseState == 0);
+            if (oldPurposeCount > 0)
+            {
+                return result;
+            }
+            //if (userInfor != null && userInfor.ExercisePurposeId != null && userInfor.ExercisePurposeId != Guid.Empty)
+            //{
+            //    return result;
+            //}
 
             var purpose = new ExercisePurpose()
                 {
@@ -56,25 +67,27 @@ namespace PlayTennis.Bll
                         Longitude = purposeDto.userLocation.longitude,
                         Speed = purposeDto.userLocation.speed
                     },
-                    StartTime = purposeDto.startTime
+                    StartTime = purposeDto.startTime,
+                    UserInformationId = userInfor.Id,
+                    ExerciseState = 0
                 };
             Context.ExercisePurpose.Add(purpose);
 
             //var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
             //if (userInfo != null && userInfo.Id.Equals(Guid.Empty))
-            if (userInfor == null)
-            {
-                userInfor = new UserInformation()
-                {
-                    ExercisePurpose = purpose,
-                    WxuserId = wxUser.Id
-                };
-                Context.UserInformation.Add(userInfor);
-            }
-            else
-            {
-                userInfor.ExercisePurpose = purpose;
-            }
+            //if (userInfor == null)
+            //{
+            //    userInfor = new UserInformation()
+            //    {
+            //        ExercisePurpose = purpose,
+            //        WxuserId = wxUser.Id
+            //    };
+            //    Context.UserInformation.Add(userInfor);
+            //}
+            //else
+            //{
+            //    userInfor.ExercisePurpose = purpose;
+            //}
 
             result = Context.SaveChanges();
 
@@ -114,7 +127,9 @@ namespace PlayTennis.Bll
 
         public List<ExercisePurposeDto> PurposeList(Guid wxUserId, int pageIndex, int pageSize, double latitude, double longitude, double disdance = 10)
         {
-            IQueryable<UserInformation> listOri = Context.UserInformation;
+            //IQueryable<UserInformation> listOri = Context.UserInformation;
+            IQueryable<ExercisePurpose> listOri = Context.ExercisePurpose;
+
             MapPoint[] ps = TencentMap.Range(new MapPoint(longitude, latitude), disdance, MapOption.Square);
             var minLng = ps[1].Lng;
             var maxLng = ps[3].Lng;
@@ -129,18 +144,18 @@ namespace PlayTennis.Bll
             //            p.ExercisePurpose.UserLocation.Latitude < maxLat);
 
             var list = listOri
-                              .Where(p => p.UserBaseInfoId != null && p.ExercisePurpose.StartTime.Value.CompareTo(DateTime.Now) >= 0)
+                              .Where(p =>  p.StartTime.Value.CompareTo(DateTime.Now) >= 0)
                               .Select(p => new ExercisePurposeDto()
                               {
-                                  Id = p.UserBaseInfo.Id,
-                                  WxUserId = p.WxuserId,
-                                  AvatarUrl = p.UserBaseInfo.AvatarUrl,
-                                  NickName = p.UserBaseInfo.NickName,
-                                  PlayAge = p.UserBaseInfo.PlayAge,
-                                  Gender = p.UserBaseInfo.Gender,
-                                  Latitude = p.ExercisePurpose.UserLocation.Latitude,
-                                  Longitude = p.ExercisePurpose.UserLocation.Longitude,
-                                  ExerciseExplain = p.ExercisePurpose.ExerciseExplain
+                                  Id = p.UserInformation.UserBaseInfo.Id,
+                                  WxUserId = p.UserInformation.WxuserId,
+                                  AvatarUrl = p.UserInformation.UserBaseInfo.AvatarUrl,
+                                  NickName = p.UserInformation.UserBaseInfo.NickName,
+                                  PlayAge = p.UserInformation.UserBaseInfo.PlayAge,
+                                  Gender = p.UserInformation.UserBaseInfo.Gender,
+                                  Latitude = p.UserLocation.Latitude,
+                                  Longitude = p.UserLocation.Longitude,
+                                  ExerciseExplain = p.ExerciseExplain
                               })
                               .ToList();
 

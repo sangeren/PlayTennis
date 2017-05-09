@@ -17,7 +17,7 @@ namespace PlayTennis.Bll
         {
             Context = new PalyTennisDb();
         }
-        public WxUser LogUserLogin(WxUserLoginDto user)
+        public UserInformation LogUserLogin(WxUserLoginDto user)
         {
             if (user != null)
             {
@@ -30,6 +30,7 @@ namespace PlayTennis.Bll
                 };
                 Context.WxUserLogin.Add(userLogin);
                 var wxUser = Context.WxUser.FirstOrDefault(p => p.Opneid.Equals(user.Openid));//.Select(p => 1).FirstOrDefault();
+                UserInformation userInfor = null;
                 if (wxUser == null)
                 {
                     wxUser = new WxUser() { Id = Guid.NewGuid(), Opneid = user.Openid, CreateTime = DateTime.Now };
@@ -38,17 +39,21 @@ namespace PlayTennis.Bll
                     var baseInfor = new UserBaseInfo() { NickName = user.NickName, AvatarUrl = user.AvatarUrl, NowAddress = "" };
                     Context.UserBaseInfo.Add(baseInfor);
 
-                    var userInfor = new UserInformation()
-                      {
-                          UserBaseInfo = baseInfor,
-                          WxuserId = wxUser.Id
-                      };
+                    userInfor = new UserInformation()
+                     {
+                         UserBaseInfo = baseInfor,
+                         WxuserId = wxUser.Id
+                     };
                     Context.UserInformation.Add(userInfor);
+                }
+                else
+                {
+                    userInfor = Context.UserInformation.Include("UserBaseInfo").FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
                 }
 
                 Context.WxUserLogin.Add(userLogin);
                 Context.SaveChanges();
-                return wxUser;
+                return userInfor;
             }
 
             return null;

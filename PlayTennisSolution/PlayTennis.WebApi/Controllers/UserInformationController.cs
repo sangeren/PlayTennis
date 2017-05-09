@@ -6,11 +6,13 @@ using System.Net.Http;
 using System.Web.Http;
 using PlayTennis.Bll;
 using PlayTennis.Model;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.WebApi.Controllers
 {
     public class UserInformationController : ApiController
     {
+        private static readonly Guid _defaultValue = Guid.Empty;
         public UserInformationService UserInformationService { get; set; }
 
         public UserInformationController()
@@ -18,10 +20,10 @@ namespace PlayTennis.WebApi.Controllers
             UserInformationService = new UserInformationService();
         }
         // GET: api/UserInformation
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/UserInformation/5
         /// <summary>
@@ -31,7 +33,7 @@ namespace PlayTennis.WebApi.Controllers
         /// <param name="idType">0:默认，微信id；1： userinfor id</param>
         /// <param name="initiatorId">发起者id</param>
         /// <returns></returns>
-        public UserInformation Get(Guid id, int idType = 0, Guid initiatorId = default(Guid))
+        public UserInformationDto Get(Guid id, string initiatorId = null, int idType = 0)
         {
             if (idType == 0)
             {
@@ -40,7 +42,7 @@ namespace PlayTennis.WebApi.Controllers
             }
             else
             {
-                return UserInformationService.GetUserInformationByuserInformationId(id, initiatorId);
+                return UserInformationService.GetUserInformationByuserInformationId(id, new Guid(initiatorId));
             }
         }
 

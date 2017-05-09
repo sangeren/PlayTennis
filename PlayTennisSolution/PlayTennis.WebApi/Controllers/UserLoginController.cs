@@ -20,7 +20,7 @@ namespace PlayTennis.WebApi.Controllers
 
 
 
-        public async Task<string> Get(string id, string nickName, string avatarUrl, byte gender)
+        public async Task<UserLoginDto> Get(string id, string nickName, string avatarUrl, byte gender)
         //public async Task<string> Get(string id,WxUserLoginDto userLoginDto)
         {
             if (string.IsNullOrEmpty(id))
@@ -28,7 +28,7 @@ namespace PlayTennis.WebApi.Controllers
                 throw new ArgumentNullException("code", "参数不合规！");
             }
 
-            var result = "";
+            UserLoginDto result = null;
 
             var url =
                 string.Format(
@@ -43,7 +43,7 @@ namespace PlayTennis.WebApi.Controllers
                 if (userLogin != null && userLogin.openid != null)
                 {
                     var servic = new UserLoginService();
-                    var wxUser = servic.LogUserLogin(new WxUserLoginDto()
+                    var userInfo = servic.LogUserLogin(new WxUserLoginDto()
                     {
                         Openid = userLogin.openid,
                         SessionKey = userLogin.session_key,
@@ -54,7 +54,7 @@ namespace PlayTennis.WebApi.Controllers
                         AvatarUrl = avatarUrl,
                         Gender = gender,
                     });
-                    result = wxUser.Id.ToString();
+                    result = new UserLoginDto {WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id};
                 }
             }
             return result;

@@ -11,12 +11,12 @@ using AutoMapper;
 using Newtonsoft.Json.Serialization;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
+using PlayTennis.Utility;
 
 namespace PlayTennis.WebApi
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        public static IMapper MyMapper { get; set; }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,15 +27,9 @@ namespace PlayTennis.WebApi
             //记录异常
             GlobalConfiguration.Configuration.Filters.Add(new WebApiExceptionFilterAttribute());
 
-            //创建请求记录映射
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<HttpRequestMessage, RequestLog>();
-                cfg.CreateMap<HttpResponseMessage, ResponseLog>();
-                cfg.CreateMap<UserInformation, UserInformationDto>();
+           //初始化mapping
+            new MapperHelper();
 
-            });
-            MyMapper = config.CreateMapper();
             //小写首字母  序列号
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

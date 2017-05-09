@@ -17,4 +17,10 @@ namespace PlayTennis.Model.Dto
         public string AvatarUrl { get; set; }
         public byte Gender { get; set; }
     }
+
+    public class UserLoginDto
+    {
+        public Guid WxUserId  { get; set; }
+        public Guid UserId  { get; set; }
+    }
 }

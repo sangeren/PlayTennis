@@ -25,8 +25,20 @@ namespace PlayTennis.Model
         /// </summary>
         public string ExerciseExplain { get; set; }
         /// <summary>
+        /// 0:创建成功；1：结束；2：删除
+        /// </summary>
+        public byte ExerciseState { get; set; }
+        /// <summary>
         /// 位置
         /// </summary>
         public BaseLocation UserLocation { get; set; }
+        /// <summary>
+        /// 用户id
+        /// </summary>
+        public Guid? UserInformationId { get; set; }
+        /// <summary>
+        /// 用户
+        /// </summary>
+        public virtual UserInformation UserInformation { get; set; }
     }
 }

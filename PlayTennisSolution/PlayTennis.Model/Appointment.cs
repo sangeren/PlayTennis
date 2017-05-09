@@ -33,7 +33,7 @@ namespace PlayTennis.Model
         /// </summary>
         public Guid ExercisePurposeId { get; set; }
         /// <summary>
-        /// 邀约
+        /// 意向
         /// </summary>
         public virtual ExercisePurpose ExercisePurpose { get; set; }
         public virtual IList<AppointmentRecord> AppointmentRecords { get; set; }
