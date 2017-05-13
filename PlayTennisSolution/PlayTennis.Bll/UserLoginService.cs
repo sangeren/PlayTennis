@@ -59,6 +59,11 @@ namespace PlayTennis.Bll
             return null;
         }
 
+        public string GetOpenidByUserid(Guid id)
+        {
+            return Context.UserInformation.Where(p => p.UserBaseInfoId == id).Select(p => p.WxUser.Opneid).FirstOrDefault();
+        }
+
         public WxUser GetWxUserByuserid(Guid wxUserid)
         {
             return Context.WxUser.FirstOrDefault(p => p.Id.Equals(wxUserid));

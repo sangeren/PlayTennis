@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AppointmentControllerTest.cs" />
     <Compile Include="Controllers\BaseInforControllerTest.cs" />
     <Compile Include="Controllers\SportsEquipmentControllerTest.cs" />
     <Compile Include="Controllers\TennisCourtControllerTest.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="Utility\UtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -123,6 +125,10 @@
     <ProjectReference Include="..\PlayTennis.Model\PlayTennis.Model.csproj">
       <Project>{16b862c3-fb42-4636-8a8d-8a6a6ce332f3}</Project>
       <Name>PlayTennis.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlayTennis.Utility\PlayTennis.Utility.csproj">
+      <Project>{EFA054E3-CB8E-4129-9865-85638C92C703}</Project>
+      <Name>PlayTennis.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\PlayTennis.WebApi\PlayTennis.WebApi.csproj">
       <Project>{0EED064A-EE7B-4D48-9811-1052206F3AB3}</Project>

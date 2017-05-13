@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using PlayTennis.Dal;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
@@ -11,6 +12,7 @@ namespace PlayTennis.Bll
 {
     public class AppointmentService : BaseService<PlayTennis.Model.Appointment, Guid>
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public AppointmentService()
         {
             AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
@@ -87,6 +89,8 @@ namespace PlayTennis.Bll
             var appointment = new Appointment() { InitiatorId = initiatorId, InviteeId = inviteeId, ExercisePurposeId = exercisePurposeId, AppointmentState = 0 };
             var appointmentRecord = new AppointmentRecord() { Appointment = appointment, AppointmentState = 0, UserBaseInfoId = initiatorId };
 
+
+            _log.Info(JsonConvert.SerializeObject(appointmentRecord));
             AppointmentRecordRepository.Insert(appointmentRecord);
         }
         /// <summary>

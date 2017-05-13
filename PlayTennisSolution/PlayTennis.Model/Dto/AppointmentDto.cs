@@ -32,5 +32,7 @@ namespace PlayTennis.Model.Dto
         /// 操作类型|0：接受；1：拒绝；2：完成；3 评论
         /// </summary>
         public byte ActionType { get; set; }
+
+        public string formId { get; set; }
     }
 }

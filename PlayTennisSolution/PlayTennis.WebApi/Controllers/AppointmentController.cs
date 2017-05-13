@@ -6,16 +6,20 @@ using System.Net.Http;
 using System.Web.Http;
 using PlayTennis.Bll;
 using PlayTennis.Model.Dto;
+using PlayTennis.Utility;
 
 namespace PlayTennis.WebApi.Controllers
 {
     public class AppointmentController : ApiController
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public AppointmentController()
         {
             AppointmentService = new AppointmentService();
+            UserLoginService = new UserLoginService();
         }
         public AppointmentService AppointmentService { get; set; }
+        public UserLoginService UserLoginService { get; set; }
 
         // GET: api/Appointment
         public IEnumerable<string> Get()
@@ -44,6 +48,21 @@ namespace PlayTennis.WebApi.Controllers
         public void Post(Guid id, AppointmentDto appointment)
         {
             AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
+            var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
+
+            var data = new List<MessageData>();
+            var keyword1 = new MessageData() { value = "预约内容" };
+            var keyword2 = new MessageData() { value = "预约人" };
+            var keyword3 = new MessageData() { value = "预约时间" };
+            var keyword4 = new MessageData() { value = "备注" };
+
+            data.Add(keyword1);
+            data.Add(keyword2);
+            data.Add(keyword3);
+            data.Add(keyword4);
+
+            _log.Info(inviteeOpenid);
+            HttpHelper.SendTemplateMessage(inviteeOpenid, appointment.formId, "", data);
         }
 
 

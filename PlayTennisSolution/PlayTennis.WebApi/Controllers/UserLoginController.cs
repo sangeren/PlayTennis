@@ -10,18 +10,15 @@ using Newtonsoft.Json;
 using PlayTennis.Bll;
 using PlayTennis.Model.Dto;
 using PlayTennis.WebApi.Models;
+using PlayTennis.Utility;
 
 namespace PlayTennis.WebApi.Controllers
 {
     public class UserLoginController : ApiController
     {
-        private const string Appid = "wx69499dc511c5b6b7";
-        private const string Secret = "dae8ba55fbe5d2fbfca156c17199b4ab";
 
-
-
-        public async Task<UserLoginDto> Get(string id, string nickName, string avatarUrl, byte gender)
         //public async Task<string> Get(string id,WxUserLoginDto userLoginDto)
+        public async Task<UserLoginDto> Get(string id, string nickName, string avatarUrl, byte gender)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -33,7 +30,7 @@ namespace PlayTennis.WebApi.Controllers
             var url =
                 string.Format(
                     "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code",
-                    Appid, Secret, id);
+                    HttpHelper.Appid, HttpHelper.Secret, id);
             var client = new HttpClient();
             var response = await client.GetAsync(url);
             if (response.StatusCode.Equals(HttpStatusCode.OK))
@@ -54,7 +51,7 @@ namespace PlayTennis.WebApi.Controllers
                         AvatarUrl = avatarUrl,
                         Gender = gender,
                     });
-                    result = new UserLoginDto {WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id};
+                    result = new UserLoginDto { WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id };
                 }
             }
             return result;
