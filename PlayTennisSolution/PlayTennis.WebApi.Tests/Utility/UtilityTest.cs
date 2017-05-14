@@ -25,8 +25,8 @@ namespace PlayTennis.WebApi.Tests.Utility
             data.Add(keyword2);
             data.Add(keyword3);
             data.Add(keyword4);
-            HttpHelper.SendTemplateMessage("ojtoI0SDNuYEW6V2ghBWMQHjdOPY",
-                "dITCIwEgwIi562Y-amlKKpd2bEr2ltCRXIfpnkyNLFI", "1494686230870", data);
+            HttpHelper.SendTemplateMessageLocal("ojtoI0SDNuYEW6V2ghBWMQHjdOPY",
+                "1494774393363", "", data);
         }
         [TestMethod]
         public void GetAccesToken()

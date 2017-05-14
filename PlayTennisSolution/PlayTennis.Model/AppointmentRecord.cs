@@ -20,5 +20,9 @@ namespace PlayTennis.Model
         /// 操作说明
         /// </summary>
         public string Remark { get; set; }
+        /// <summary>
+        /// 微信表单id
+        /// </summary>
+        public string FormId { get; set; }
     }
 }

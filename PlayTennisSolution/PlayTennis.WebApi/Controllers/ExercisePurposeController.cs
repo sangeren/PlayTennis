@@ -46,7 +46,7 @@ namespace PlayTennis.WebApi.Controllers
 
         // POST: api/EditPurpose
         /// <summary>
-        /// 
+        /// 新增运动意向
         /// </summary>
         /// <param name="id">wxUserid</param>
         /// <param name="purpose"></param>

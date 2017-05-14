@@ -31,6 +31,11 @@ namespace PlayTennis.Bll
             }
             return purpose;
         }
+        public ExercisePurpose GetPurposeByEntityId(Guid exercisePurposeId)
+        {
+            ExercisePurpose purpose = null;
+            return Context.ExercisePurpose.FirstOrDefault(p => p.Id.Equals(exercisePurposeId));
+        }
         public int AddPurpose(EditPurposeDto purposeDto, WxUser wxUser)
         {
             var result = 0;
@@ -69,7 +74,8 @@ namespace PlayTennis.Bll
                     },
                     StartTime = purposeDto.startTime,
                     UserInformationId = userInfor.Id,
-                    ExerciseState = 0
+                    ExerciseState = 0,
+                    FormId = purposeDto.formId
                 };
             Context.ExercisePurpose.Add(purpose);
 
@@ -118,6 +124,7 @@ namespace PlayTennis.Bll
             };
             purpose.StartTime = purposeDto.startTime;
             purpose.UpdateTime = DateTime.Now;
+            purpose.FormId = purposeDto.formId;
 
             Context.ExercisePurpose.AddOrUpdate(purpose);
             result = Context.SaveChanges();

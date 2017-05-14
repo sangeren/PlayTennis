@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201705041144286_InitialMig.Designer.cs">
       <DependentUpon>201705041144286_InitialMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705141449423_AddFormidMig.cs" />
+    <Compile Include="Migrations\201705141449423_AddFormidMig.Designer.cs">
+      <DependentUpon>201705141449423_AddFormidMig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +89,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201705041144286_InitialMig.resx">
       <DependentUpon>201705041144286_InitialMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705141449423_AddFormidMig.resx">
+      <DependentUpon>201705141449423_AddFormidMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

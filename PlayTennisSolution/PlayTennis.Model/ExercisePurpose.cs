@@ -40,5 +40,9 @@ namespace PlayTennis.Model
         /// 用户
         /// </summary>
         public virtual UserInformation UserInformation { get; set; }
+        /// <summary>
+        /// 微信表单id
+        /// </summary>
+        public string FormId { get; set; }
     }
 }

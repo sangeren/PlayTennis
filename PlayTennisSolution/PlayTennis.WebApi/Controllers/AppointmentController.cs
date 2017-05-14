@@ -17,9 +17,11 @@ namespace PlayTennis.WebApi.Controllers
         {
             AppointmentService = new AppointmentService();
             UserLoginService = new UserLoginService();
+            ExercisePurposeService = new ExercisePurposeService();
         }
         public AppointmentService AppointmentService { get; set; }
         public UserLoginService UserLoginService { get; set; }
+        public ExercisePurposeService ExercisePurposeService { get; set; }
 
         // GET: api/Appointment
         public IEnumerable<string> Get()
@@ -47,7 +49,8 @@ namespace PlayTennis.WebApi.Controllers
         /// <param name="appointment"></param>
         public void Post(Guid id, AppointmentDto appointment)
         {
-            AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
+            AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId, appointment.formId);
+            var fromId = ExercisePurposeService.GetPurposeByEntityId(appointment.exercisePurposeId).FormId;
             var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
 
             var data = new List<MessageData>();
@@ -62,7 +65,7 @@ namespace PlayTennis.WebApi.Controllers
             data.Add(keyword4);
 
             _log.Info(inviteeOpenid);
-            HttpHelper.SendTemplateMessage(inviteeOpenid, appointment.formId, "", data);
+            HttpHelper.SendTemplateMessage(inviteeOpenid, fromId, "", data);
         }
 
 

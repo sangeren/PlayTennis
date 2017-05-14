@@ -84,10 +84,11 @@ namespace PlayTennis.Bll
         /// <param name="initiatorId">发起人用户id</param>
         /// <param name="inviteeId">受邀人用户id</param>
         /// <param name="exercisePurposeId">意向id</param>
-        public void InitatorAppointment(Guid initiatorId, Guid inviteeId, Guid exercisePurposeId)
+        /// <param name="formid">提交发起预约表单id</param>
+        public void InitatorAppointment(Guid initiatorId, Guid inviteeId, Guid exercisePurposeId, string formid)
         {
             var appointment = new Appointment() { InitiatorId = initiatorId, InviteeId = inviteeId, ExercisePurposeId = exercisePurposeId, AppointmentState = 0 };
-            var appointmentRecord = new AppointmentRecord() { Appointment = appointment, AppointmentState = 0, UserBaseInfoId = initiatorId };
+            var appointmentRecord = new AppointmentRecord() { Appointment = appointment, AppointmentState = 0, UserBaseInfoId = initiatorId, FormId = formid };
 
 
             _log.Info(JsonConvert.SerializeObject(appointmentRecord));

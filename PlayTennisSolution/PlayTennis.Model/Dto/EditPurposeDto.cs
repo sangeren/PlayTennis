@@ -33,6 +33,11 @@ namespace PlayTennis.Model.Dto
         /// 位置
         /// </summary>
         public LocationDto userLocation { get; set; }
+        /// <summary>
+        /// 微信表单id
+        /// </summary>
+        public string formId { get; set; }
+
     }
 
     public class LocationDto
