@@ -36,6 +36,21 @@ namespace PlayTennis.Bll
             ExercisePurpose purpose = null;
             return Context.ExercisePurpose.FirstOrDefault(p => p.Id.Equals(exercisePurposeId));
         }
+
+        public string GetFormIdByEntityId(Guid exercisePurposeId)
+        {
+            var exercise = Context.ExercisePurpose.FirstOrDefault(p => p.Id.Equals(exercisePurposeId));
+            if (exercise != null && !string.IsNullOrEmpty(exercise.FormId))
+            {
+                exercise.FormId = null;
+                var count = Context.SaveChanges();
+                if (count > 0)
+                {
+                    return exercise.FormId;
+                }
+            }
+            return null;
+        }
         public int AddPurpose(EditPurposeDto purposeDto, WxUser wxUser)
         {
             var result = 0;

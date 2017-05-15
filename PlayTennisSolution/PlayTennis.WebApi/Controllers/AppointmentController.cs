@@ -50,22 +50,26 @@ namespace PlayTennis.WebApi.Controllers
         public void Post(Guid id, AppointmentDto appointment)
         {
             AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId, appointment.formId);
-            var fromId = ExercisePurposeService.GetPurposeByEntityId(appointment.exercisePurposeId).FormId;
-            var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
+            var formId = ExercisePurposeService.GetFormIdByEntityId(appointment.exercisePurposeId);
+            if (!string.IsNullOrEmpty(formId))
+            {
+                var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
+                var exercise = ExercisePurposeService.GetPurposeByEntityId(appointment.exercisePurposeId);
 
-            var data = new List<MessageData>();
-            var keyword1 = new MessageData() { value = "预约内容" };
-            var keyword2 = new MessageData() { value = "预约人" };
-            var keyword3 = new MessageData() { value = "预约时间" };
-            var keyword4 = new MessageData() { value = "备注" };
+                var data = new List<MessageData>();
+                var keyword1 = new MessageData() { value = "预约内容", color = "#173177" };
+                var keyword2 = new MessageData() { value = "预约人", color = "#173177" };
+                var keyword3 = new MessageData() { value = "预约时间", color = "#173177" };
+                var keyword4 = new MessageData() { value = "备注", color = "#173177" };
 
-            data.Add(keyword1);
-            data.Add(keyword2);
-            data.Add(keyword3);
-            data.Add(keyword4);
+                data.Add(keyword1);
+                data.Add(keyword2);
+                data.Add(keyword3);
+                data.Add(keyword4);
 
-            _log.Info(inviteeOpenid);
-            HttpHelper.SendTemplateMessage(inviteeOpenid, fromId, "", data);
+                _log.Info(inviteeOpenid);
+                HttpHelper.SendTemplateMessage(inviteeOpenid, formId, "", data);
+            }
         }
 
 
