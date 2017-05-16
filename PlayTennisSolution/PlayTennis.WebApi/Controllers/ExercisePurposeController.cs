@@ -27,6 +27,15 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/EditPurpose
+        /// <summary>
+        /// 预约列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="lat"></param>
+        /// <param name="lon"></param>
+        /// <returns></returns>
         public IList<ExercisePurposeDto> Get(Guid id, int pageIndex, int pageSize = 6, double lat = 0, double lon = 0)
         {
             //return new string[] { "value1", "value2" };

@@ -44,6 +44,7 @@
     <Compile Include="AppointmentRecord.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Dto\AppointmentDto.cs" />
+    <Compile Include="Dto\AppointmentInformationDto.cs" />
     <Compile Include="Dto\AppointmentResultDto.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeDto.cs" />

@@ -22,5 +22,6 @@ namespace PlayTennis.Model.Dto
     {
         public Guid WxUserId  { get; set; }
         public Guid UserId  { get; set; }
+        public Guid UserInforId  { get; set; }
     }
 }

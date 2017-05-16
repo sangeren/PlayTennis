@@ -208,5 +208,28 @@ namespace PlayTennis.Bll
 
             return list;
         }
+
+        public List<ExercisePurposeDto> PurposeListFinish(Guid useInforId, int pageIndex, int pageSize)
+        {
+            var result = Context.ExercisePurpose.Where(p => p.UserInformationId == useInforId && p.ExerciseState.Equals(1))
+                  .OrderByDescending(p => p.CreateTime)
+                    .Skip((pageIndex - 1) * pageSize)
+                  .Take(pageSize)
+                   .Select(p => new ExercisePurposeDto()
+                   {
+                       Id = p.UserInformation.UserBaseInfo.Id,
+                       WxUserId = p.UserInformation.WxuserId,
+                       AvatarUrl = p.UserInformation.UserBaseInfo.AvatarUrl,
+                       NickName = p.UserInformation.UserBaseInfo.NickName,
+                       PlayAge = p.UserInformation.UserBaseInfo.PlayAge,
+                       Gender = p.UserInformation.UserBaseInfo.Gender,
+                       Latitude = p.UserLocation.Latitude,
+                       Longitude = p.UserLocation.Longitude,
+                       ExerciseExplain = p.ExerciseExplain
+                   })
+                  .ToList();
+
+            return result;
+        }
     }
 }

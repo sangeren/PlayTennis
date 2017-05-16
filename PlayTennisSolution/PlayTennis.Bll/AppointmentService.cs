@@ -16,8 +16,12 @@ namespace PlayTennis.Bll
         public AppointmentService()
         {
             AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
+            ExercisePurposeRepository = new GenericRepository<ExercisePurpose>();
+            UserInformationRepository = new GenericRepository<UserInformation>();
         }
         protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
+        protected GenericRepository<ExercisePurpose> ExercisePurposeRepository { get; set; }
+        protected GenericRepository<UserInformation> UserInformationRepository { get; set; }
 
         /// <summary>
         /// 预约列表
@@ -28,24 +32,28 @@ namespace PlayTennis.Bll
         public IList<AppointmentResultDto> AppointmentList(Guid id, byte type)
         {
             var list = new List<AppointmentResultDto>();
-            //            AppointmentRecordRepository.Entities.Where(p=>p.)
+            //AppointmentRecordRepository.Entities.Where(p=>p.)
+            var userInfor = UserInformationRepository.Entities.FirstOrDefault(p => p.Id.Equals(id));
+            var exercisePurpose =
+                ExercisePurposeRepository.Entities.FirstOrDefault(
+                    p => p.UserInformationId == id && p.ExerciseState.Equals(0));
+            if (userInfor == null)
+            {
+                return list;
+            }
             if (type == 0)
             {
-                //list=   MyEntitiesRepository.Entities.
-                //  Where(p=>p.InitiatorId.Equals(id))
-                //  .Select(p=>new AppointmentResultDto
-                //  {
-                //      AvatarUrl=p.Invitee.AvatarUrl,
-                //      NickName=p.Invitee.NickName,
-                //      StartTime=p.ExercisePurpose.StartTime,
-                //      EndTime=p.ExercisePurpose.EndTime,
-                //      e
-                //  })
+
             }
             else if (type == 1)
             {
+                if (exercisePurpose == null)
+                {
+                    return list;
+                }
+
                 list = MyEntitiesRepository.Entities
-                    .Where(p => p.InviteeId.Equals(id) && p.AppointmentState.Equals(0))
+                    .Where(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) && p.ExercisePurposeId.Equals(exercisePurpose.Id))
                     .Select(p => new AppointmentResultDto()
                     {
                         AvatarUrl = p.Initiator.AvatarUrl,
@@ -61,7 +69,7 @@ namespace PlayTennis.Bll
             else if (type == 2)
             {
                 list = MyEntitiesRepository.Entities
-                  .Where(p => p.InviteeId.Equals(id) && p.AppointmentState.Equals(3))
+                  .Where(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) && p.ExercisePurposeId.Equals(exercisePurpose.Id))
                   .Select(p => new AppointmentResultDto()
                   {
                       AvatarUrl = p.Initiator.AvatarUrl,
@@ -76,6 +84,36 @@ namespace PlayTennis.Bll
             }
 
             return list;
+        }
+
+        public AppointmentInformationDto AppointmentInformation(Guid id)
+        {
+            var result = new AppointmentInformationDto() { AppointmentCount = 0 };
+            //AppointmentRecordRepository.Entities.Where(p=>p.)
+            var userInfor = UserInformationRepository.Entities.FirstOrDefault(p => p.Id.Equals(id));
+            var exercisePurpose =
+                ExercisePurposeRepository.Entities.FirstOrDefault(
+                    p => p.UserInformationId == id && p.ExerciseState.Equals(0));
+            if (userInfor == null)
+            {
+                return result;
+            }
+            if (exercisePurpose == null)
+            {
+                return result;
+            }
+
+            var appointmentCount = MyEntitiesRepository.Entities
+                .Count(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
+                        p.ExercisePurposeId.Equals(exercisePurpose.Id));
+            result.AppointmentCount = appointmentCount;
+
+            var appointmentReceiveCount = MyEntitiesRepository.Entities
+    .Count(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(1) &&
+            p.ExercisePurposeId.Equals(exercisePurpose.Id));
+
+            result.ExercisPurposeId = appointmentReceiveCount > 0 ? exercisePurpose.Id.ToString() : null;
+            return result;
         }
 
         /// <summary>

@@ -33,8 +33,8 @@ namespace PlayTennis.WebApi.Controllers
         /// <summary>
         /// 预约列表
         /// </summary>
-        /// <param name="id">用户id</param>
-        /// <param name="type">0：发起；1：接收；2:完成</param>
+        /// <param name="id">用户信息id</param>
+        /// <param name="type">0：发起；1：接收；2:完成【有问题】</param>
         /// <returns></returns>
         public IList<AppointmentResultDto> Get(Guid id, byte type)
         {

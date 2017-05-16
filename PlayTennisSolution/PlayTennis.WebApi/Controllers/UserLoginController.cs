@@ -51,7 +51,7 @@ namespace PlayTennis.WebApi.Controllers
                         AvatarUrl = avatarUrl,
                         Gender = gender,
                     });
-                    result = new UserLoginDto { WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id };
+                    result = new UserLoginDto { WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id, UserInforId = userInfo.Id };
                 }
             }
             return result;

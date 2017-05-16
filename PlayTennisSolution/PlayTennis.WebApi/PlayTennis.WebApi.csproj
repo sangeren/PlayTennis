@@ -171,6 +171,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseInforController.cs" />
     <Compile Include="Controllers\ExercisePurposeController.cs" />
+    <Compile Include="Controllers\HistoryPlayerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SportsEquipmentController.cs" />
     <Compile Include="Controllers\TennisCourtController.cs" />
