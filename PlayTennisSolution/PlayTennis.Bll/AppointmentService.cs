@@ -56,13 +56,15 @@ namespace PlayTennis.Bll
                     .Where(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) && p.ExercisePurposeId.Equals(exercisePurpose.Id))
                     .Select(p => new AppointmentResultDto()
                     {
+                        Id = p.InitiatorId,
                         AvatarUrl = p.Initiator.AvatarUrl,
                         NickName = p.Initiator.NickName,
                         StartTime = p.ExercisePurpose.StartTime,
                         EndTime = p.ExercisePurpose.EndTime,
                         ExercisePurposeId = p.ExercisePurposeId,
                         CreateTime = p.CreateTime,
-
+                        Gender = p.Initiator.Gender,
+                        PlayAge = p.Initiator.PlayAge
                     })
                     .ToList();
             }
