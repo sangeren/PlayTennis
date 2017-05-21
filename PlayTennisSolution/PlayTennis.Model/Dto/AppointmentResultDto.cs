@@ -9,6 +9,8 @@ namespace PlayTennis.Model.Dto
     public class AppointmentResultDto
     {
         //p.Invitee.AvatarUrl,p.Invitee.NickName,p.ExercisePurpose.StartTime,p.ExercisePurpose.EndTime
+
+        public Guid AppointmentId { get; set; }
         public Guid Id { get; set; }
         public string AvatarUrl { get; set; }
         public string NickName { get; set; }

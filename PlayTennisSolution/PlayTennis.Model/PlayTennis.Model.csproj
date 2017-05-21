@@ -61,6 +61,7 @@
     <Compile Include="TennisCourt.cs" />
     <Compile Include="UserBaseInfo.cs" />
     <Compile Include="UserInformation.cs" />
+    <Compile Include="WxMessageId.cs" />
     <Compile Include="WxUser.cs" />
     <Compile Include="WxUserLogin.cs" />
   </ItemGroup>

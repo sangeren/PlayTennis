@@ -79,6 +79,10 @@ namespace PlayTennis.Bll
                         p =>
                             p.ExercisePurposeId == purpose.Id && p.InitiatorId == initiatorId &&
                             (p.AppointmentState == 0 || p.AppointmentState == 1 || p.AppointmentState == 2));
+                //result.HasOperateAppointment = AppointmentRepository.Entities.Any(
+                //        p =>
+                //            p.ExercisePurposeId == purpose.Id && p.InitiatorId == initiatorId &&
+                //            (p.AppointmentState == 1 || p.AppointmentState == 2));
             }
             return result;
 

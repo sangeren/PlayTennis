@@ -64,7 +64,8 @@ namespace PlayTennis.Bll
                         ExercisePurposeId = p.ExercisePurposeId,
                         CreateTime = p.CreateTime,
                         Gender = p.Initiator.Gender,
-                        PlayAge = p.Initiator.PlayAge
+                        PlayAge = p.Initiator.PlayAge,
+                        AppointmentId = p.Id
                     })
                     .ToList();
             }
