@@ -47,6 +47,7 @@ namespace PlayTennis.Bll
             }
             else if (type == 1)
             {
+                #region MyRegion
                 if (exercisePurpose == null)
                 {
                     return list;
@@ -68,15 +69,18 @@ namespace PlayTennis.Bll
                         AppointmentId = p.Id
                     })
                     .ToList();
+                #endregion
             }
             else if (type == 2)
             {
                 list = MyEntitiesRepository.Entities
-                  .Where(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) && p.ExercisePurposeId.Equals(exercisePurpose.Id))
+                  .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value)) && (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4)))
                   .Select(p => new AppointmentResultDto()
                   {
                       AvatarUrl = p.Initiator.AvatarUrl,
+                      AvatarUrl2 = p.Invitee.AvatarUrl,
                       NickName = p.Initiator.NickName,
+                      NickName2 = p.Invitee.NickName,
                       StartTime = p.ExercisePurpose.StartTime,
                       EndTime = p.ExercisePurpose.EndTime,
                       ExercisePurposeId = p.ExercisePurposeId,

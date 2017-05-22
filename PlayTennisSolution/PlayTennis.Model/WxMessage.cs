@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PlayTennis.Model
 {
-    public class WxMessageId : BaseEntity
+    public class WxMessage : BaseEntity
     {
         /// <summary>
         /// id的类型：1，form；2，支付

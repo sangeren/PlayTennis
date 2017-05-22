@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
@@ -39,14 +40,16 @@ namespace PlayTennis.Bll
 
         public string GetFormIdByEntityId(Guid exercisePurposeId)
         {
-            var exercise = Context.ExercisePurpose.FirstOrDefault(p => p.Id.Equals(exercisePurposeId));
-            if (exercise != null && !string.IsNullOrEmpty(exercise.FormId))
+            var message = Context.WxMessage.FirstOrDefault(p => p.MessageKey.Equals(exercisePurposeId) && p.MessageType.Equals(1) && p.IsUser.Equals(false));
+            if (message != null && !string.IsNullOrEmpty(message.Vaule))
             {
-                exercise.FormId = null;
+                message.IsUser = true;
+                message.UpdateTime = DateTime.Now;
+
                 var count = Context.SaveChanges();
                 if (count > 0)
                 {
-                    return exercise.FormId;
+                    return message.Vaule;
                 }
             }
             return null;
@@ -90,25 +93,18 @@ namespace PlayTennis.Bll
                     StartTime = purposeDto.startTime,
                     UserInformationId = userInfor.Id,
                     ExerciseState = 0,
-                    FormId = purposeDto.formId
+                    //FormId = purposeDto.formId
                 };
             Context.ExercisePurpose.Add(purpose);
 
-            //var userInfo = Context.UserInformation.FirstOrDefault(p => p.WxuserId.Equals(wxUser.Id));
-            //if (userInfo != null && userInfo.Id.Equals(Guid.Empty))
-            //if (userInfor == null)
-            //{
-            //    userInfor = new UserInformation()
-            //    {
-            //        ExercisePurpose = purpose,
-            //        WxuserId = wxUser.Id
-            //    };
-            //    Context.UserInformation.Add(userInfor);
-            //}
-            //else
-            //{
-            //    userInfor.ExercisePurpose = purpose;
-            //}
+            var messageId = new WxMessage()
+            {
+                MessageType = 1,
+                MessageKey = purpose.Id,
+                Vaule = purposeDto.formId,
+                IsUser = false
+            };
+            Context.WxMessage.Add(messageId);
 
             result = Context.SaveChanges();
 
@@ -139,9 +135,17 @@ namespace PlayTennis.Bll
             };
             purpose.StartTime = purposeDto.startTime;
             purpose.UpdateTime = DateTime.Now;
-            purpose.FormId = purposeDto.formId;
-
             Context.ExercisePurpose.AddOrUpdate(purpose);
+
+            var messageId = new WxMessage()
+            {
+                MessageType = 1,
+                MessageKey = purpose.Id,
+                Vaule = purposeDto.formId,
+                IsUser = false
+            };
+            Context.WxMessage.Add(messageId);
+
             result = Context.SaveChanges();
 
             return result;
@@ -228,6 +232,37 @@ namespace PlayTennis.Bll
                        ExerciseExplain = p.ExerciseExplain
                    })
                   .ToList();
+
+            return result;
+        }
+
+        public ExercisePurposeIngDto GetUserExercisePurpose(Guid userInforId)
+        {
+            ExercisePurposeIngDto result = null;
+            var userInfor = Context.UserInformation.FirstOrDefault(p => p.Id.Equals(userInforId));
+            var exercise = Context.ExercisePurpose.FirstOrDefault(p => p.UserInformationId == userInforId
+                && p.ExerciseState == 0);
+
+            if (userInfor != null && userInfor.UserBaseInfoId != null && exercise != null)
+            {
+                var appointment =
+                  Context.Appointment.Include(p => p.Initiator)
+                  .Include(p => p.Invitee)
+                  .FirstOrDefault(
+                      p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.ExercisePurposeId.Equals(exercise.Id) && p.AppointmentState == 1);
+                if (appointment != null)
+                {
+                    result = new ExercisePurposeIngDto
+                    {
+                        ExercisePurpose = exercise,
+                        InInitiator = appointment.Initiator,
+                        Invitee = appointment.Invitee
+                    };
+                }
+
+
+            }
+            //Context.Appointment.FirstOrDefault(p=>p.)
 
             return result;
         }

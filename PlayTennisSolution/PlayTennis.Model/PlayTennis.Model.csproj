@@ -48,6 +48,8 @@
     <Compile Include="Dto\AppointmentResultDto.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeDto.cs" />
+    <Compile Include="Dto\ExercisePurposeIngDto.cs" />
+    <Compile Include="Dto\PurposeCommunicationDto.cs" />
     <Compile Include="Dto\RequestLog.cs" />
     <Compile Include="Dto\UserInformationDto.cs" />
     <Compile Include="Dto\WxMessageDto.cs" />
@@ -61,7 +63,7 @@
     <Compile Include="TennisCourt.cs" />
     <Compile Include="UserBaseInfo.cs" />
     <Compile Include="UserInformation.cs" />
-    <Compile Include="WxMessageId.cs" />
+    <Compile Include="WxMessage.cs" />
     <Compile Include="WxUser.cs" />
     <Compile Include="WxUserLogin.cs" />
   </ItemGroup>

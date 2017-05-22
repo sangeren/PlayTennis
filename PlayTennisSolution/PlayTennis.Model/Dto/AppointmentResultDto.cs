@@ -13,7 +13,9 @@ namespace PlayTennis.Model.Dto
         public Guid AppointmentId { get; set; }
         public Guid Id { get; set; }
         public string AvatarUrl { get; set; }
+        public string AvatarUrl2 { get; set; }
         public string NickName { get; set; }
+        public string NickName2 { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public Guid ExercisePurposeId { get; set; }

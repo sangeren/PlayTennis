@@ -25,6 +25,7 @@ namespace PlayTennis.Dal
         //的详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=390109。
 
         public virtual DbSet<WxUserLogin> WxUserLogin { get; set; }
+        public virtual DbSet<WxMessage> WxMessage { get; set; }
         public virtual DbSet<LogInformation> LogInformation { get; set; }
         public virtual DbSet<WxUser> WxUser { get; set; }
         public virtual DbSet<UserBaseInfo> UserBaseInfo { get; set; }
@@ -34,6 +35,7 @@ namespace PlayTennis.Dal
         public virtual DbSet<ExercisePurpose> ExercisePurpose { get; set; }
         public virtual DbSet<LogHttpRequest> LogHttpRequest { get; set; }
         public virtual DbSet<PurposeCommunication> PurposeCommunication { get; set; }
+        public virtual DbSet<Appointment> Appointment { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

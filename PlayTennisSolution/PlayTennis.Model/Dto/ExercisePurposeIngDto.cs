@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PlayTennis.Model.Dto
+{
+    public class ExercisePurposeIngDto
+    {
+        public ExercisePurposeIngDto()
+        {
+            Id = Guid.NewGuid();
+        }
+        public Guid Id { get; set; }
+        public ExercisePurpose ExercisePurpose { get; set; }
+        public UserBaseInfo InInitiator { get; set; }
+        public UserBaseInfo Invitee { get; set; }
+        public IList<PurposeCommunication> Communications { get; set; }
+    }
+}
