@@ -7,13 +7,13 @@ namespace PlayTennis.Dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddFormidMig : IMigrationMetadata
+    public sealed partial class RemoveUserMig : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddFormidMig));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveUserMig));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705141449423_AddFormidMig"; }
+            get { return "201705291224491_RemoveUserMig"; }
         }
         
         string IMigrationMetadata.Source

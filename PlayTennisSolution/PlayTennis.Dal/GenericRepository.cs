@@ -11,7 +11,7 @@ namespace PlayTennis.Dal
     public class GenericRepository<TEntity> where TEntity : class
     {
         public UnitOfWork UnitOfWork { get; set; }
-        public DbSet<TEntity> Entities { get; set; }
+        public IQueryable<TEntity> Entities { get; set; }
 
         private readonly PalyTennisDb _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -21,7 +21,7 @@ namespace PlayTennis.Dal
             UnitOfWork = new UnitOfWork();
             _context = UnitOfWork.MyDbContext;
             _dbSet = _context.Set<TEntity>();
-            Entities = _dbSet;
+            Entities = _dbSet.AsNoTracking();
         }
 
         public virtual IEnumerable<TEntity> Get(

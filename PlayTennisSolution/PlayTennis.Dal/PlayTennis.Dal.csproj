@@ -62,18 +62,22 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IEntityMapper.cs" />
     <Compile Include="Mapper\AppointmentConfiguration.cs" />
-    <Compile Include="Mapper\ExercisePurposeConfiguration.cs" />
-    <Compile Include="Migrations\201705041144286_InitialMig.cs" />
-    <Compile Include="Migrations\201705041144286_InitialMig.Designer.cs">
-      <DependentUpon>201705041144286_InitialMig.cs</DependentUpon>
+    <Compile Include="Mapper\UserInformationDtoConfiguration.cs" />
+    <Compile Include="Migrations\201705260447059_InitMig.cs" />
+    <Compile Include="Migrations\201705260447059_InitMig.Designer.cs">
+      <DependentUpon>201705260447059_InitMig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705141449423_AddFormidMig.cs" />
-    <Compile Include="Migrations\201705141449423_AddFormidMig.Designer.cs">
-      <DependentUpon>201705141449423_AddFormidMig.cs</DependentUpon>
+    <Compile Include="Migrations\201705291048112_RemoveFormIdMig.cs" />
+    <Compile Include="Migrations\201705291048112_RemoveFormIdMig.Designer.cs">
+      <DependentUpon>201705291048112_RemoveFormIdMig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705221418075_AddMessageMig.cs" />
-    <Compile Include="Migrations\201705221418075_AddMessageMig.Designer.cs">
-      <DependentUpon>201705221418075_AddMessageMig.cs</DependentUpon>
+    <Compile Include="Migrations\201705291224491_RemoveUserMig.cs" />
+    <Compile Include="Migrations\201705291224491_RemoveUserMig.Designer.cs">
+      <DependentUpon>201705291224491_RemoveUserMig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705291238038_ChangeFormIdMig.cs" />
+    <Compile Include="Migrations\201705291238038_ChangeFormIdMig.Designer.cs">
+      <DependentUpon>201705291238038_ChangeFormIdMig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
@@ -91,14 +95,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705041144286_InitialMig.resx">
-      <DependentUpon>201705041144286_InitialMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705260447059_InitMig.resx">
+      <DependentUpon>201705260447059_InitMig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705141449423_AddFormidMig.resx">
-      <DependentUpon>201705141449423_AddFormidMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705291048112_RemoveFormIdMig.resx">
+      <DependentUpon>201705291048112_RemoveFormIdMig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705221418075_AddMessageMig.resx">
-      <DependentUpon>201705221418075_AddMessageMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705291224491_RemoveUserMig.resx">
+      <DependentUpon>201705291224491_RemoveUserMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705291238038_ChangeFormIdMig.resx">
+      <DependentUpon>201705291238038_ChangeFormIdMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

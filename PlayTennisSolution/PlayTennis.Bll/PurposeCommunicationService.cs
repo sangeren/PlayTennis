@@ -17,6 +17,7 @@ namespace PlayTennis.Bll
         public IList<PurposeCommunication> PurposeCommunications(Guid exerciseId)
         {
             var list = MyEntitiesRepository.Entities.Where(p => p.ExercisePurposeId.Equals(exerciseId)).ToList();
+            return list;
         }
     }
 }

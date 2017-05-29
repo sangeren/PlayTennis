@@ -14,8 +14,12 @@ namespace PlayTennis.Model
         public byte MessageType { get; set; }
         /// <summary>
         /// 消息的key
+        /// <summary>
+        /// 消息的key
+        /// </summary>
         /// </summary>
         public Guid MessageKey { get; set; }
+        //public Guid BaseUserId { get; set; }
         /// <summary>
         /// id的值
         /// </summary>

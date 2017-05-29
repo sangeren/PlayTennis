@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using PlayTennis.Dal;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
@@ -13,15 +14,41 @@ namespace PlayTennis.Bll
 {
     public class UserInformationService : BaseService<PlayTennis.Model.UserInformation, Guid>
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
         protected GenericRepository<ExercisePurpose> ExercisePurposeRepository { get; set; }
         protected GenericRepository<Appointment> AppointmentRepository { get; set; }
+        protected GenericRepository<UserBaseInfo> UserBaseInfoRepository { get; set; }
 
         public UserInformationService()
         {
             AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
             ExercisePurposeRepository = new GenericRepository<ExercisePurpose>();
             AppointmentRepository = new GenericRepository<Appointment>();
+            UserBaseInfoRepository = new GenericRepository<UserBaseInfo>();
+        }
+
+        public UserCentreDto GetUserCentreDto(Guid userId)
+        {
+            var result = new UserCentreDto();
+            var exercisePurpose = ExercisePurposeRepository.Entities.FirstOrDefault(
+                p => p.UserInformationId == userId && p.ExerciseState.Equals(0));
+            var userInfo = MyEntitiesRepository.Entities.FirstOrDefault(p => p.Id.Equals(userId));
+            result.IsReceiveAppointment = AppointmentRepository.Entities.Any(
+                p =>
+                    p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
+                    p.ExercisePurposeId.Equals(exercisePurpose.Id));
+            result.IsExerciseIng = AppointmentRepository.Entities
+                .Any(
+                    p =>
+                        p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) && p.AppointmentState.Equals(1) &&
+                        p.ExercisePurposeId.Equals(exercisePurpose.Id));
+            result.IsComplishExercise = AppointmentRepository.Entities
+                .Any(
+                    p =>
+                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userId)) && p.AppointmentState.Equals(3));
+
+            return result;
         }
 
         public UserInformationDto GetUserInformationById(Guid wxUserid)
@@ -42,6 +69,9 @@ namespace PlayTennis.Bll
                     p => p.UserInformationId == userInfo.Id && p.ExerciseState == 0);
             var result = MapperHelper.MyMapper.Map<UserInformationDto>(userInfo);
             result.ExercisePurpose = purpose;
+
+            //var jsonSetting = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+            //_log.Info(JsonConvert.SerializeObject(result, jsonSetting));
 
             return result;
         }

@@ -51,6 +51,7 @@
     <Compile Include="Dto\ExercisePurposeIngDto.cs" />
     <Compile Include="Dto\PurposeCommunicationDto.cs" />
     <Compile Include="Dto\RequestLog.cs" />
+    <Compile Include="Dto\UserCentreDto.cs" />
     <Compile Include="Dto\UserInformationDto.cs" />
     <Compile Include="Dto\WxMessageDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />

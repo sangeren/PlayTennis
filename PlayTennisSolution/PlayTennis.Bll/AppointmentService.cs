@@ -130,15 +130,36 @@ namespace PlayTennis.Bll
         /// <param name="inviteeId">受邀人用户id</param>
         /// <param name="exercisePurposeId">意向id</param>
         /// <param name="formid">提交发起预约表单id</param>
-        public void InitatorAppointment(Guid initiatorId, Guid inviteeId, Guid exercisePurposeId, string formid)
+        public void InitatorAppointment(Guid initiatorId, Guid inviteeId, Guid exercisePurposeId)
         {
-            var appointment = new Appointment() { InitiatorId = initiatorId, InviteeId = inviteeId, ExercisePurposeId = exercisePurposeId, AppointmentState = 0 };
-            var appointmentRecord = new AppointmentRecord() { Appointment = appointment, AppointmentState = 0, UserBaseInfoId = initiatorId, FormId = formid };
+            var hasAppointment =
+                MyEntitiesRepository.Entities.Any(
+                    p => p.InitiatorId.Equals(initiatorId) && p.InviteeId.Equals(inviteeId) && p.AppointmentState == 0);
+            if (hasAppointment)
+            {
+                return;
+            }
+
+            var appointment = new Appointment()
+            {
+                InitiatorId = initiatorId,
+                InviteeId = inviteeId,
+                ExercisePurposeId = exercisePurposeId,
+                AppointmentState = 0
+            };
+            var appointmentRecord = new AppointmentRecord()
+            {
+                Appointment = appointment,
+                AppointmentState = 0,
+                UserBaseInfoId = initiatorId,
+                //FormId = formid
+            };
 
 
             _log.Info(JsonConvert.SerializeObject(appointmentRecord));
             AppointmentRecordRepository.Insert(appointmentRecord);
         }
+
         /// <summary>
         /// 接受预约
         /// </summary>
@@ -150,7 +171,7 @@ namespace PlayTennis.Bll
                 AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
             if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(0))
             {
-                var appointment = MyEntitiesRepository.Entities.Find(appointmentId);
+                var appointment = MyEntitiesRepository.GetById(appointmentId);
                 appointment.AppointmentState = 1;
                 appointment.UpdateTime = DateTime.Now;
                 var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 1, UserBaseInfoId = inviteeId };
@@ -172,7 +193,7 @@ namespace PlayTennis.Bll
                 AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
             if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(0))
             {
-                var appointment = MyEntitiesRepository.Entities.Find(appointmentId);
+                var appointment = MyEntitiesRepository.GetById(appointmentId);
                 appointment.AppointmentState = 2;
                 appointment.UpdateTime = DateTime.Now; var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 2, UserBaseInfoId = inviteeId, Remark = explain };
                 MyEntitiesRepository.UnitOfWork.EnableTransation = true;
@@ -193,7 +214,7 @@ namespace PlayTennis.Bll
                 AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
             if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(1))
             {
-                var appointment = MyEntitiesRepository.Entities.Find(appointmentId);
+                var appointment = MyEntitiesRepository.GetById(appointmentId);
                 appointment.AppointmentState = 3;
                 var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 3, UserBaseInfoId = userId, Remark = comment };
                 MyEntitiesRepository.UnitOfWork.EnableTransation = true;

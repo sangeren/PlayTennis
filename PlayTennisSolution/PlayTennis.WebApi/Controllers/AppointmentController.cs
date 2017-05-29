@@ -49,8 +49,10 @@ namespace PlayTennis.WebApi.Controllers
         /// <param name="appointment"></param>
         public void Post(Guid id, AppointmentDto appointment)
         {
-            AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId, appointment.formId);
-            var formId = ExercisePurposeService.GetFormIdByEntityId(appointment.exercisePurposeId);
+            AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
+            ExercisePurposeService.SaveWxFormId(id, appointment.formId);
+
+            var formId = ExercisePurposeService.GetFormIdByEntityId(appointment.inviteeId);
             if (!string.IsNullOrEmpty(formId))
             {
                 var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
@@ -76,6 +78,9 @@ namespace PlayTennis.WebApi.Controllers
         // PUT: api/Appointment/5
         public void Put(Guid id, AppointmentDto appointment)
         {
+            ExercisePurposeService.SaveWxFormId(id, appointment.formId);
+
+
             if (appointment.ActionType == 0)
             {
                 AppointmentService.AcceptAppointment(id, appointment.appointmentId);

@@ -38,9 +38,9 @@ namespace PlayTennis.Bll
             return Context.ExercisePurpose.FirstOrDefault(p => p.Id.Equals(exercisePurposeId));
         }
 
-        public string GetFormIdByEntityId(Guid exercisePurposeId)
+        public string GetFormIdByEntityId(Guid baseUserId, byte formIdType = 1)
         {
-            var message = Context.WxMessage.FirstOrDefault(p => p.MessageKey.Equals(exercisePurposeId) && p.MessageType.Equals(1) && p.IsUser.Equals(false));
+            var message = Context.WxMessage.FirstOrDefault(p => p.MessageKey.Equals(baseUserId) && p.MessageType.Equals(1) && p.IsUser.Equals(false));
             if (message != null && !string.IsNullOrEmpty(message.Vaule))
             {
                 message.IsUser = true;
@@ -97,19 +97,26 @@ namespace PlayTennis.Bll
                 };
             Context.ExercisePurpose.Add(purpose);
 
-            var messageId = new WxMessage()
-            {
-                MessageType = 1,
-                MessageKey = purpose.Id,
-                Vaule = purposeDto.formId,
-                IsUser = false
-            };
-            Context.WxMessage.Add(messageId);
+            if (userInfor.UserBaseInfoId != null)
+                SaveWxFormId(userInfor.UserBaseInfoId.Value, purposeDto.formId);
 
             result = Context.SaveChanges();
 
             return result;
         }
+
+        public void SaveWxFormId(Guid key, string formId, byte formType = 1)
+        {
+            var messageId = new WxMessage()
+            {
+                MessageType = formType,
+                MessageKey = key,
+                Vaule = formId,
+                IsUser = false
+            };
+            Context.WxMessage.Add(messageId);
+        }
+
         public int EditPurpose(EditPurposeDto purposeDto)
         {
             var result = 0;

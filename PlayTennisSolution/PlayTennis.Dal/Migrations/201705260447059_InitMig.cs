@@ -3,10 +3,66 @@ namespace PlayTennis.Dal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMig : DbMigration
+    public partial class InitMig : DbMigration
     {
         public override void Up()
         {
+            DropForeignKey("dbo.UserInformation", "ExercisePurpose_Id", "dbo.ExercisePurposeA");
+            DropIndex("dbo.UserInformation", new[] { "ExercisePurpose_Id" });
+            CreateTable(
+                "dbo.Appointment",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        InitiatorId = c.Guid(nullable: false),
+                        InviteeId = c.Guid(nullable: false),
+                        ExercisePurposeId = c.Guid(nullable: false),
+                        AppointmentState = c.Byte(nullable: false),
+                        CreateTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ExercisePurpose", t => t.ExercisePurposeId, cascadeDelete: true)
+                .ForeignKey("dbo.UserBaseInfo", t => t.InitiatorId)
+                .ForeignKey("dbo.UserBaseInfo", t => t.InviteeId)
+                .Index(t => t.InitiatorId)
+                .Index(t => t.InviteeId)
+                .Index(t => t.ExercisePurposeId);
+            
+            CreateTable(
+                "dbo.AppointmentRecord",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        AppointmentId = c.Guid(nullable: false),
+                        UserBaseInfoId = c.Guid(nullable: false),
+                        AppointmentState = c.Byte(nullable: false),
+                        Remark = c.String(),
+                        FormId = c.String(),
+                        CreateTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Appointment", t => t.AppointmentId, cascadeDelete: true)
+                .ForeignKey("dbo.UserBaseInfo", t => t.UserBaseInfoId, cascadeDelete: true)
+                .Index(t => t.AppointmentId)
+                .Index(t => t.UserBaseInfoId);
+            
+            CreateTable(
+                "dbo.UserBaseInfo",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        NickName = c.String(),
+                        AvatarUrl = c.String(),
+                        Gender = c.Byte(nullable: false),
+                        PlayAge = c.Double(nullable: false),
+                        NowAddress = c.String(),
+                        CreateTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
             CreateTable(
                 "dbo.ExercisePurpose",
                 c => new
@@ -28,28 +84,6 @@ namespace PlayTennis.Dal.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserInformation", t => t.UserInformationId)
                 .Index(t => t.UserInformationId);
-            
-            CreateTable(
-                "dbo.UserInformation",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        WxuserId = c.Guid(nullable: false),
-                        UserBaseInfoId = c.Guid(),
-                        SportsEquipmentId = c.Guid(),
-                        HasInitiatorAppointment = c.Boolean(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                        ExercisePurpose_Id = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SportsEquipment", t => t.SportsEquipmentId)
-                .ForeignKey("dbo.UserBaseInfo", t => t.UserBaseInfoId)
-                .ForeignKey("dbo.WxUser", t => t.WxuserId, cascadeDelete: true)
-                .ForeignKey("dbo.ExercisePurpose", t => t.ExercisePurpose_Id)
-                .Index(t => t.WxuserId)
-                .Index(t => t.UserBaseInfoId)
-                .Index(t => t.SportsEquipmentId)
-                .Index(t => t.ExercisePurpose_Id);
             
             CreateTable(
                 "dbo.SportsEquipment",
@@ -82,59 +116,6 @@ namespace PlayTennis.Dal.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserInformation", t => t.UserInformationId)
                 .Index(t => t.UserInformationId);
-            
-            CreateTable(
-                "dbo.UserBaseInfo",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        NickName = c.String(),
-                        AvatarUrl = c.String(),
-                        Gender = c.Byte(nullable: false),
-                        PlayAge = c.Double(nullable: false),
-                        NowAddress = c.String(),
-                        CreateTime = c.DateTime(nullable: false),
-                        UpdateTime = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Appointment",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        InitiatorId = c.Guid(nullable: false),
-                        InviteeId = c.Guid(nullable: false),
-                        ExercisePurposeId = c.Guid(nullable: false),
-                        AppointmentState = c.Byte(nullable: false),
-                        CreateTime = c.DateTime(nullable: false),
-                        UpdateTime = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ExercisePurpose", t => t.ExercisePurposeId, cascadeDelete: true)
-                .ForeignKey("dbo.UserBaseInfo", t => t.InitiatorId)
-                .ForeignKey("dbo.UserBaseInfo", t => t.InviteeId)
-                .Index(t => t.InitiatorId)
-                .Index(t => t.InviteeId)
-                .Index(t => t.ExercisePurposeId);
-            
-            CreateTable(
-                "dbo.AppointmentRecord",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        AppointmentId = c.Guid(nullable: false),
-                        UserBaseInfoId = c.Guid(nullable: false),
-                        AppointmentState = c.Byte(nullable: false),
-                        Remark = c.String(),
-                        CreateTime = c.DateTime(nullable: false),
-                        UpdateTime = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Appointment", t => t.AppointmentId, cascadeDelete: true)
-                .ForeignKey("dbo.UserBaseInfo", t => t.UserBaseInfoId, cascadeDelete: true)
-                .Index(t => t.AppointmentId)
-                .Index(t => t.UserBaseInfoId);
             
             CreateTable(
                 "dbo.WxUser",
@@ -189,6 +170,20 @@ namespace PlayTennis.Dal.Migrations
                 .Index(t => t.ExercisePurposeId);
             
             CreateTable(
+                "dbo.WxMessage",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        MessageType = c.Byte(nullable: false),
+                        MessageKey = c.Guid(nullable: false),
+                        Vaule = c.String(),
+                        IsUser = c.Boolean(nullable: false),
+                        CreateTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.WxUserLogin",
                 c => new
                     {
@@ -199,48 +194,75 @@ namespace PlayTennis.Dal.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            AddColumn("dbo.UserInformation", "WxuserId", c => c.Guid(nullable: false));
+            AddColumn("dbo.UserInformation", "UserBaseInfoId", c => c.Guid());
+            AddColumn("dbo.UserInformation", "SportsEquipmentId", c => c.Guid());
+            CreateIndex("dbo.UserInformation", "WxuserId");
+            CreateIndex("dbo.UserInformation", "UserBaseInfoId");
+            CreateIndex("dbo.UserInformation", "SportsEquipmentId");
+            AddForeignKey("dbo.UserInformation", "SportsEquipmentId", "dbo.SportsEquipment", "Id");
+            AddForeignKey("dbo.UserInformation", "UserBaseInfoId", "dbo.UserBaseInfo", "Id");
+            AddForeignKey("dbo.UserInformation", "WxuserId", "dbo.WxUser", "Id", cascadeDelete: true);
+            DropColumn("dbo.UserInformation", "HasInitiatorAppointment");
+            DropColumn("dbo.UserInformation", "ExercisePurpose_Id");
+            DropTable("dbo.ExercisePurposeA");
         }
         
         public override void Down()
         {
+            CreateTable(
+                "dbo.ExercisePurposeA",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CreateTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            AddColumn("dbo.UserInformation", "ExercisePurpose_Id", c => c.Guid());
+            AddColumn("dbo.UserInformation", "HasInitiatorAppointment", c => c.Boolean());
             DropForeignKey("dbo.PurposeCommunication", "UserBaseInfoId", "dbo.UserBaseInfo");
             DropForeignKey("dbo.PurposeCommunication", "ExercisePurposeId", "dbo.ExercisePurpose");
-            DropForeignKey("dbo.UserInformation", "ExercisePurpose_Id", "dbo.ExercisePurpose");
-            DropForeignKey("dbo.UserInformation", "WxuserId", "dbo.WxUser");
-            DropForeignKey("dbo.UserInformation", "UserBaseInfoId", "dbo.UserBaseInfo");
             DropForeignKey("dbo.Appointment", "InviteeId", "dbo.UserBaseInfo");
             DropForeignKey("dbo.Appointment", "InitiatorId", "dbo.UserBaseInfo");
             DropForeignKey("dbo.Appointment", "ExercisePurposeId", "dbo.ExercisePurpose");
-            DropForeignKey("dbo.AppointmentRecord", "UserBaseInfoId", "dbo.UserBaseInfo");
-            DropForeignKey("dbo.AppointmentRecord", "AppointmentId", "dbo.Appointment");
+            DropForeignKey("dbo.UserInformation", "WxuserId", "dbo.WxUser");
+            DropForeignKey("dbo.UserInformation", "UserBaseInfoId", "dbo.UserBaseInfo");
             DropForeignKey("dbo.TennisCourt", "UserInformationId", "dbo.UserInformation");
             DropForeignKey("dbo.UserInformation", "SportsEquipmentId", "dbo.SportsEquipment");
             DropForeignKey("dbo.ExercisePurpose", "UserInformationId", "dbo.UserInformation");
+            DropForeignKey("dbo.AppointmentRecord", "UserBaseInfoId", "dbo.UserBaseInfo");
+            DropForeignKey("dbo.AppointmentRecord", "AppointmentId", "dbo.Appointment");
             DropIndex("dbo.PurposeCommunication", new[] { "ExercisePurposeId" });
             DropIndex("dbo.PurposeCommunication", new[] { "UserBaseInfoId" });
+            DropIndex("dbo.TennisCourt", new[] { "UserInformationId" });
+            DropIndex("dbo.UserInformation", new[] { "SportsEquipmentId" });
+            DropIndex("dbo.UserInformation", new[] { "UserBaseInfoId" });
+            DropIndex("dbo.UserInformation", new[] { "WxuserId" });
+            DropIndex("dbo.ExercisePurpose", new[] { "UserInformationId" });
             DropIndex("dbo.AppointmentRecord", new[] { "UserBaseInfoId" });
             DropIndex("dbo.AppointmentRecord", new[] { "AppointmentId" });
             DropIndex("dbo.Appointment", new[] { "ExercisePurposeId" });
             DropIndex("dbo.Appointment", new[] { "InviteeId" });
             DropIndex("dbo.Appointment", new[] { "InitiatorId" });
-            DropIndex("dbo.TennisCourt", new[] { "UserInformationId" });
-            DropIndex("dbo.UserInformation", new[] { "ExercisePurpose_Id" });
-            DropIndex("dbo.UserInformation", new[] { "SportsEquipmentId" });
-            DropIndex("dbo.UserInformation", new[] { "UserBaseInfoId" });
-            DropIndex("dbo.UserInformation", new[] { "WxuserId" });
-            DropIndex("dbo.ExercisePurpose", new[] { "UserInformationId" });
+            DropColumn("dbo.UserInformation", "SportsEquipmentId");
+            DropColumn("dbo.UserInformation", "UserBaseInfoId");
+            DropColumn("dbo.UserInformation", "WxuserId");
             DropTable("dbo.WxUserLogin");
+            DropTable("dbo.WxMessage");
             DropTable("dbo.PurposeCommunication");
             DropTable("dbo.LogInformation");
             DropTable("dbo.LogHttpRequest");
             DropTable("dbo.WxUser");
-            DropTable("dbo.AppointmentRecord");
-            DropTable("dbo.Appointment");
-            DropTable("dbo.UserBaseInfo");
             DropTable("dbo.TennisCourt");
             DropTable("dbo.SportsEquipment");
-            DropTable("dbo.UserInformation");
             DropTable("dbo.ExercisePurpose");
+            DropTable("dbo.UserBaseInfo");
+            DropTable("dbo.AppointmentRecord");
+            DropTable("dbo.Appointment");
+            CreateIndex("dbo.UserInformation", "ExercisePurpose_Id");
+            AddForeignKey("dbo.UserInformation", "ExercisePurpose_Id", "dbo.ExercisePurposeA", "Id");
         }
     }
 }
