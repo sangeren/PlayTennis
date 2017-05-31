@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
 using PlayTennis.Bll;
 using PlayTennis.Model.Dto;
 
@@ -11,6 +12,7 @@ namespace PlayTennis.WebApi.Controllers
 {
     public class PurposeCommunicationController : ApiController
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public PurposeCommunicationController()
         {
             UserLoginService = new UserLoginService();
@@ -41,8 +43,10 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // POST: api/PurposeCommunication
-        public void Post([FromBody]string value)
+        public void Post(Guid id, ContentDto content)
         {
+            _log.Info(id + JsonConvert.SerializeObject(content));
+            PurposeCommunicationService.AddComment(id, content.ExercisePurposeId, content.Content);
         }
 
         // PUT: api/PurposeCommunication/5

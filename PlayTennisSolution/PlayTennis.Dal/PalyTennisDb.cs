@@ -18,7 +18,7 @@ namespace PlayTennis.Dal
         public PalyTennisDb()
             : base("name=PalyTennisDb")
         {
-            //Configuration.ProxyCreationEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         //为您要在模型中包含的每种实体类型都添加 DbSet。有关配置和使用 Code First  模型
@@ -40,7 +40,7 @@ namespace PlayTennis.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //是否启用代理类
-            Configuration.ProxyCreationEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
 
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
 

@@ -19,5 +19,21 @@ namespace PlayTennis.Bll
             var list = MyEntitiesRepository.Entities.Where(p => p.ExercisePurposeId.Equals(exerciseId)).ToList();
             return list;
         }
+
+        public void AddComment(Guid userBaseInfoId, Guid exercisePurposeId, string content)
+        {
+
+            if (string.IsNullOrEmpty(content))
+            {
+                return;
+            }
+            var comment = new PurposeCommunication()
+            {
+                UserBaseInfoId = userBaseInfoId,
+                ExercisePurposeId = exercisePurposeId,
+                Content = content
+            };
+            MyEntitiesRepository.Insert(comment);
+        }
     }
 }
