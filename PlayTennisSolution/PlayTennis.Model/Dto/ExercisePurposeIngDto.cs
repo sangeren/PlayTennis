@@ -16,6 +16,6 @@ namespace PlayTennis.Model.Dto
         public ExercisePurpose ExercisePurpose { get; set; }
         public UserBaseInfo InInitiator { get; set; }
         public UserBaseInfo Invitee { get; set; }
-        public IList<PurposeCommunication> Communications { get; set; }
+        public IList<ContentListDto> Communications { get; set; }
     }
 }

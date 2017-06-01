@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PlayTennis.Model;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.Bll
 {
@@ -14,9 +15,16 @@ namespace PlayTennis.Bll
 
         }
 
-        public IList<PurposeCommunication> PurposeCommunications(Guid exerciseId)
+        public IList<ContentListDto> PurposeCommunications(Guid exerciseId)
         {
-            var list = MyEntitiesRepository.Entities.Where(p => p.ExercisePurposeId.Equals(exerciseId)).ToList();
+            var list = MyEntitiesRepository.Entities.Where(p => p.ExercisePurposeId.Equals(exerciseId))
+                .Select(p => new ContentListDto()
+                {
+                    //AvatarUrl = p.UserBaseInfo.AvatarUrl,
+                    Content = p.Content,
+                    UserBaseInfoId = p.UserBaseInfoId
+                })
+                .ToList();
             return list;
         }
 

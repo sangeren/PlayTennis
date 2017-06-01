@@ -47,6 +47,7 @@
     <Compile Include="Dto\AppointmentInformationDto.cs" />
     <Compile Include="Dto\AppointmentResultDto.cs" />
     <Compile Include="Dto\ContentDto.cs" />
+    <Compile Include="Dto\ContentListDto.cs" />
     <Compile Include="Dto\EditPurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeDto.cs" />
     <Compile Include="Dto\ExercisePurposeIngDto.cs" />
