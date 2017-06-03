@@ -12,6 +12,7 @@ namespace PlayTennis.Model
         {
             Id = Guid.NewGuid();
             TennisCourts = new HashSet<TennisCourt>();
+            ExercisePurposes = new HashSet<ExercisePurpose>();
         }
         /// <summary>
         /// 用户id

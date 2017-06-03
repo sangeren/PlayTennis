@@ -34,7 +34,7 @@ namespace PlayTennis.WebApi.Controllers
         /// 预约列表
         /// </summary>
         /// <param name="id">用户信息id</param>
-        /// <param name="type">0：发起；1：接收；2:完成【有问题】</param>
+        /// <param name="type">0：发起；1：接收；2:完成【有问题】；3 进行的预约</param>
         /// <returns></returns>
         public IList<AppointmentResultDto> Get(Guid id, byte type)
         {

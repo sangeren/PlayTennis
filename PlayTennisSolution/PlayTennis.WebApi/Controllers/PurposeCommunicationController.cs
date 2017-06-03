@@ -31,9 +31,9 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/PurposeCommunication/5
-        public ExercisePurposeIngDto Get(Guid id)
+        public ExercisePurposeIngDto Get(Guid id, Guid exercisePurposeId)
         {
-            var result = ExercisePurposeService.GetUserExercisePurpose(id);
+            var result = ExercisePurposeService.GetUserExercisePurpose(id,exercisePurposeId);
             if (result != null)
             {
                 result.Communications = PurposeCommunicationService.PurposeCommunications(result.ExercisePurpose.Id);

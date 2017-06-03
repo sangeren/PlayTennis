@@ -30,19 +30,25 @@ namespace PlayTennis.Bll
 
         public UserCentreDto GetUserCentreDto(Guid userId)
         {
+            //todo 进行预约有问题
             var result = new UserCentreDto();
             var exercisePurpose = ExercisePurposeRepository.Entities.FirstOrDefault(
                 p => p.UserInformationId == userId && p.ExerciseState.Equals(0));
             var userInfo = MyEntitiesRepository.Entities.FirstOrDefault(p => p.Id.Equals(userId));
-            result.IsReceiveAppointment = AppointmentRepository.Entities.Any(
-                p =>
-                    p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
-                    p.ExercisePurposeId.Equals(exercisePurpose.Id));
+
+            if (exercisePurpose != null)
+            {
+                result.IsReceiveAppointment = AppointmentRepository.Entities.Any(
+               p =>
+                   p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
+                   p.ExercisePurposeId.Equals(exercisePurpose.Id));
+            }
+
+            // any  && p.ExercisePurposeId.Equals(exercisePurpose.Id)
             result.IsExerciseIng = AppointmentRepository.Entities
                 .Any(
                     p =>
-                        p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) && p.AppointmentState.Equals(1) &&
-                        p.ExercisePurposeId.Equals(exercisePurpose.Id));
+                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfo.UserBaseInfoId.Value)) && p.AppointmentState.Equals(1));
             result.IsComplishExercise = AppointmentRepository.Entities
                 .Any(
                     p =>

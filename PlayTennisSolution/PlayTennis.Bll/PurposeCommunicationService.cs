@@ -17,7 +17,9 @@ namespace PlayTennis.Bll
 
         public IList<ContentListDto> PurposeCommunications(Guid exerciseId)
         {
-            var list = MyEntitiesRepository.Entities.Where(p => p.ExercisePurposeId.Equals(exerciseId))
+            var list = MyEntitiesRepository.Entities
+                .Where(p => p.ExercisePurposeId.Equals(exerciseId))
+                .OrderBy(p => p.CreateTime)
                 .Select(p => new ContentListDto()
                 {
                     //AvatarUrl = p.UserBaseInfo.AvatarUrl,

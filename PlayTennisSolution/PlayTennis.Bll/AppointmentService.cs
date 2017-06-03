@@ -27,7 +27,7 @@ namespace PlayTennis.Bll
         /// 预约列表
         /// </summary>
         /// <param name="id">用户id</param>
-        /// <param name="type">0：发起；1：接收；2:完成</param>
+        /// <param name="type">0：发起；1：接收；2:完成;3 进行的预约</param>
         /// <returns></returns>
         public IList<AppointmentResultDto> AppointmentList(Guid id, byte type)
         {
@@ -37,6 +37,8 @@ namespace PlayTennis.Bll
             var exercisePurpose =
                 ExercisePurposeRepository.Entities.FirstOrDefault(
                     p => p.UserInformationId == id && p.ExerciseState.Equals(0));
+
+            var now = DateTime.Now;
             if (userInfor == null)
             {
                 return list;
@@ -73,21 +75,46 @@ namespace PlayTennis.Bll
             }
             else if (type == 2)
             {
+                #region MyRegion
                 list = MyEntitiesRepository.Entities
-                  .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value)) && (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4)))
-                  .Select(p => new AppointmentResultDto()
-                  {
-                      AvatarUrl = p.Initiator.AvatarUrl,
-                      AvatarUrl2 = p.Invitee.AvatarUrl,
-                      NickName = p.Initiator.NickName,
-                      NickName2 = p.Invitee.NickName,
-                      StartTime = p.ExercisePurpose.StartTime,
-                      EndTime = p.ExercisePurpose.EndTime,
-                      ExercisePurposeId = p.ExercisePurposeId,
-                      CreateTime = p.CreateTime,
+                         .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
+                             && (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4) || (p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) > 0)))
+                         .Select(p => new AppointmentResultDto()
+                         {
+                             AvatarUrl = p.Initiator.AvatarUrl,
+                             AvatarUrl2 = p.Invitee.AvatarUrl,
+                             NickName = p.Initiator.NickName,
+                             NickName2 = p.Invitee.NickName,
+                             StartTime = p.ExercisePurpose.StartTime,
+                             EndTime = p.ExercisePurpose.EndTime,
+                             ExercisePurposeId = p.ExercisePurposeId,
+                             CreateTime = p.CreateTime,
 
-                  })
-                  .ToList();
+                         })
+                         .ToList();
+                #endregion
+            }
+            else if (type == 3)
+            {
+                #region MyRegion
+                list = MyEntitiesRepository.Entities
+                         .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
+                             && p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) <= 0)
+                         .Select(p => new AppointmentResultDto()
+                         {
+                             Id = p.ExercisePurposeId,
+                             AvatarUrl = p.Initiator.AvatarUrl,
+                             AvatarUrl2 = p.Invitee.AvatarUrl,
+                             NickName = p.Initiator.NickName,
+                             NickName2 = p.Invitee.NickName,
+                             StartTime = p.ExercisePurpose.StartTime,
+                             EndTime = p.ExercisePurpose.EndTime,
+                             ExercisePurposeId = p.ExercisePurposeId,
+                             CreateTime = p.CreateTime,
+
+                         })
+                         .ToList();
+                #endregion
             }
 
             return list;

@@ -243,11 +243,11 @@ namespace PlayTennis.Bll
             return result;
         }
 
-        public ExercisePurposeIngDto GetUserExercisePurpose(Guid userInforId)
+        public ExercisePurposeIngDto GetUserExercisePurpose(Guid userInforId, Guid exercisePurposeId)
         {
             ExercisePurposeIngDto result = null;
             var userInfor = Context.UserInformation.FirstOrDefault(p => p.Id.Equals(userInforId));
-            var exercise = Context.ExercisePurpose.FirstOrDefault(p => p.UserInformationId == userInforId
+            var exercise = Context.ExercisePurpose.FirstOrDefault(p => p.Id == exercisePurposeId
                 && p.ExerciseState == 0);
 
             if (userInfor != null && userInfor.UserBaseInfoId != null && exercise != null)
@@ -256,7 +256,7 @@ namespace PlayTennis.Bll
                   Context.Appointment.Include(p => p.Initiator)
                   .Include(p => p.Invitee)
                   .FirstOrDefault(
-                      p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.ExercisePurposeId.Equals(exercise.Id) && p.AppointmentState == 1);
+                      p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value)) && p.ExercisePurposeId.Equals(exercise.Id) && p.AppointmentState == 1);
                 if (appointment != null)
                 {
                     result = new ExercisePurposeIngDto
