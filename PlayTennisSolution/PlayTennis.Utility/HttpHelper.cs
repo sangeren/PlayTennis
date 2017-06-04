@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -15,11 +16,13 @@ namespace PlayTennis.Utility
     {
         private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public const string Appid = "wx69499dc511c5b6b7";
-        public const string Secret = "dae8ba55fbe5d2fbfca156c17199b4ab";
+        public static string Appid { get; set; }
+        public static string Secret { get; set; }
 
         private static DateTime expiresTime = new DateTime(1991, 1, 1);
         private static string accesToken = "";
+
+        public static string BaiduMapKey { get; set; }
 
         public static string PostWxMessage(WxTextMessageDto wxText)
         {
@@ -33,8 +36,14 @@ namespace PlayTennis.Utility
         static HttpHelper()
         {
             //_log.Logger.Repository.Propertie
+            //todo 日志记录有问题 ？
             var fileInfo = new FileInfo("c:/webLogs/http-helper/");
             log4net.Config.XmlConfigurator.Configure(fileInfo);
+
+            Appid = ConfigHelper.GetConfigValueOrDefault("Appid", "wxd7c6faee52928e6b");
+            Secret = ConfigHelper.GetConfigValueOrDefault("Secret", "d804dfd690de9011e6713a886822e236");
+
+            BaiduMapKey = ConfigHelper.GetConfigValueOrDefault("baiduMapKey", "NGv7mm5W9fOpNGkSqH093PxYLdXKgI3G");
         }
 
         public static void SendTemplateMessage(string openid, string form_id, string page, List<MessageData> data, string templateid = "dITCIwEgwIi562Y-amlKKpd2bEr2ltCRXIfpnkyNLFI")
@@ -108,6 +117,25 @@ namespace PlayTennis.Utility
                 return accesToken;
             }
         }
+
+        public static LocationInfor GetLocationInfor(string lng, string lat)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.ExpectContinue = false;
+            var uri = new Uri("http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.983424,116.322987&output=json&pois=1&pois=0&ak=" + BaiduMapKey);
+
+            var result = client.GetStringAsync(uri).Result;
+            if (!string.IsNullOrEmpty(result))
+            {
+                result = result.Substring(result.IndexOf('(') + 1, result.Length - result.IndexOf('(') - 2);
+                var location = JsonConvert.DeserializeObject<BaiduMapResult>(result);
+                if (location != null && location.status == 0)
+                {
+                    return location.result.addressComponent;
+                }
+            }
+            return null;
+        }
     }
 
 
@@ -157,5 +185,16 @@ namespace PlayTennis.Utility
     {
         public string access_token { get; set; }
         public int expires_in { get; set; }
+    }
+
+    class BaiduMapResult
+    {
+        public int status { get; set; }
+        public LocationResult result { get; set; }
+    }
+
+    class LocationResult
+    {
+        public LocationInfor addressComponent { get; set; }
     }
 }

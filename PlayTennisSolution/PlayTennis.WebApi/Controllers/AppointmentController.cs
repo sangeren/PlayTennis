@@ -74,8 +74,12 @@ namespace PlayTennis.WebApi.Controllers
             }
         }
 
-
         // PUT: api/Appointment/5
+        /// <summary>
+        /// 更改预约状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="appointment"></param>
         public void Put(Guid id, AppointmentDto appointment)
         {
             ExercisePurposeService.SaveWxFormId(id, appointment.formId);

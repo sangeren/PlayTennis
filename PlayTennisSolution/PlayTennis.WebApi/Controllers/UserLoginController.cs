@@ -16,14 +16,15 @@ namespace PlayTennis.WebApi.Controllers
 {
     public class UserLoginController : ApiController
     {
-
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         //public async Task<string> Get(string id,WxUserLoginDto userLoginDto)
-        public async Task<UserLoginDto> Get(string id, string nickName, string avatarUrl, byte gender)
+        public async Task<UserLoginDto> Get(string id, string nickName, string avatarUrl, byte gender, string province, string city)
         {
             if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentNullException("code", "参数不合规！");
             }
+
 
             UserLoginDto result = null;
 
@@ -37,10 +38,13 @@ namespace PlayTennis.WebApi.Controllers
             {
                 var context = await response.Content.ReadAsStringAsync();
                 var userLogin = JsonConvert.DeserializeObject<WxLogin>(context);
+
+                //_log.Info(JsonConvert.SerializeObject(logDto));
+
                 if (userLogin != null && userLogin.openid != null)
                 {
                     var servic = new UserLoginService();
-                    var userInfo = servic.LogUserLogin(new WxUserLoginDto()
+                    var logDto = new WxUserLoginDto()
                     {
                         Openid = userLogin.openid,
                         SessionKey = userLogin.session_key,
@@ -50,7 +54,11 @@ namespace PlayTennis.WebApi.Controllers
                         NickName = nickName,
                         AvatarUrl = avatarUrl,
                         Gender = gender,
-                    });
+                        Province = province,
+                        City = city
+                    };
+                    var userInfo = servic.LogUserLogin(logDto);
+
                     result = new UserLoginDto { WxUserId = userInfo.WxuserId, UserId = userInfo.UserBaseInfo.Id, UserInforId = userInfo.Id };
                 }
             }

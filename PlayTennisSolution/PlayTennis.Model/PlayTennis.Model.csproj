@@ -55,6 +55,7 @@
     <Compile Include="Dto\RequestLog.cs" />
     <Compile Include="Dto\UserCentreDto.cs" />
     <Compile Include="Dto\UserInformationDto.cs" />
+    <Compile Include="Dto\LocationInfor.cs" />
     <Compile Include="Dto\WxMessageDto.cs" />
     <Compile Include="Dto\WxUserLoginDto.cs" />
     <Compile Include="ExercisePurpose.cs" />

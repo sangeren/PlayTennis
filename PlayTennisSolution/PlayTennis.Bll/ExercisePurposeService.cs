@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,6 +78,20 @@ namespace PlayTennis.Bll
             //{
             //    return result;
             //}
+
+            if (purposeDto.userLocation.longitude < 0.01 || purposeDto.userLocation.latitude < 0.01)
+            {
+                return result;
+            }
+
+            //暂只开启 上海和深圳地址
+            var userLocation =
+                HttpHelper.GetLocationInfor(purposeDto.userLocation.longitude.ToString(CultureInfo.InvariantCulture),
+                    purposeDto.userLocation.latitude.ToString(CultureInfo.InvariantCulture));
+            if (!userLocation.Province.Equals("上海市") || !(userLocation.Province.Equals("广东省") && userLocation.City.Equals("深圳市")))
+            {
+                return result;
+            }
 
             var purpose = new ExercisePurpose()
                 {
@@ -177,7 +192,7 @@ namespace PlayTennis.Bll
             //            p.ExercisePurpose.UserLocation.Latitude < maxLat);
 
             var list = listOri
-                              .Where(p => p.StartTime.Value.CompareTo(DateTime.Now) >= 0 && !p.UserInformation.WxuserId.Equals(wxUserId))
+                              .Where(p => p.EndTime.Value.CompareTo(DateTime.Now) >= 0 && !p.UserInformation.WxuserId.Equals(wxUserId))
                               .Select(p => new ExercisePurposeDto()
                               {
                                   Id = p.UserInformation.UserBaseInfo.Id,
@@ -263,11 +278,12 @@ namespace PlayTennis.Bll
                     {
                         ExercisePurpose = exercise,
                         InInitiator = appointment.Initiator,
-                        Invitee = appointment.Invitee
+                        Invitee = appointment.Invitee,
+                        AppointmentId = appointment.Id
                     };
+                    if (result.ExercisePurpose.EndTime != null)
+                        result.IsPastDate = result.ExercisePurpose.EndTime.Value.CompareTo(DateTime.Now) <= 0;
                 }
-
-
             }
             //Context.Appointment.FirstOrDefault(p=>p.)
 

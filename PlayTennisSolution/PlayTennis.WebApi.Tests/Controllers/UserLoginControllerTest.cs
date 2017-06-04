@@ -18,7 +18,7 @@ namespace PlayTennis.WebApi.Tests.Controllers
             var controller = new UserLoginController();
 
             // 操作
-            var result = await controller.Get("code", "", "", 1);
+            var result = await controller.Get("code", "", "", 1, "", "");
 
             // 断言
             Assert.IsNotNull(result);

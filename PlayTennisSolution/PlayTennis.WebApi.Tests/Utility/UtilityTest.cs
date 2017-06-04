@@ -34,6 +34,12 @@ namespace PlayTennis.WebApi.Tests.Utility
 
             HttpHelper.GetAccesToken();
         }
+        [TestMethod]
+        public void GetLocationInfor()
+        {
 
+            HttpHelper.GetLocationInfor("116.32298699999993", "39.98342407140365");
+        }
+        //HttpHelper
     }
 }

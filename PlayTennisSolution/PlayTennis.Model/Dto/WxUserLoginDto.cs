@@ -16,12 +16,21 @@ namespace PlayTennis.Model.Dto
         /// </summary>
         public string AvatarUrl { get; set; }
         public byte Gender { get; set; }
+        /// <summary>
+        /// 省
+        /// </summary>
+        public string Province { get; set; }
+        /// <summary>
+        /// 城市
+        /// </summary>
+        public string City { get; set; }
+
     }
 
     public class UserLoginDto
     {
-        public Guid WxUserId  { get; set; }
-        public Guid UserId  { get; set; }
-        public Guid UserInforId  { get; set; }
+        public Guid WxUserId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid UserInforId { get; set; }
     }
 }

@@ -12,13 +12,16 @@ namespace PlayTennis.Bll
 {
     public class AppointmentService : BaseService<PlayTennis.Model.Appointment, Guid>
     {
-        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static log4net.ILog _log =
+            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public AppointmentService()
         {
             AppointmentRecordRepository = new GenericRepository<AppointmentRecord>();
             ExercisePurposeRepository = new GenericRepository<ExercisePurpose>();
             UserInformationRepository = new GenericRepository<UserInformation>();
         }
+
         protected GenericRepository<AppointmentRecord> AppointmentRecordRepository { get; set; }
         protected GenericRepository<ExercisePurpose> ExercisePurposeRepository { get; set; }
         protected GenericRepository<UserInformation> UserInformationRepository { get; set; }
@@ -50,13 +53,17 @@ namespace PlayTennis.Bll
             else if (type == 1)
             {
                 #region MyRegion
+
                 if (exercisePurpose == null)
                 {
                     return list;
                 }
 
                 list = MyEntitiesRepository.Entities
-                    .Where(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) && p.ExercisePurposeId.Equals(exercisePurpose.Id))
+                    .Where(
+                        p =>
+                            p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
+                            p.ExercisePurposeId.Equals(exercisePurpose.Id))
                     .Select(p => new AppointmentResultDto()
                     {
                         Id = p.InitiatorId,
@@ -71,49 +78,63 @@ namespace PlayTennis.Bll
                         AppointmentId = p.Id
                     })
                     .ToList();
+
                 #endregion
             }
             else if (type == 2)
             {
                 #region MyRegion
-                list = MyEntitiesRepository.Entities
-                         .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
-                             && (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4) || (p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) > 0)))
-                         .Select(p => new AppointmentResultDto()
-                         {
-                             AvatarUrl = p.Initiator.AvatarUrl,
-                             AvatarUrl2 = p.Invitee.AvatarUrl,
-                             NickName = p.Initiator.NickName,
-                             NickName2 = p.Invitee.NickName,
-                             StartTime = p.ExercisePurpose.StartTime,
-                             EndTime = p.ExercisePurpose.EndTime,
-                             ExercisePurposeId = p.ExercisePurposeId,
-                             CreateTime = p.CreateTime,
 
-                         })
-                         .ToList();
+                list = MyEntitiesRepository.Entities
+                    .Where(
+                        p =>
+                            (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) ||
+                             p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
+                            &&
+                            (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4) ||
+                             (p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) <= 0)))
+                    .Select(p => new AppointmentResultDto()
+                    {
+                        Id = p.ExercisePurposeId,
+                        AvatarUrl = p.Initiator.AvatarUrl,
+                        AvatarUrl2 = p.Invitee.AvatarUrl,
+                        NickName = p.Initiator.NickName,
+                        NickName2 = p.Invitee.NickName,
+                        StartTime = p.ExercisePurpose.StartTime,
+                        EndTime = p.ExercisePurpose.EndTime,
+                        ExercisePurposeId = p.ExercisePurposeId,
+                        CreateTime = p.CreateTime,
+
+                    })
+                    .ToList();
+
                 #endregion
             }
             else if (type == 3)
             {
                 #region MyRegion
-                list = MyEntitiesRepository.Entities
-                         .Where(p => (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
-                             && p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) <= 0)
-                         .Select(p => new AppointmentResultDto()
-                         {
-                             Id = p.ExercisePurposeId,
-                             AvatarUrl = p.Initiator.AvatarUrl,
-                             AvatarUrl2 = p.Invitee.AvatarUrl,
-                             NickName = p.Initiator.NickName,
-                             NickName2 = p.Invitee.NickName,
-                             StartTime = p.ExercisePurpose.StartTime,
-                             EndTime = p.ExercisePurpose.EndTime,
-                             ExercisePurposeId = p.ExercisePurposeId,
-                             CreateTime = p.CreateTime,
 
-                         })
-                         .ToList();
+                list = MyEntitiesRepository.Entities
+                    .Where(
+                        p =>
+                            (p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) ||
+                             p.InitiatorId.Equals(userInfor.UserBaseInfoId.Value))
+                            && p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) >= 0)
+                    .Select(p => new AppointmentResultDto()
+                    {
+                        Id = p.ExercisePurposeId,
+                        AvatarUrl = p.Initiator.AvatarUrl,
+                        AvatarUrl2 = p.Invitee.AvatarUrl,
+                        NickName = p.Initiator.NickName,
+                        NickName2 = p.Invitee.NickName,
+                        StartTime = p.ExercisePurpose.StartTime,
+                        EndTime = p.ExercisePurpose.EndTime,
+                        ExercisePurposeId = p.ExercisePurposeId,
+                        CreateTime = p.CreateTime,
+
+                    })
+                    .ToList();
+
                 #endregion
             }
 
@@ -122,7 +143,7 @@ namespace PlayTennis.Bll
 
         public AppointmentInformationDto AppointmentInformation(Guid id)
         {
-            var result = new AppointmentInformationDto() { AppointmentCount = 0 };
+            var result = new AppointmentInformationDto() {AppointmentCount = 0};
             //AppointmentRecordRepository.Entities.Where(p=>p.)
             var userInfor = UserInformationRepository.Entities.FirstOrDefault(p => p.Id.Equals(id));
             var exercisePurpose =
@@ -139,12 +160,12 @@ namespace PlayTennis.Bll
 
             var appointmentCount = MyEntitiesRepository.Entities
                 .Count(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(0) &&
-                        p.ExercisePurposeId.Equals(exercisePurpose.Id));
+                            p.ExercisePurposeId.Equals(exercisePurpose.Id));
             result.AppointmentCount = appointmentCount;
 
             var appointmentReceiveCount = MyEntitiesRepository.Entities
-    .Count(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(1) &&
-            p.ExercisePurposeId.Equals(exercisePurpose.Id));
+                .Count(p => p.InviteeId.Equals(userInfor.UserBaseInfoId.Value) && p.AppointmentState.Equals(1) &&
+                            p.ExercisePurposeId.Equals(exercisePurpose.Id));
 
             result.ExercisPurposeId = appointmentReceiveCount > 0 ? exercisePurpose.Id.ToString() : null;
             return result;
@@ -195,19 +216,27 @@ namespace PlayTennis.Bll
         public void AcceptAppointment(Guid inviteeId, Guid appointmentId)
         {
             var appointmentRecord =
-                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
+                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId))
+                    .OrderByDescending(p => p.CreateTime)
+                    .FirstOrDefault();
             if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(0))
             {
                 var appointment = MyEntitiesRepository.GetById(appointmentId);
                 appointment.AppointmentState = 1;
                 appointment.UpdateTime = DateTime.Now;
-                var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 1, UserBaseInfoId = inviteeId };
+                var record = new AppointmentRecord()
+                {
+                    AppointmentId = appointmentId,
+                    AppointmentState = 1,
+                    UserBaseInfoId = inviteeId
+                };
                 MyEntitiesRepository.UnitOfWork.EnableTransation = true;
                 MyEntitiesRepository.Update(appointment);
                 AppointmentRecordRepository.Insert(record);
                 MyEntitiesRepository.UnitOfWork.SavaChanges();
             }
         }
+
         /// <summary>
         /// 拒绝预约
         /// </summary>
@@ -217,18 +246,28 @@ namespace PlayTennis.Bll
         public void RefuseAppointment(Guid inviteeId, Guid appointmentId, string explain)
         {
             var appointmentRecord =
-                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
+                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId))
+                    .OrderByDescending(p => p.CreateTime)
+                    .FirstOrDefault();
             if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(0))
             {
                 var appointment = MyEntitiesRepository.GetById(appointmentId);
                 appointment.AppointmentState = 2;
-                appointment.UpdateTime = DateTime.Now; var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 2, UserBaseInfoId = inviteeId, Remark = explain };
+                appointment.UpdateTime = DateTime.Now;
+                var record = new AppointmentRecord()
+                {
+                    AppointmentId = appointmentId,
+                    AppointmentState = 2,
+                    UserBaseInfoId = inviteeId,
+                    Remark = explain
+                };
                 MyEntitiesRepository.UnitOfWork.EnableTransation = true;
                 MyEntitiesRepository.Update(appointment);
                 AppointmentRecordRepository.Insert(record);
                 MyEntitiesRepository.UnitOfWork.SavaChanges();
             }
         }
+
         /// <summary>
         /// 完成预约
         /// </summary>
@@ -238,13 +277,33 @@ namespace PlayTennis.Bll
         public void FinishAppointment(Guid userId, Guid appointmentId, string comment)
         {
             var appointmentRecord =
-                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId)).OrderByDescending(p => p.CreateTime).FirstOrDefault();
-            if (appointmentRecord != null && appointmentRecord.AppointmentState.Equals(1))
+                AppointmentRecordRepository.Entities.Where(p => p.AppointmentId.Equals(appointmentId))
+                    .OrderByDescending(p => p.CreateTime)
+                    .FirstOrDefault();
+            if (appointmentRecord != null &&
+                (appointmentRecord.AppointmentState.Equals(1) || appointmentRecord.AppointmentState.Equals(3)))
             {
                 var appointment = MyEntitiesRepository.GetById(appointmentId);
-                appointment.AppointmentState = 3;
-                var record = new AppointmentRecord() { AppointmentId = appointmentId, AppointmentState = 3, UserBaseInfoId = userId, Remark = comment };
                 MyEntitiesRepository.UnitOfWork.EnableTransation = true;
+
+                var exercisePurpose =
+                    ExercisePurposeRepository.Entities.FirstOrDefault(p => p.Id.Equals(appointment.ExercisePurposeId));
+                if (exercisePurpose != null && exercisePurpose.ExerciseState.Equals(0))
+                {
+                    exercisePurpose.ExerciseState = 1;
+                    exercisePurpose.UpdateTime = DateTime.Now;
+                    ExercisePurposeRepository.Update(exercisePurpose);
+                }
+
+                appointment.AppointmentState = 3;
+                var record = new AppointmentRecord()
+                {
+                    AppointmentId = appointmentId,
+                    AppointmentState = 3,
+                    UserBaseInfoId = userId,
+                    Remark = comment
+                };
+
                 MyEntitiesRepository.Update(appointment);
                 AppointmentRecordRepository.Insert(record);
                 MyEntitiesRepository.UnitOfWork.SavaChanges();

@@ -30,6 +30,7 @@ namespace PlayTennis.Bll
 
         public UserCentreDto GetUserCentreDto(Guid userId)
         {
+            var now = DateTime.Now;
             //todo 进行预约有问题
             var result = new UserCentreDto();
             var exercisePurpose = ExercisePurposeRepository.Entities.FirstOrDefault(
@@ -48,11 +49,11 @@ namespace PlayTennis.Bll
             result.IsExerciseIng = AppointmentRepository.Entities
                 .Any(
                     p =>
-                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfo.UserBaseInfoId.Value)) && p.AppointmentState.Equals(1));
+                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfo.UserBaseInfoId.Value)) && p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) >= 0);
             result.IsComplishExercise = AppointmentRepository.Entities
                 .Any(
                     p =>
-                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userId)) && p.AppointmentState.Equals(3));
+                        (p.InviteeId.Equals(userInfo.UserBaseInfoId.Value) || p.InitiatorId.Equals(userInfo.UserBaseInfoId.Value)) && (p.AppointmentState.Equals(3) || p.AppointmentState.Equals(4) || (p.AppointmentState.Equals(1) && p.ExercisePurpose.EndTime.Value.CompareTo(now) <= 0)));
 
             return result;
         }
