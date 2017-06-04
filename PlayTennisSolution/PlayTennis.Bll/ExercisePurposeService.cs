@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using PlayTennis.Dal;
 using PlayTennis.Model;
 using PlayTennis.Model.Dto;
@@ -15,6 +16,8 @@ namespace PlayTennis.Bll
 {
     public class ExercisePurposeService
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public PalyTennisDb Context { private get; set; }
 
         public ExercisePurposeService()
@@ -57,6 +60,8 @@ namespace PlayTennis.Bll
         }
         public int AddPurpose(EditPurposeDto purposeDto, WxUser wxUser)
         {
+            _log.Info(JsonConvert.SerializeObject(purposeDto));
+
             var result = 0;
             if (purposeDto == null || wxUser == null)
             {
@@ -88,6 +93,9 @@ namespace PlayTennis.Bll
             var userLocation =
                 HttpHelper.GetLocationInfor(purposeDto.userLocation.longitude.ToString(CultureInfo.InvariantCulture),
                     purposeDto.userLocation.latitude.ToString(CultureInfo.InvariantCulture));
+
+            _log.Info(JsonConvert.SerializeObject(userLocation));
+
             if (!userLocation.Province.Equals("上海市") || !(userLocation.Province.Equals("广东省") && userLocation.City.Equals("深圳市")))
             {
                 return result;

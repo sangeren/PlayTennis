@@ -122,7 +122,7 @@ namespace PlayTennis.Utility
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.ExpectContinue = false;
-            var uri = new Uri("http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.983424,116.322987&output=json&pois=1&pois=0&ak=" + BaiduMapKey);
+            var uri = new Uri("http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=" + lat + "," + lng + "&output=json&pois=1&pois=0&ak=" + BaiduMapKey);
 
             var result = client.GetStringAsync(uri).Result;
             if (!string.IsNullOrEmpty(result))

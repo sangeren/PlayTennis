@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,8 +38,10 @@ namespace PlayTennis.WebApi.Tests.Utility
         [TestMethod]
         public void GetLocationInfor()
         {
+            double d1 = 31.273418;
+            double d2 = 121.532906;
 
-            HttpHelper.GetLocationInfor("116.32298699999993", "39.98342407140365");
+            HttpHelper.GetLocationInfor(d2.ToString(), d1.ToString());
         }
         //HttpHelper
     }
