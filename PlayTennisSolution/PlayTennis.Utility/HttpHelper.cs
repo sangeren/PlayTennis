@@ -46,7 +46,7 @@ namespace PlayTennis.Utility
             BaiduMapKey = ConfigHelper.GetConfigValueOrDefault("baiduMapKey", "NGv7mm5W9fOpNGkSqH093PxYLdXKgI3G");
         }
 
-        public static void SendTemplateMessage(string openid, string form_id, string page, List<MessageData> data, string templateid = "dITCIwEgwIi562Y-amlKKpd2bEr2ltCRXIfpnkyNLFI")
+        public static void SendTemplateMessage(string openid, string form_id, string page, List<MessageData> data, string templateid = "BZ5fO_Aw17zcdLm093dClKIUVUPW4DBRpWJemU8IevY")
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.ExpectContinue = false;

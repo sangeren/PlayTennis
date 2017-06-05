@@ -59,18 +59,19 @@ namespace PlayTennis.WebApi.Controllers
                 var exercise = ExercisePurposeService.GetPurposeByEntityId(appointment.exercisePurposeId);
 
                 var data = new List<MessageData>();
-                var keyword1 = new MessageData() { value = "预约内容", color = "#173177" };
-                var keyword2 = new MessageData() { value = "预约人", color = "#173177" };
-                var keyword3 = new MessageData() { value = "预约时间", color = "#173177" };
-                var keyword4 = new MessageData() { value = "备注", color = "#173177" };
+                //预约时间
+                var keyword1 = new MessageData() { value = exercise.StartTime.Value.ToString() + "至" + exercise.EndTime.Value.ToString(), color = "#173177" };
+                //姓名
+                var keyword2 = new MessageData() { value = inviteeOpenid.Item2, color = "#173177" };
+                //备注
+                var keyword3 = new MessageData() { value = "", color = "#173177" };
 
                 data.Add(keyword1);
                 data.Add(keyword2);
                 data.Add(keyword3);
-                data.Add(keyword4);
 
                 _log.Info(inviteeOpenid);
-                HttpHelper.SendTemplateMessage(inviteeOpenid, formId, "", data);
+                HttpHelper.SendTemplateMessage(inviteeOpenid.Item1, formId, "", data);
             }
         }
 
