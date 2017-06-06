@@ -295,6 +295,8 @@ namespace PlayTennis.Bll
                     };
                     if (result.ExercisePurpose.EndTime != null)
                         result.IsPastDate = result.ExercisePurpose.EndTime.Value.CompareTo(DateTime.Now) <= 0;
+                    //todo debug
+                    //result.IsPastDate = true;
                 }
             }
             //Context.Appointment.FirstOrDefault(p=>p.)

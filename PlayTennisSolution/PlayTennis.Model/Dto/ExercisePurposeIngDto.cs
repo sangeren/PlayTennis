@@ -17,6 +17,9 @@ namespace PlayTennis.Model.Dto
         public ExercisePurpose ExercisePurpose { get; set; }
         public UserBaseInfo InInitiator { get; set; }
         public UserBaseInfo Invitee { get; set; }
+        /// <summary>
+        /// 是否到期
+        /// </summary>
         public bool IsPastDate { get; set; }
         public IList<ContentListDto> Communications { get; set; }
     }

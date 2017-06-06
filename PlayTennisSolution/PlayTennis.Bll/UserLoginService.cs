@@ -61,7 +61,13 @@ namespace PlayTennis.Bll
 
         public Tuple<string, string> GetOpenidByUserid(Guid id)
         {
-            return Context.UserInformation.Where(p => p.UserBaseInfoId == id).Select(p => new Tuple<string, string>(p.WxUser.Opneid, p.UserBaseInfo.NickName)).FirstOrDefault();
+            var result = Context.UserInformation.Where(p => p.UserBaseInfoId == id).Select(p => new
+            {
+                p.WxUser.Opneid,
+                p.UserBaseInfo.NickName
+            }).FirstOrDefault();
+            if (result != null) return new Tuple<string, string>(result.Opneid, result.NickName);
+            return new Tuple<string, string>(null, null);
         }
 
         public WxUser GetWxUserByuserid(Guid wxUserid)
