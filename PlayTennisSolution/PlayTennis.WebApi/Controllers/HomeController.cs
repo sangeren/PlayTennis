@@ -10,7 +10,7 @@ namespace PlayTennis.WebApi.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Play-tennis";
 
             return View();
         }

@@ -220,6 +220,7 @@
     <Content Include="Log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="File\play-tennis.pdf" />
     <None Include="Properties\PublishProfiles\AliEcs2.pubxml" />
     <None Include="Properties\PublishProfiles\Debug.pubxml" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
