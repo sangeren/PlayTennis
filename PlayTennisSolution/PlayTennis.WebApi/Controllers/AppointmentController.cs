@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PlayTennis.Bll;
+using PlayTennis.Model;
 using PlayTennis.Model.Dto;
 using PlayTennis.Utility;
 
@@ -50,29 +51,64 @@ namespace PlayTennis.WebApi.Controllers
         public void Post(Guid id, AppointmentDto appointment)
         {
             AppointmentService.InitatorAppointment(id, appointment.inviteeId, appointment.exercisePurposeId);
-            ExercisePurposeService.SaveWxFormId(id, appointment.formId);
 
+            _log.Info("formId:" + 1);
+            ExercisePurposeService.SaveWxFormId(id, appointment.formId);
             var formId = ExercisePurposeService.GetFormIdByEntityId(appointment.inviteeId);
+
+            _log.Info("formId:" + 2 + "|" + formId + "|" + appointment.inviteeId);
+
             if (!string.IsNullOrEmpty(formId))
             {
-                var inviteeOpenid = UserLoginService.GetOpenidByUserid(appointment.inviteeId);
+                _log.Info("formId:" + formId);
+
                 var exercise = ExercisePurposeService.GetPurposeByEntityId(appointment.exercisePurposeId);
 
-                var data = new List<MessageData>();
-                //预约时间
-                var keyword1 = new MessageData() { value = exercise.StartTime.Value.ToString() + "至" + exercise.EndTime.Value.ToString(), color = "#173177" };
-                //姓名
-                var keyword2 = new MessageData() { value = inviteeOpenid.Item2, color = "#173177" };
-                //备注
-                var keyword3 = new MessageData() { value = "", color = "#173177" };
-
-                data.Add(keyword1);
-                data.Add(keyword2);
-                data.Add(keyword3);
-
-                _log.Info(inviteeOpenid);
-                HttpHelper.SendTemplateMessage(inviteeOpenid.Item1, formId, "", data);
+                SendWxMessage(appointment.inviteeId, exercise, formId);
             }
+        }
+        /// <summary>
+        /// 发送微信模板消息
+        /// </summary>
+        /// <param name="inviteeId"></param>
+        /// <param name="exercise"></param>
+        /// <param name="formId"></param>
+        /// <param name="sendType">发送场景类型：1 发起预约；2 接受预约</param>
+        private void SendWxMessage(Guid inviteeId, ExercisePurpose exercise, string formId, byte sendType = 1)
+        {
+            if (exercise == null)
+            {
+                return;
+            }
+            var inviteeOpenid = UserLoginService.GetOpenidByUserid(inviteeId);
+            var data = new ListData();
+            //预约时间
+            var keyword2 = new MessageData()
+            {
+                value = exercise.StartTime.Value.ToString() + "至" + exercise.EndTime.Value.ToString(),
+                color = "#173177"
+            };
+            //姓名
+            var keyword1 = new MessageData() { value = inviteeOpenid.Item2, color = "#173177" };
+            MessageData keyword3 = null;
+            if (sendType == 1)
+            {
+                //备注
+                keyword3 = new MessageData() { value = exercise.ExerciseExplain, color = "#173177" };
+            }
+            else if (sendType == 2)
+            {
+                //备注
+                keyword3 = new MessageData() { value = "小伙伴接受你的预约了！", color = "#173177" };
+            }
+
+
+            data.keyword1 = keyword1;
+            data.keyword2 = keyword2;
+            data.keyword3 = keyword3;
+
+            _log.Info(inviteeOpenid);
+            HttpHelper.SendTemplateMessage(inviteeOpenid.Item1, formId, "", data);
         }
 
         // PUT: api/Appointment/5
@@ -89,6 +125,14 @@ namespace PlayTennis.WebApi.Controllers
             if (appointment.ActionType == 0)
             {
                 AppointmentService.AcceptAppointment(id, appointment.appointmentId);
+
+                var formId = ExercisePurposeService.GetFormIdByEntityId(appointment.inviteeId);
+                _log.Info("put-formId:" + 2 + "|" + formId + "|" + appointment.inviteeId);
+
+                if (!string.IsNullOrEmpty(formId))
+                {
+                    SendWxMessage(appointment.inviteeId, AppointmentService.GetPurposeByAppointmentId(appointment.appointmentId), formId, 2);
+                }
             }
             else if (appointment.ActionType == 1)
             {

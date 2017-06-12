@@ -46,7 +46,7 @@ namespace PlayTennis.Utility
             BaiduMapKey = ConfigHelper.GetConfigValueOrDefault("baiduMapKey", "NGv7mm5W9fOpNGkSqH093PxYLdXKgI3G");
         }
 
-        public static void SendTemplateMessage(string openid, string form_id, string page, List<MessageData> data, string templateid = "BZ5fO_Aw17zcdLm093dClKIUVUPW4DBRpWJemU8IevY")
+        public static void SendTemplateMessage(string openid, string form_id, string page, ListData data, string templateid = "BZ5fO_Aw17zcdLm093dClL8XVd9wsgU9Gwdfyzh9QEM")
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.ExpectContinue = false;
@@ -73,13 +73,12 @@ namespace PlayTennis.Utility
         }
 
         //6omskY50ZQeOKvYQPIVkl2Qkwequq679yWWO3RG6sdwUTe9XU5jgBv9X9gYvVZU7petgrSXW2OeaMYx3tMnwiSzZXxm2aWXt27WTgPWFBhXwDmSac7YmnnxJTVu-5txNOQSdABADFH
-        public static void SendTemplateMessageLocal(string openid, string form_id, string page, List<MessageData> data, string templateid = "dITCIwEgwIi562Y-amlKKpd2bEr2ltCRXIfpnkyNLFI")
+        public static void SendTemplateMessageLocal(string openid, string form_id, string page, ListData data, string templateid = "BZ5fO_Aw17zcdLm093dClKIUVUPW4DBRpWJemU8IevY")
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.ExpectContinue = false;
             //s api.weixin.qq.com mwSfP6I4A1mCQh4PYxswmGVPg85VKLFhByMDr-AiFfsnFCX-V5LFL4JsDr4BNP_mUZqBnyq_s-QT9o8ipv5_IOT5eeH__OlA5yb4M7EfKh8RG_Rey6GM4ph9eT3xuTriPTZgABABFL
-            //client.BaseAddress = new Uri("http://106.14.15.67/cgi-bin/message/custom/send?access_token=pYRPWw4zFx1kO35U-PCQymMHq4MfSpUdYCxdk0nwNo3c2r2Q6pkOFWtDh6ttVk1Vvzd84iq8r5iPEPrwcrRVsGjWw4jRnqDQV08EWMkMK-DpoVTpxTRv-hhDRQRLgBVbGKQfAEAQUA");
-            client.BaseAddress = new Uri("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=pYRPWw4zFx1kO35U-PCQymMHq4MfSpUdYCxdk0nwNo3c2r2Q6pkOFWtDh6ttVk1Vvzd84iq8r5iPEPrwcrRVsGjWw4jRnqDQV08EWMkMK-DpoVTpxTRv-hhDRQRLgBVbGKQfAEAQUA");
+            client.BaseAddress = new Uri("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=Fg0bKcP4TV-degd3gy66vzIA6HDUQQluIi8XghIOklX4yhuyD6Rae57Z2bsPie--Dm6cPthtfKX8Cj_PzmfMnq8mDSMSt-UNiL2J3jkuFyyoQo4wl40QiQLTKG5i-IUkUXNfAHAEHX");
 
             var message = new TemplateMessage()
             {
@@ -172,7 +171,14 @@ namespace PlayTennis.Utility
         public string page { get; set; }
         public string form_id { get; set; }
         public string emphasis_keyword { get; set; }
-        public List<MessageData> data { get; set; }
+        public ListData data { get; set; }
+    }
+
+    public class ListData
+    {
+        public MessageData keyword1 { get; set; }
+        public MessageData keyword2 { get; set; }
+        public MessageData keyword3 { get; set; }
     }
 
     public class MessageData

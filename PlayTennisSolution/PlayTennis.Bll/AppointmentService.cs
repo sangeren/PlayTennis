@@ -143,7 +143,7 @@ namespace PlayTennis.Bll
 
         public AppointmentInformationDto AppointmentInformation(Guid id)
         {
-            var result = new AppointmentInformationDto() {AppointmentCount = 0};
+            var result = new AppointmentInformationDto() { AppointmentCount = 0 };
             //AppointmentRecordRepository.Entities.Where(p=>p.)
             var userInfor = UserInformationRepository.Entities.FirstOrDefault(p => p.Id.Equals(id));
             var exercisePurpose =
@@ -180,9 +180,13 @@ namespace PlayTennis.Bll
         /// <param name="formid">提交发起预约表单id</param>
         public void InitatorAppointment(Guid initiatorId, Guid inviteeId, Guid exercisePurposeId)
         {
+            //var hasAppointment =
+            //    MyEntitiesRepository.Entities.Any(
+            //        p => p.InitiatorId.Equals(initiatorId) && p.InviteeId.Equals(inviteeId) && p.AppointmentState == 0);
             var hasAppointment =
                 MyEntitiesRepository.Entities.Any(
-                    p => p.InitiatorId.Equals(initiatorId) && p.InviteeId.Equals(inviteeId) && p.AppointmentState == 0);
+                    p => p.ExercisePurposeId.Equals(exercisePurposeId) && p.AppointmentState != -1 && p.AppointmentState != 0);
+
             if (hasAppointment)
             {
                 return;
@@ -235,6 +239,16 @@ namespace PlayTennis.Bll
                 AppointmentRecordRepository.Insert(record);
                 MyEntitiesRepository.UnitOfWork.SavaChanges();
             }
+        }
+
+        public ExercisePurpose GetPurposeByAppointmentId(Guid appointmentId)
+        {
+            var result =
+                MyEntitiesRepository.Entities.Where(p => p.Id.Equals(appointmentId))
+                    .Select(p => p.ExercisePurpose)
+                    .FirstOrDefault();
+
+            return result;
         }
 
         /// <summary>

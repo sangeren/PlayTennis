@@ -151,7 +151,17 @@ namespace PlayTennis.Bll
             {
                 return result;
             }
-            var purpose = Context.ExercisePurpose.FirstOrDefault(p => p.Id == purposeDto.Id);
+
+            var hasAppointment =
+                Context.Appointment.Any(
+                    p => p.ExercisePurposeId.Equals(purposeDto.Id) && p.AppointmentState != -1);
+            if (hasAppointment)
+            {
+                return result;
+            }
+
+            var purpose =
+                Context.ExercisePurpose.Include(p => p.UserInformation).FirstOrDefault(p => p.Id == purposeDto.Id);
             if (purpose == null || purpose.Id != purposeDto.Id)
             {
                 return result;
@@ -171,14 +181,17 @@ namespace PlayTennis.Bll
             purpose.UpdateTime = DateTime.Now;
             Context.ExercisePurpose.AddOrUpdate(purpose);
 
-            var messageId = new WxMessage()
+            if (purpose.UserInformation.UserBaseInfoId != null)
             {
-                MessageType = 1,
-                MessageKey = purpose.Id,
-                Vaule = purposeDto.formId,
-                IsUser = false
-            };
-            Context.WxMessage.Add(messageId);
+                var messageId = new WxMessage()
+                {
+                    MessageType = 1,
+                    MessageKey = purpose.UserInformation.UserBaseInfoId.Value,
+                    Vaule = purposeDto.formId,
+                    IsUser = false
+                };
+                Context.WxMessage.Add(messageId);
+            }
 
             result = Context.SaveChanges();
 
