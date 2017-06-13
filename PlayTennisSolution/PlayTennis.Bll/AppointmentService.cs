@@ -323,5 +323,10 @@ namespace PlayTennis.Bll
                 MyEntitiesRepository.UnitOfWork.SavaChanges();
             }
         }
+
+        public int GetAppointmentCount()
+        {
+            return AppointmentRecordRepository.Entities.Count();
+        }
     }
 }
