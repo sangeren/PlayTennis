@@ -36,7 +36,7 @@ namespace PlayTennis.WebApi.Controllers
         /// <param name="lat"></param>
         /// <param name="lon"></param>
         /// <returns></returns>
-        public IList<ExercisePurposeDto> Get(Guid id, int pageIndex, int pageSize = 6, double lat = 0, double lon = 0)
+        public IList<ExercisePurposeDto> Get(Guid id, int pageIndex, int pageSize = 26, double lat = 0, double lon = 0)
         {
             //return new string[] { "value1", "value2" };
             return ExercisePurposeService.PurposeList(id, pageIndex, pageSize, lat, lon);
