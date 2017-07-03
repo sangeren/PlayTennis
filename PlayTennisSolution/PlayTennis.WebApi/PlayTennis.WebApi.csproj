@@ -223,6 +223,7 @@
     <Content Include="File\play-tennis.pdf" />
     <None Include="Properties\PublishProfiles\AliEcs2.pubxml" />
     <None Include="Properties\PublishProfiles\Debug.pubxml" />
+    <None Include="Properties\PublishProfiles\AliEcs3年.pubxml" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

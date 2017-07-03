@@ -41,8 +41,8 @@ namespace PlayTennis.WebApi.Tests.Utility
         [TestMethod]
         public void GetLocationInfor()
         {
-            double d1 = 31.273418;
-            double d2 = 121.532906;
+            double d1 = 39.983424;
+            double d2 = 116.322987;
 
             HttpHelper.GetLocationInfor(d2.ToString(), d1.ToString());
         }

@@ -96,7 +96,7 @@ namespace PlayTennis.Bll
 
             _log.Info(JsonConvert.SerializeObject(userLocation));
 
-            if (userLocation.Province.Equals("上海市") || (userLocation.Province.Equals("广东省") && userLocation.City.Equals("深圳市")))
+            if (userLocation.Province.Equals("北京市") || userLocation.Province.Equals("上海市") || (userLocation.Province.Equals("广东省") && userLocation.City.Equals("深圳市")))
             {
 
             }
