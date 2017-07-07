@@ -22,6 +22,12 @@ namespace PlayTennis.Bll
         {
             return MyEntitiesRepository.GetById(id);
         }
+
+        public IQueryable<T> Entitys()
+        {
+            return MyEntitiesRepository.Entities;
+        } 
+
         public T GetEntityFirstOrDefault(Expression<Func<T, bool>> where)
         {
             return MyEntitiesRepository.Get(where);

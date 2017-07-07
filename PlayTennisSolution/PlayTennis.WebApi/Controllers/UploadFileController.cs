@@ -27,9 +27,16 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/UploadFile/5
-        public string Get(int id)
+        public List<string> Get(Guid id)
         {
-            return "value";
+            var host = ConfigHelper.GetConfigValueOrDefault("imageDownloadPath", "");
+
+            return
+                UserImageService.Entitys()
+                    .Where(p => p.UserInformationId == (id) && p.IsDelete.Equals(false))
+                    .Select(p => host + p.RelativePath)
+                    .Take(9)
+                    .ToList();
         }
 
         // POST: api/UploadFile
