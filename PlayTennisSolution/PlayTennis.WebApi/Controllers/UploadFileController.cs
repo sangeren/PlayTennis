@@ -1,4 +1,5 @@
-﻿using PlayTennis.Utility;
+﻿using PlayTennis.Bll;
+using PlayTennis.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,13 @@ namespace PlayTennis.WebApi.Controllers
 {
     public class UploadFileController : ApiController
     {
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public UploadFileController()
+        {
+            UserImageService = new UserImageService();
+        }
+        public UserImageService UserImageService { get; set; }
+
         // GET: api/UploadFile
         public IEnumerable<string> Get()
         {
@@ -25,11 +33,23 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // POST: api/UploadFile
-        public string Post()
+        public string Post(Guid userInforId)
         {
+            _log.Info(userInforId);
+
             var imageFile = HttpContext.Current.Request.Files["image1"];
             var result = FileHelper.SaveSingleFile(imageFile);
-            return result.Item2;
+            if (result.Item1.Equals(true))
+            {
+                UserImageService.AddImage(userInforId, result.Item2);
+                var path = ConfigHelper.GetConfigValueOrDefault("imageDownloadPath", @"");
+
+                return path + result.Item2;
+            }
+            else
+            {
+                throw new Exception(result.Item2);
+            }
         }
 
         // PUT: api/UploadFile/5

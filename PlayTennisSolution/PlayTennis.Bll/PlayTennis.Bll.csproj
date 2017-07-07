@@ -69,6 +69,7 @@
     <Compile Include="PurposeCommunicationService.cs" />
     <Compile Include="SportsEquipmentService.cs" />
     <Compile Include="TennisCourtService.cs" />
+    <Compile Include="UserImageService.cs" />
     <Compile Include="UserInformationService.cs" />
     <Compile Include="UserLoginService.cs" />
   </ItemGroup>

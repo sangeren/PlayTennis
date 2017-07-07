@@ -79,6 +79,14 @@
     <Compile Include="Migrations\201705291238038_ChangeFormIdMig.Designer.cs">
       <DependentUpon>201705291238038_ChangeFormIdMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707041339284_AddImageMig.cs" />
+    <Compile Include="Migrations\201707041339284_AddImageMig.Designer.cs">
+      <DependentUpon>201707041339284_AddImageMig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707041646029_AddImageChangeMig.cs" />
+    <Compile Include="Migrations\201707041646029_AddImageChangeMig.Designer.cs">
+      <DependentUpon>201707041646029_AddImageChangeMig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PalyTennisDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +114,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705291238038_ChangeFormIdMig.resx">
       <DependentUpon>201705291238038_ChangeFormIdMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707041339284_AddImageMig.resx">
+      <DependentUpon>201707041339284_AddImageMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707041646029_AddImageChangeMig.resx">
+      <DependentUpon>201707041646029_AddImageChangeMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

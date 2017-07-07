@@ -30,7 +30,7 @@ namespace PlayTennis.WebApi
             else
             {
                 //.....这里可以根据项目需要返回到客户端特定的状态码。如果找不到相应的异常，统一返回服务端错误500
-                actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(actionExecutedContext.Exception.Message) };
             }
 
 
@@ -49,7 +49,8 @@ namespace PlayTennis.WebApi
             //logService.LogUserLoginAsync(log);
             var jsonSetting = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Request, jsonSetting));
-            _log.Error(JsonConvert.SerializeObject(actionExecutedContext.Exception, jsonSetting));
+            _log.Error("123");
+            //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Exception, jsonSetting));
             base.OnException(actionExecutedContext);
         }
     }

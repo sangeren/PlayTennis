@@ -54,6 +54,7 @@
     <Compile Include="Dto\PurposeCommunicationDto.cs" />
     <Compile Include="Dto\RequestLog.cs" />
     <Compile Include="Dto\UserCentreDto.cs" />
+    <Compile Include="Dto\UserImageDto.cs" />
     <Compile Include="Dto\UserInformationDto.cs" />
     <Compile Include="Dto\LocationInfor.cs" />
     <Compile Include="Dto\WxMessageDto.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="SportsEquipment.cs" />
     <Compile Include="TennisCourt.cs" />
     <Compile Include="UserBaseInfo.cs" />
+    <Compile Include="UserImage.cs" />
     <Compile Include="UserInformation.cs" />
     <Compile Include="WxMessage.cs" />
     <Compile Include="WxUser.cs" />
