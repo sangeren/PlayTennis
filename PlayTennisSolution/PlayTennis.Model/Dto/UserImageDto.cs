@@ -9,6 +9,7 @@ namespace PlayTennis.Model.Dto
 {
     public class UserImageDto
     {
+        public Guid Id { get; set; }
         /// <summary>
         /// 全路径
         /// </summary>

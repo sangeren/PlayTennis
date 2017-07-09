@@ -47,10 +47,16 @@ namespace PlayTennis.WebApi
             //    CreateTime = DateTime.Now
             //};
             //logService.LogUserLoginAsync(log);
-            var jsonSetting = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-            //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Request, jsonSetting));
-            _log.Error("123");
-            //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Exception, jsonSetting));
+            try
+            {
+                var jsonSetting = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+                //_log.Error(JsonConvert.SerializeObject(actionExecutedContext.Request, jsonSetting));
+                _log.Error(JsonConvert.SerializeObject(actionExecutedContext.Exception, jsonSetting));
+            }
+            catch (Exception ex)
+            {
+                _log.Error("123" + ex.Message);
+            }
             base.OnException(actionExecutedContext);
         }
     }

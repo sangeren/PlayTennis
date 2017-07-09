@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -110,8 +111,15 @@ namespace PlayTennis.Dal
 
         public virtual int Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
-            _context.Entry(entityToUpdate).State = EntityState.Modified;
+            DbEntityEntry<TEntity> entry = _context.Entry(entityToUpdate);
+            if (entry.State == EntityState.Detached)
+            {
+                _dbSet.Attach(entityToUpdate);
+                entry.State = EntityState.Modified;
+            }
+
+            //_dbSet.Attach(entityToUpdate);
+            //_context.Entry(entityToUpdate).State = EntityState.Modified;
             if (UnitOfWork.EnableTransation)
             {
                 return 0;

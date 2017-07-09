@@ -8,7 +8,7 @@ namespace PlayTennis.Dal
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        public static PalyTennisDb MyDbContext;
+        public PalyTennisDb MyDbContext;
         public static bool IsTransaction;
         public UnitOfWork()
         {

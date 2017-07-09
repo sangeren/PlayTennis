@@ -2,12 +2,15 @@
 using PlayTennis.Utility;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
+using PlayTennis.Model.Dto;
 
 namespace PlayTennis.WebApi.Controllers
 {
@@ -27,14 +30,20 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // GET: api/UploadFile/5
-        public List<string> Get(Guid id)
+        public List<UserImageDto> Get(Guid id)
         {
             var host = ConfigHelper.GetConfigValueOrDefault("imageDownloadPath", "");
 
             return
                 UserImageService.Entitys()
                     .Where(p => p.UserInformationId == (id) && p.IsDelete.Equals(false))
-                    .Select(p => host + p.RelativePath)
+                    .Select(p => new UserImageDto()
+                    {
+                        Id = p.Id,
+                        FullPath = host + p.RelativePath,
+                        CreateTime = p.CreateTime
+                    })
+                    .OrderBy(p => p.CreateTime)
                     .Take(9)
                     .ToList();
         }
@@ -65,8 +74,9 @@ namespace PlayTennis.WebApi.Controllers
         }
 
         // DELETE: api/UploadFile/5
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            UserImageService.DeleteImage(id);
         }
     }
 }
